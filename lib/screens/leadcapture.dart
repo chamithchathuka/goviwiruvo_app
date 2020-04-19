@@ -728,8 +728,9 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             onPressed: () {
               _validateInputs();
+              Navigator.of(context).pushNamed('/vegadd'); // to connect screen
             },
-            child: Text("Save Lead",
+            child: Text("Next",
                 style: TextStyle(color: Colors.white, fontSize: 20)),
           ),
         ),

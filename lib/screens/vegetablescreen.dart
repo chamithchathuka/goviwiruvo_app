@@ -29,9 +29,12 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
   final weightController = TextEditingController();
 
   bool isDataLoaded = false;
-  bool  isErrorOccurred = false;
 
-  List<String> _channels = ['Please Select', 'Walk-in', 'B', 'C', 'D'];
+  String selectedQualityValue = '';
+
+  bool isErrorOccurred = false;
+
+  List<String> qualitygrades = ['Please Select', 'A', 'B', 'C'];
 
   List<VegetableLoad> _vegetable = [];
 
@@ -72,57 +75,153 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
   final pageName = "Add Vegetable";
 
   vegetable(BuildContext context) => Padding(
-    padding: const EdgeInsets.only(top: 8.0),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        Align(
-            alignment: Alignment.topLeft,
-            child: Text(
-
-              "Vegetable/එළවළු වර්ගය",
-              style: TextStyle(fontWeight: FontWeight.bold),
-              textAlign: TextAlign.left,
-            )),
-        Container(
-          child: Row(
-            children: <Widget>[
+        padding: const EdgeInsets.only(top: 8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  "Vegetable/එළවළු වර්ගය",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.left,
+                )),
+            Container(
+              child: Row(
+                children: <Widget>[
 //                  Icon(Icons.chat_bubble),
 //                  Padding(
 //                    padding: EdgeInsets.only(left: 8, right: 8),
 //                  ),
-              isDataLoaded==false?CircularProgressIndicator():Expanded(
-                child: DropdownButtonFormField(
-                  validator: (value) {
-                    if (selectedVegetable == null) {
-                      return 'පළාත තෝරන්න';
-                    }
-                  },
+                  isDataLoaded == false
+                      ? CircularProgressIndicator()
+                      : Expanded(
+                          child: DropdownButtonFormField(
+                            validator: (value) {
+                              if (selectedVegetable == null) {
+                                return 'පළාත තෝරන්න';
+                              }
+                            },
 //                      isExpanded: true,
-                  items: veggiesList
-                      .map((value) => DropdownMenuItem(
-                    child: Text('${value}'),
-                    value: value,
-                  ),)
-                      .toList(),
-                  onChanged: (String value) {
-                    setState(() {
-                      selectedVegetable = value;
-                      print("Selected Channel  - $value");
-                    });
-                  },
-                  value:
-                  selectedVegetable == '' ? '' : selectedVegetable,
-                ),
+                            items: veggiesList
+                                .map(
+                                  (value) => DropdownMenuItem(
+                                    child: Text('${value}'),
+                                    value: value,
+                                  ),
+                                )
+                                .toList(),
+                            onChanged: (String value) {
+                              setState(() {
+                                selectedVegetable = value;
+                                print("Selected Channel  - $value");
+                              });
+                            },
+                            value: selectedVegetable == ''
+                                ? ''
+                                : selectedVegetable,
+                          ),
+                        ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-      ],
-    ),
-  );
+      );
 
   weight(BuildContext context) => Padding(
+        padding: const EdgeInsets.only(top: 8),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  "බර කිලෝග්‍රෑම්/ Weight in Kilograms",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.left,
+                )),
+            Container(
+              child: Row(
+                children: <Widget>[
+                  Icon(Icons.add_shopping_cart),
+                  Padding(
+                    padding: EdgeInsets.only(left: 8, right: 8),
+                  ),
+                  Expanded(
+                    child: TextFormField(
+                      inputFormatters: [
+                        WhitelistingTextInputFormatter.digitsOnly
+                      ],
+                      controller: weightController,
+                      maxLength: 10,
+                      validator: (value) {
+                        if (value.length < 1000) {
+                          return ('Weight invalid.');
+                        }
+                      },
+                      textAlign: TextAlign.left,
+                      keyboardType: TextInputType.number,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+
+  quality(BuildContext context) => Padding(
+        padding: const EdgeInsets.only(top: 8),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  "ගුණාත්මකභාවය / Quality",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.left,
+                )),
+            Container(
+              child: Row(
+                children: <Widget>[
+                  Icon(Icons.add_shopping_cart),
+                  Padding(
+                    padding: EdgeInsets.only(left: 8, right: 8),
+                  ),
+                  Expanded(
+                    child: DropdownButtonFormField(
+                      validator: (value) {
+                        if (selectedQualityValue == '') {
+                          return 'Select Channel.';
+                        }
+                      },
+//                      isExpanded: true,
+                      items: qualitygrades
+                          .map((value) => DropdownMenuItem(
+                                child: Text(value),
+                                value: value,
+                              ))
+                          .toList(),
+                      onChanged: (String value) {
+                        setState(() {
+                          selectedQualityValue = value;
+                        });
+                      },
+                      value: selectedQualityValue == ''
+                          ? ''
+                          : selectedQualityValue,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+
+  quality(BuildContext context) => Padding(
     padding: const EdgeInsets.only(top: 8),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -130,7 +229,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
         Align(
             alignment: Alignment.topLeft,
             child: Text(
-              "Weight in Kilograms/බර කිලෝග්‍රෑම්",
+              "ගුණාත්මකභාවය / Quality",
               style: TextStyle(fontWeight: FontWeight.bold),
               textAlign: TextAlign.left,
             )),
@@ -142,18 +241,27 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                 padding: EdgeInsets.only(left: 8, right: 8),
               ),
               Expanded(
-                child: TextFormField(
-
-                  inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
-                  controller: weightController,
-                  maxLength: 10,
+                child: DropdownButtonFormField(
                   validator: (value) {
-                    if (value.length < 1000) {
-                      return ('Weight invalid.');
+                    if (selectedQualityValue == '') {
+                      return 'Select Channel.';
                     }
                   },
-                  textAlign: TextAlign.left,
-                  keyboardType: TextInputType.number,
+//                      isExpanded: true,
+                  items: qualitygrades
+                      .map((value) => DropdownMenuItem(
+                    child: Text(value),
+                    value: value,
+                  ))
+                      .toList(),
+                  onChanged: (String value) {
+                    setState(() {
+                      selectedQualityValue = value;
+                    });
+                  },
+                  value: selectedQualityValue == ''
+                      ? ''
+                      : selectedQualityValue,
                 ),
               ),
             ],
@@ -162,6 +270,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
       ],
     ),
   );
+
 
 ////                            subtitle: Text(todo.vegList[index].grade.toString(), style: TextStyle(color: Colors.black45,
 ////                                fontWeight: FontWeight.bold),),
@@ -247,15 +356,15 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                   child: MaterialButton(
                     child: selectedValues.length == 0
                         ? Text(
-                      "Select Products",
-                      style: selectedValues.length==0
-                          ? TextStyle(color: Colors.red)
-                          : TextStyle(color: Colors.black),
-                    )
+                            "Select Products",
+                            style: selectedValues.length == 0
+                                ? TextStyle(color: Colors.red)
+                                : TextStyle(color: Colors.black),
+                          )
                         : Text(
-                      "${selectedProductListStrNames}",
-                      textAlign: TextAlign.center,
-                    ),
+                            "${selectedProductListStrNames}",
+                            textAlign: TextAlign.center,
+                          ),
                     onPressed: () {
                       _showMultiSelect(context);
                     },
@@ -273,18 +382,15 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
   void initState() {
     super.initState();
     loadData();
-
   }
 
-
   void loadData() async {
-
     List<VegetableLoad> vegetables = await WebServiceCall.getVegetables();
 
     setState(() {
       isDataLoaded = true;
 
-      for (var i=0; i<vegetables.length; i++) {
+      for (var i = 0; i < vegetables.length; i++) {
         veggiesList.add(vegetables[i].description);
       }
 //      veggiesList = vegetables;
@@ -307,14 +413,13 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
 //    }
   }
 
-
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
         context: context,
         initialDate: selectedDate == null
             ? DateTime.now().add(
-          Duration(days: 2),
-        )
+                Duration(days: 2),
+              )
             : selectedDate,
         firstDate: DateTime.now(),
         lastDate: DateTime(2022));
@@ -325,51 +430,51 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
   }
 
   targetDate(BuildContext context) => Padding(
-    padding: const EdgeInsets.only(top: 8),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        Align(
-            alignment: Alignment.topLeft,
-            child: Text(
-              "Target Date",
-              style: TextStyle(fontWeight: FontWeight.bold),
-              textAlign: TextAlign.left,
-            )),
-        Container(
-          child: Row(
-            children: <Widget>[
-              Icon(Icons.calendar_today),
-              Padding(
-                padding: EdgeInsets.only(left: 8, right: 8),
+        padding: const EdgeInsets.only(top: 8),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  "Target Date",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.left,
+                )),
+            Container(
+              child: Row(
+                children: <Widget>[
+                  Icon(Icons.calendar_today),
+                  Padding(
+                    padding: EdgeInsets.only(left: 8, right: 8),
+                  ),
+                  Expanded(
+                    child: MaterialButton(
+                        child: Text(selectedDate == null
+                            ? "Select Date"
+                            : "${selectedDate.toLocal().day} - ${selectedDate.toLocal().month} - ${selectedDate.toLocal().year}"),
+                        onPressed: () => _selectDate(context)),
+                  ),
+                ],
               ),
-              Expanded(
-                child: MaterialButton(
-                    child: Text(selectedDate == null
-                        ? "Select Date"
-                        : "${selectedDate.toLocal().day} - ${selectedDate.toLocal().month} - ${selectedDate.toLocal().year}"),
-                    onPressed: () => _selectDate(context)),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
-      ],
-    ),
-  );
+      );
 
   saveLead(BuildContext context) => Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: Container(
-      width: double.infinity,
-      height: 50,
-      child: RaisedButton(
-        color: Color.fromRGBO(2, 119, 189, 0.9),
-        shape:
-        RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        onPressed: () {
-          //_validateInputs();
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          width: double.infinity,
+          height: 50,
+          child: RaisedButton(
+            color: Color.fromRGBO(2, 119, 189, 0.9),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            onPressed: () {
+              //_validateInputs();
 
-          var rng = new Random(3);
+              var rng = new Random(3);
 
 //          Vegset v1 = Vegset();
 //          v1.vegetableId = rng.nextInt(3);
@@ -379,22 +484,32 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
 //          v1.date="2013-02-01";
 //          v1.freePercentage = 10;
 //          Provider.of<VegetableModel>(context).addVegToList(veggiesList[rng.nextInt(3)]);
-
-        },
-        child: Text("Save",
-            style: TextStyle(color: Colors.white, fontSize: 20)),
-      ),
-    ),
-  );
+            },
+            child: Text("Save",
+                style: TextStyle(color: Colors.white, fontSize: 20)),
+          ),
+        ),
+      );
 
   _buildVerticalLayout(BuildContext context) {
     print('${veggiesList.length}');
-    return SingleChildScrollView(
+    return Container(
       child: Column(
-        children: [
-        vegetable(context),
-        weight(context),
-        saveLead(context),
+        children: <Widget>[
+          Expanded(
+            child: SingleChildScrollView(
+              child: Container(
+                child: Column(
+                  children: [
+                    vegetable(context),
+                    weight(context),
+                    quality(context)
+                  ],
+                ),
+              ),
+            ),
+          ),
+          saveLead(context),
         ],
       ),
     );
@@ -438,11 +553,11 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
             child: GridView.count(
                 childAspectRatio: MediaQuery.of(context).size.width > 1200
                     ? (MediaQuery.of(context).size.width *
-                    0.6 /
-                    (horizontalheight))
+                        0.6 /
+                        (horizontalheight))
                     : MediaQuery.of(context).size.width *
-                    0.3 /
-                    (horizontalheight),
+                        0.3 /
+                        (horizontalheight),
                 crossAxisCount: 2,
                 crossAxisSpacing: 8,
                 children: <Widget>[
@@ -466,50 +581,45 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-    return
-
-      Scaffold(
-
-        appBar: new AppBar(
-          actions: <Widget>[
-            IconButton(
-                icon: Icon(Icons.search),
-                onPressed: () {
-                  Navigator.of(context).pushReplacementNamed(
-                      '/leadcapturesearch'); // to connect screen
-                }),
-          ],
-          title: new Text(pageName,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+    return Scaffold(
+      appBar: new AppBar(
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {
+                Navigator.of(context).pushReplacementNamed(
+                    '/leadcapturesearch'); // to connect screen
+              }),
+        ],
+        title: new Text(pageName,
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+      ),
+      body: SafeArea(
+        minimum: const EdgeInsets.all(8.0),
+        child: Form(
+          key: _formKey,
+          autovalidate: _autoValidate,
+          child: OrientationBuilder(builder: (context, orientation) {
+            return orientation == Orientation.portrait
+                ? LayoutBuilder(builder: (context, constraints) {
+                    if (constraints.maxWidth < 600) {
+                      return _buildVerticalLayout(context);
+                    } else {
+                      return _buildVerticallTabLayout(context);
+                    }
+                  })
+                : LayoutBuilder(builder: (context, constraints) {
+                    if (constraints.maxWidth < 600) {
+                      return _buildHorizontalLayout(context);
+                    } else {
+                      //Todo Change this
+                      return _buildHorizontalLayout(context);
+                    }
+                  });
+          }),
         ),
-        body: SafeArea(
-          minimum: const EdgeInsets.all(8.0),
-          child: Form(
-            key: _formKey,
-            autovalidate: _autoValidate,
-            child: OrientationBuilder(builder: (context, orientation) {
-              return orientation == Orientation.portrait
-                  ? LayoutBuilder(builder: (context, constraints) {
-                if (constraints.maxWidth < 600) {
-                  return _buildVerticalLayout(context);
-                } else {
-                  return _buildVerticallTabLayout(context);
-                }
-              })
-                  : LayoutBuilder(builder: (context, constraints) {
-                if (constraints.maxWidth < 600) {
-                  return _buildHorizontalLayout(context);
-                } else {
-                  //Todo Change this
-                  return _buildHorizontalLayout(context);
-                }
-              });
-            }),
-          ),
-        ),
-      );
-
+      ),
+    );
   }
 
   void _validateInputs() {
@@ -534,7 +644,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
         return MultiSelectDialog(
           items: items,
           initialSelectedValues:
-          selectedValues.length == 0 ? [1].toSet() : selectedValues.toSet(),
+              selectedValues.length == 0 ? [1].toSet() : selectedValues.toSet(),
         );
       },
     );
