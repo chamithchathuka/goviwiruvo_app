@@ -745,12 +745,16 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
               child: Container(
                 child: Column(
 
-                  children: <Widget>[
-
+                    children: <Widget>[
+                    SizedBox(height: 15),
                     customerName(context),
+                    SizedBox(height: 20),
                     area(context),
+                    SizedBox(height: 20),
                     contactnumber(context),
+                    SizedBox(height: 20),
                     contactnumberWhatsApp(context),
+                    SizedBox(height: 20),
                     coordinationOfficerNumber(context),
 
 
