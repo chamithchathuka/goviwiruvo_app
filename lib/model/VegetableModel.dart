@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:goviwiruvo_app/dto/vegetableload.dart';
-import 'package:goviwiruvo_app/dto/vegitablerequestdto.dart';
+import 'package:goviwiruvo_app/dto/vegetablerequestdto.dart';
 
 class VegetableModel extends ChangeNotifier{
 

@@ -727,7 +727,7 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
             color: Color.fromRGBO(0, 0, 0, 0.9),
             onPressed: () {
               _validateInputs();
-              Navigator.of(context).pushNamed('/vegadd'); // to connect screen
+              Navigator.of(context).pushNamed('/cart'); // to connect screen
             },
             child: Text("ඉදිරියට",
                 style: TextStyle(color: Colors.white, fontSize: 20)),
