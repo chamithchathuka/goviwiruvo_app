@@ -728,7 +728,7 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             onPressed: () {
               _validateInputs();
-              Navigator.of(context).pushNamed('/vegadd'); // to connect screen
+              Navigator.of(context).pushNamed('/cart'); // to connect screen
             },
             child: Text("Next",
                 style: TextStyle(color: Colors.white, fontSize: 20)),

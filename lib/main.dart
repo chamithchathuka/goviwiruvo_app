@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:goviwiruvo_app/screens/cartscreen.dart';
 import 'package:goviwiruvo_app/screens/vegetablescreen.dart';
 
 import 'package:goviwiruvo_app/screens/leadcapture.dart';
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         '/lead': (BuildContext context) => LeadCaptureScreen(),
         '/vegadd': (BuildContext context) => VegitableAddScreen(),
+        '/cart': (BuildContext context) => CartScreen(),
       },
       title: MyGlobals.AppName,
       theme: ThemeData(

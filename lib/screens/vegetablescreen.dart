@@ -5,10 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:goviwiruvo_app/customwidget/multiselectdialog.dart';
 import 'package:goviwiruvo_app/dto/vegetableload.dart';
-import 'package:goviwiruvo_app/dto/vegitablerequestdto.dart';
+import 'package:goviwiruvo_app/dto/vegetablerequestdto.dart';
 import 'package:goviwiruvo_app/external/webservices.dart';
 import 'package:goviwiruvo_app/model/VegetablLoadModel.dart';
 import 'package:goviwiruvo_app/model/VegetableModel.dart';
+import 'package:goviwiruvo_app/services/vegetableservice.dart';
 
 class VegitableAddScreen extends StatefulWidget {
   @override
@@ -18,18 +19,21 @@ class VegitableAddScreen extends StatefulWidget {
 class _VegitableAddScreenState extends State<VegitableAddScreen> {
   final _formKey = GlobalKey<FormState>();
 
+  Vegset veggi = Vegset();
+
   bool _autoValidate = false;
 
   final qualityController = TextEditingController();
   final weightController = TextEditingController();
   final rateController = TextEditingController();
   final freeprecentagecontroller = TextEditingController();
+  VegetableService vegservice = VegetableService();
 
   bool isDataLoaded = false;
 
   bool isErrorOccurred = false;
 
-  List<String> qualitygrades = ['Please Select', 'A', 'B', 'C'];
+  List<String> qualitygrades = ['Please Select', '1', '2', '3'];
 
   List<VegetableLoad> _vegetable = [];
 
@@ -107,6 +111,8 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
 
                               });
                             },
+                            onSaved: (val) =>
+                                setState(() => veggi.vegetableDescription = val),
 //                            value: selectedVegetable == ''
 //                          ? 'Selected Value'
 //                          : selectedVegetable,
@@ -140,11 +146,14 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
               ),
               Expanded(
                 child: TextFormField(
+
                   inputFormatters: [
                     WhitelistingTextInputFormatter.digitsOnly
                   ],
                   controller: rateController,
                   maxLength: 3,
+                  onSaved: (val) =>
+                      setState(() => veggi.rate = double.parse(val)),
                   validator: (value) {
 
                     if(value.isEmpty){
@@ -187,6 +196,8 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
               ),
               Expanded(
                 child: TextFormField(
+                  onSaved: (val) =>
+                      setState(() => veggi.quantity = int.parse(val)),
                   inputFormatters: [
                     WhitelistingTextInputFormatter.digitsOnly
                   ],
@@ -234,13 +245,14 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                   Expanded(
                     child: DropdownButtonFormField(
                       validator: (value) {
-                        if (selectedQualityValue== '') {
+                        if (selectedQualityValue.contains('Select Quality')) {
                           return 'Select Quality.';
                         }
                       },
 //                      isExpanded: true,
                       items: qualitygrades
                           .map((value) => DropdownMenuItem(
+
                                 child: Text(value),
                                 value: value,
                               ))
@@ -249,6 +261,8 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                         setState(() {
                           selectedQualityValue = value;
                         });
+                        onSaved: (val) =>
+                            setState(() => veggi.grade = int.parse(val));
                       },
                       value: selectedQualityValue == ''
                           ? ''
@@ -297,6 +311,8 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                       return ('invalid Precentage.2');
                     }
                   },
+                  onSaved: (val) =>
+                      setState(() => veggi.freePercentage = int.parse(val)),
                   textAlign: TextAlign.left,
                   keyboardType: TextInputType.number,
                 ),
@@ -385,20 +401,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
       }
     });
 
-    void _validateInputs() {
-      if (_formKey.currentState.validate()) {
-        print('Validated');
-//    If all data are correct then save data to out variables
-        _formKey.currentState.save();
-        _formKey.currentState.reset();
-      } else {
-        print('invalid');
-//    If all data are not valid then start auto validation.
-        setState(() {
-          _autoValidate = true;
-        });
-      }
-    }
+
 
 //
 //    try {
@@ -632,16 +635,26 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
 
   void _validateInputs() {
     if (_formKey.currentState.validate()) {
-      print('Validated');
+      print('Validated 3');
 //    If all data are correct then save data to out variables
-      _formKey.currentState.save();
+        _formKey.currentState.save();
+      vegservice.addVegSet(veggi);
+
+      setState(){
       _formKey.currentState.reset();
+
+      }
+
+      Navigator.of(context).pop(
+                    ); // to connect screen
+
+
     } else {
       print('invalid');
 //    If all data are not valid then start auto validation.
-//      setState(() {
-//        _autoValidate = true;
-//      });
+      setState(() {
+        _autoValidate = true;
+      });
     }
   }
 

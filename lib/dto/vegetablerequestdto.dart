@@ -80,7 +80,7 @@ class Connector {
 }
 
 class Vegset {
-  int vegetableId;
+  String vegetableDescription;
   int grade;
   double rate;
   int quantity;
@@ -88,7 +88,7 @@ class Vegset {
   int freePercentage;
 
   Vegset(
-      {this.vegetableId,
+      {this.vegetableDescription,
         this.grade,
         this.rate,
         this.quantity,
@@ -96,7 +96,7 @@ class Vegset {
         this.freePercentage});
 
   Vegset.fromJson(Map<String, dynamic> json) {
-    vegetableId = json['vegetableId'];
+    vegetableDescription = json['vegetableDescription'];
     grade = json['grade'];
     rate = json['rate'];
     quantity = json['quantity'];
@@ -106,7 +106,7 @@ class Vegset {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['vegetableId'] = this.vegetableId;
+    data['vegetableDescription'] = this.vegetableDescription;
     data['grade'] = this.grade;
     data['rate'] = this.rate;
     data['quantity'] = this.quantity;
