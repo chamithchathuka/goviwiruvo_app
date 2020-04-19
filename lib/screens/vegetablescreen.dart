@@ -43,7 +43,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
 
   List<VegetableLoad> _vegetable = [];
 
-  List<VegetableLoad> veggiesList = List();
+  List<String> veggiesList = [];
 
   String selectedVegetable = null;
 
@@ -99,7 +99,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
 //                  Padding(
 //                    padding: EdgeInsets.only(left: 8, right: 8),
 //                  ),
-              Expanded(
+              isDataLoaded==false?CircularProgressIndicator():Expanded(
                 child: DropdownButtonFormField(
                   validator: (value) {
                     if (selectedVegetable == null) {
@@ -109,9 +109,9 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
 //                      isExpanded: true,
                   items: veggiesList
                       .map((value) => DropdownMenuItem(
-                    child: Text('${value.description}'),
-                    value: value.description,
-                  ))
+                    child: Text('${value}'),
+                    value: value,
+                  ),)
                       .toList(),
                   onChanged: (String value) {
                     setState(() {
@@ -120,7 +120,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                     });
                   },
                   value:
-                  selectedVegetable == null ? '' : selectedVegetable,
+                  selectedVegetable == '' ? '' : selectedVegetable,
                 ),
               ),
             ],
@@ -291,7 +291,11 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
 
     setState(() {
       isDataLoaded = true;
-      veggiesList = vegetables;
+
+      for (var i=0; i<vegetables.length; i++) {
+        veggiesList.add(vegetables[i].description);
+      }
+//      veggiesList = vegetables;
     });
 
 //
@@ -396,24 +400,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          (veggiesList == null)?Center(child:CircularProgressIndicator()):
-          Container(
-            height:MediaQuery.of(context).size.height/2,
-            child: ListView.builder(
-              itemCount:veggiesList.length,
-              itemBuilder: (context,index){
-                return ListTile(
-                  subtitle: Text(veggiesList[index].code),
-                  title: Text(veggiesList[index].description),
-                );
-              },
-            ),
-          ),
-
-
-
-
-        (veggiesList == null)?Center(child:CircularProgressIndicator()):vegetable(context),
+        vegetable(context),
         weight(context),
         saveLead(context),
         ],

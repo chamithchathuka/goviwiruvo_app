@@ -15,7 +15,7 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
 
   bool _autoValidate = false;
 
-  final areaController = TextEditingController();
+  final addressController = TextEditingController();
 
   final nameController = TextEditingController();
 
@@ -98,13 +98,13 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-          "ලිපිනය/Address ",
-          style: TextStyle(fontWeight: FontWeight.bold),
-          textAlign: TextAlign.left,
-        )),
+//            Align(
+//                alignment: Alignment.topLeft,
+//                child: Text(
+//          "ලිපිනය/Address",
+//          style: TextStyle(fontWeight: FontWeight.bold),
+//          textAlign: TextAlign.left,
+//        )),
             Container(
               child: Row(
                 children: <Widget>[
@@ -113,28 +113,27 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
 //                    padding: EdgeInsets.only(left: 8, right: 8),
 //                  ),
                   Expanded(
-                    child: DropdownButtonFormField(
-                      validator: (value) {
-                        if (selectedArea == null) {
-                          return 'පළාත තෝරන්න';
-                        }
-                      },
-//                      isExpanded: true,
-                      items: _channels
-                          .map((value) => DropdownMenuItem(
-                                child: Text(value),
-                                value: value,
-                              ))
-                          .toList(),
-                      onChanged: (String value) {
-//                    setState(() {
-//                      selectedArea = value;
-//                      print("Selected Channel  - $value");
-//                    });
-                      },
-                      value:
-                          selectedArea == null ? _channels.first : selectedArea,
-                    ),
+
+              child: TextFormField(
+
+              decoration: InputDecoration(
+//                        fillColor: Colors.black,
+//                          focusColor: Colors.black,
+//                          hoverColor: Colors.black,
+
+              labelStyle:TextStyle(color: Colors.black),
+                focusedBorder:  UnderlineInputBorder(
+                    borderSide: new BorderSide(
+                        color: Colors.black
+                    )
+                ),
+
+                labelText: 'ලිපිනය/Address'
+            ),
+
+    controller: addressController,
+    textAlign: TextAlign.left,
+  ),
                   ),
                 ],
               ),
@@ -803,7 +802,7 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
 
   @override
   void dispose() {
-    areaController.dispose();
+    addressController.dispose();
     nameController.dispose();
     whatappContactNoController.dispose();
     weightController.dispose();
