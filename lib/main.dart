@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
     return   MultiProvider(
         providers: [
           ChangeNotifierProvider<VegetableModel>(create: (_) => VegetableModel()),
+          ChangeNotifierProvider<VegetableLoadModel>(create: (_) => VegetableLoadModel()),
           FutureProvider(create: (_) => webserive.getVegetables()
           ,
           catchError: (context,error){

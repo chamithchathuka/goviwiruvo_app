@@ -15,4 +15,14 @@ class VegetableLoadModel extends ChangeNotifier{
 //    notifyListeners();
 //  }
 
+    String selectedVegetable = '';
+
+
+    setSelectedVegetable(String selected){
+
+      selectedVegetable = selected;
+
+      notifyListeners();
+    }
+
 }

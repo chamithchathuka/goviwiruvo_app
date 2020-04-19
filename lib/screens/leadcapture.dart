@@ -84,7 +84,7 @@ class LeadCaptureScreen extends StatelessWidget {
             Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-          "Vegetable/එළවළු වර්ගය",
+          "ලිපිනය/Address ",
           style: TextStyle(fontWeight: FontWeight.bold),
           textAlign: TextAlign.left,
         )),

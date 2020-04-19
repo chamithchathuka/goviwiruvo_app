@@ -6,6 +6,7 @@ class VegetableModel extends ChangeNotifier{
 
   List<VegetableLoad> vegList = [];//
 
+
 //  Map vegMap = Map<int, Vegset>();
 
 //  getList(){

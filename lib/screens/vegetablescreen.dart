@@ -77,34 +77,35 @@ class VegitableAddScreen extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(left: 8, right: 8),
               ),
-              Expanded(
-                child: veggiesList==null?Center(child:CircularProgressIndicator()):
-                DropdownButtonFormField(
-                  validator: (value) {
-
-                    if (selectedVegitable == null) {
-                      return 'එළවළු වර්ගය තෝරන්න';
-                    }
-                  },
+              Builder(
+                builder: (BuildContext context){
+                  return  Expanded(
+                    child: DropdownButtonFormField(
+                      validator: (value) {
+                        if (selectedVegitable == null) {
+                          return 'පළාත තෝරන්න';
+                        }
+                      },
 //                      isExpanded: true,
-                  items: veggiesList
-                      .map((value) {
-                    print('${value.description}');
-                    return DropdownMenuItem(
-                      child: Text('1'),
-                      value: value,
-                    );
-                  }
-                     )
-                      .toList(),
-//                    onChanged: (VegetableLoad value) {
-//                    },
-                  value:
-//                  selectedVegitable == null
-//                      ? _vegetable.first
-//                      :
-                  selectedVegitable,
-                ),
+                      items: _channels
+                          .map((value) => DropdownMenuItem(
+                        child: Text(value),
+                        value: value,
+                      ))
+                          .toList(),
+                      onChanged: (String value) {
+
+//                    setState(() {
+//                      selectedArea = value;
+//                      print("Selected Channel  - $value");
+//                    });
+                      },
+                      value:
+                      selectedVegitable == null ? _channels.first : selectedVegitable,
+                    ),
+                  );
+                },
+
               ),
             ],
           ),
@@ -358,7 +359,7 @@ class VegitableAddScreen extends StatelessWidget {
           Provider.of<VegetableModel>(context).addVegToList(veggiesList[rng.nextInt(3)]);
 
         },
-        child: Text("Save Lead",
+        child: Text("Save",
             style: TextStyle(color: Colors.white, fontSize: 20)),
       ),
     ),
@@ -369,11 +370,26 @@ class VegitableAddScreen extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          vegetable(context),
-          weight(context),
+          (veggiesList == null)?Center(child:CircularProgressIndicator()):
+          Container(
+            height:MediaQuery.of(context).size.height/2,
+            child: ListView.builder(
+              itemCount:veggiesList.length,
+              itemBuilder: (context,index){
+                return ListTile(
+                  subtitle: Text(veggiesList[index].code),
+                  title: Text(veggiesList[index].description),
+                );
+              },
+            ),
+          ),
 
-//          listviewscroll(context),
-          saveLead(context),
+
+
+
+        (veggiesList == null)?Center(child:CircularProgressIndicator()):vegetable(context),
+        weight(context),
+        saveLead(context),
         ],
       ),
     );
