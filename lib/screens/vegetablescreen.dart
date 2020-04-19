@@ -20,21 +20,13 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
 
   bool _autoValidate = false;
 
-  final areaController = TextEditingController();
+//  final areaController = TextEditingController();
 
-  final nameController = TextEditingController();
+//  final nameController = TextEditingController();
 
-  final whatappContactNoController = TextEditingController();
+  final qualityController = TextEditingController();
 
   final weightController = TextEditingController();
-
-  final coordinationOfficerTextController = TextEditingController();
-
-  final contactNoController = TextEditingController();
-
-  final nicController = TextEditingController();
-
-  final noteController = TextEditingController();
 
   bool isDataLoaded = false;
   bool  isErrorOccurred = false;
@@ -188,37 +180,37 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
 //    ),
 //  );
 
-  customerNIC(BuildContext context) => Padding(
-    padding: const EdgeInsets.only(top: 8),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        Align(
-            alignment: Alignment.topLeft,
-            child: Text(
-              "Customer NIC",
-              style: TextStyle(fontWeight: FontWeight.bold),
-              textAlign: TextAlign.left,
-            )),
-        Container(
-          child: Row(
-            children: <Widget>[
-              Icon(Icons.perm_identity),
-              Padding(
-                padding: EdgeInsets.only(left: 8, right: 8),
-              ),
-              Expanded(
-                child: TextFormField(
-                  controller: nicController,
-                  textAlign: TextAlign.left,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    ),
-  );
+//  customerNIC(BuildContext context) => Padding(
+//    padding: const EdgeInsets.only(top: 8),
+//    child: Column(
+//      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//      children: [
+//        Align(
+//            alignment: Alignment.topLeft,
+//            child: Text(
+//              "Customer NIC",
+//              style: TextStyle(fontWeight: FontWeight.bold),
+//              textAlign: TextAlign.left,
+//            )),
+//        Container(
+//          child: Row(
+//            children: <Widget>[
+//              Icon(Icons.perm_identity),
+//              Padding(
+//                padding: EdgeInsets.only(left: 8, right: 8),
+//              ),
+//              Expanded(
+//                child: TextFormField(
+//                  controller: nicController,
+//                  textAlign: TextAlign.left,
+//                ),
+//              ),
+//            ],
+//          ),
+//        ),
+//      ],
+//    ),
+//  );
 
   products(BuildContext context) {
     selectedProductListStrNames = "";
@@ -424,7 +416,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                 crossAxisSpacing: 8,
                 children: <Widget>[
                   vegetable(context),
-                  customerNIC(context),
+                  //customerNIC(context),
                   products(context),
                   targetDate(context),
                 ]),
@@ -455,7 +447,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                 crossAxisSpacing: 8,
                 children: <Widget>[
                   vegetable(context),
-                  customerNIC(context),
+                  //customerNIC(context),
                   products(context),
                   targetDate(context),
                 ]),
@@ -468,38 +460,12 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
 
   @override
   void dispose() {
-    areaController.dispose();
-    nameController.dispose();
-    whatappContactNoController.dispose();
+    qualityController.dispose();
     weightController.dispose();
-    contactNoController.dispose();
-    nicController.dispose();
-    noteController.dispose();
-    coordinationOfficerTextController.dispose();
-//    super.dispose();
   }
-
-////
-//  void loadData() async {
-//    var list = await WebServiceCall.getVegetables();
-//
-//    var listDrop = [];
-//
-//    if (list != null) {
-//      list.forEach((n) {
-//        listDrop.add(new DropdownMenuItem(child: Text(n.id.toString()), value: n.description));
-//      });
-////      setState(() {
-////        //_obscureText = !_obscureText;
-////        _inprogress = false;
-////      });
-//    }
-//  }
 
   @override
   Widget build(BuildContext context) {
-//
-//veggiesList = Provider.of<List<VegetableLoad>>(context);
 
     return
 

@@ -736,17 +736,34 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
       );
 
   _buildVerticalLayout(BuildContext context) {
-    return SingleChildScrollView(
+    return Container(
       child: Column(
-        children: [
-          customerName(context),
-          area(context),
-          contactnumber(context),
-          contactnumberWhatsApp(context),
-          coordinationOfficerNumber(context),
-//        listViewNew(context ),
-//          listviewscroll(context),
-          saveLead(context),
+        children: <Widget>[
+          Expanded(
+            child:
+            SingleChildScrollView(
+              child: Container(
+                child: Column(
+
+                  children: <Widget>[
+
+                    customerName(context),
+                    area(context),
+                    contactnumber(context),
+                    contactnumberWhatsApp(context),
+                    coordinationOfficerNumber(context),
+
+
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Column(
+            children: [
+              saveLead(context),
+            ],
+          ),
         ],
       ),
     );
@@ -777,7 +794,7 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
                   targetDate(context),
                 ]),
           ),
-          saveLead(context),
+            saveLead(context),
         ],
       ),
     );
@@ -846,14 +863,14 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
         title: new Text(pageName,
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Add your onPressed code here!
-          Navigator.of(context).pushNamed('/vegadd'); // to connect screen
-        },
-        child: Icon(Icons.add_shopping_cart),
-        backgroundColor: Colors.redAccent,
-      ),
+//      floatingActionButton: FloatingActionButton(
+//        onPressed: () {
+//          // Add your onPressed code here!
+//          Navigator.of(context).pushNamed('/vegadd'); // to connect screen
+//        },
+//        child: Icon(Icons.add_shopping_cart),
+//        backgroundColor: Colors.redAccent,
+//      ),
       body: SafeArea(
         minimum: const EdgeInsets.all(8.0),
         child: Form(
@@ -863,7 +880,8 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
             return orientation == Orientation.portrait
                 ? LayoutBuilder(builder: (context, constraints) {
                     if (constraints.maxWidth < 600) {
-                      return _buildVerticalLayout(context);
+                      return
+                        _buildVerticalLayout(context);
                     } else {
                       return _buildVerticallTabLayout(context);
                     }
