@@ -51,16 +51,16 @@ class _CartScreenState extends State<CartScreen> {
   @override
   void initState() {
     super.initState();
+    print('cart size ${vegitablesToBeSaved.length}');
     loadData();
+
   }
 
   void loadData() async {
     vegitablesToBeSaved = vegservice.getVegstobeSaved();
+    print('cart size 2 ${vegitablesToBeSaved.length}');
 
-    print('cart size ${vegitablesToBeSaved.length}');
   }
-
-
 
   listViewVegs(BuildContext context) => Padding(
     padding: const EdgeInsets.only(top: 8),
@@ -87,7 +87,7 @@ class _CartScreenState extends State<CartScreen> {
 
 
   Widget buildBody(BuildContext ctxt, int index) {
-    return  Text(vegitablesToBeSaved[index].vegetableDescription);
+    return Text(vegitablesToBeSaved[index].vegetableDescription);
   }
 
 
@@ -102,6 +102,9 @@ class _CartScreenState extends State<CartScreen> {
         RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         onPressed: () {
 //          _validateInputs();
+
+
+
 
 //              var rng = new Random(3);
 
@@ -189,10 +192,7 @@ class _CartScreenState extends State<CartScreen> {
   @override
   void dispose() {
     super.dispose;
-//    qualityController.dispose();
-//    weightController.dispose();
-//    freeprecentagecontroller.dispose();
-//    rateController.dispose();
+
   }
 
   @override
@@ -214,7 +214,10 @@ class _CartScreenState extends State<CartScreen> {
     floatingActionButton: FloatingActionButton(
         onPressed: () {
           // Add your onPressed code here!
-          Navigator.of(context).pushNamed('/vegadd'); // to connect screen
+          Navigator.of(context)
+              .pushReplacementNamed(
+              '/vegadd'); // to connect screen
+//          Navigator.of(context).pushNamed('/vegadd'); // to connect screen
         },
         child: Icon(Icons.add_shopping_cart),
         backgroundColor: Colors.redAccent,

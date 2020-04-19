@@ -165,21 +165,6 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
                   Expanded(
                     child: TextFormField(
 
-//                      decoration: InputDecoration(
-////                        fillColor: Colors.black,
-////                          focusColor: Colors.black,
-////                          hoverColor: Colors.black,
-//
-//                          labelStyle:TextStyle(color: Colors.black),
-//                          focusedBorder:  UnderlineInputBorder(
-//                              borderSide: new BorderSide(
-//                                  color: Colors.black
-//                              )
-//                          ),
-//
-//                          labelText: 'නම'
-//                      ),
-
                       controller: nameController,
                       textAlign: TextAlign.left,
                     ),
@@ -212,22 +197,7 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
 //                  ),
                   Expanded(
                     child: TextFormField(
-
-//                      decoration: InputDecoration(
-////                        fillColor: Colors.black,
-////                          focusColor: Colors.black,
-////                          hoverColor: Colors.black,
-//
-//                          labelStyle:TextStyle(color: Colors.black),
-//                          focusedBorder:  UnderlineInputBorder(
-//                              borderSide: new BorderSide(
-//                                  color: Colors.black
-//                              )
-//                          ),
-//
-//                          labelText: 'දුරකථන අංකය'
-//                      ),
-
+                      keyboardType: TextInputType.number,
                       controller: contactNoController,
                       textAlign: TextAlign.left,
                     ),
@@ -260,22 +230,7 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
 //                  ),
                   Expanded(
                     child: TextFormField(
-
-//                      decoration: InputDecoration(
-////                        fillColor: Colors.black,
-////                          focusColor: Colors.black,
-////                          hoverColor: Colors.black,
-//
-//                          labelStyle:TextStyle(color: Colors.black),
-//                          focusedBorder:  UnderlineInputBorder(
-//                              borderSide: new BorderSide(
-//                                  color: Colors.black
-//                              )
-//                          ),
-//
-//                          labelText: 'WhatsApp දුරකථන අංකය'
-//                      ),
-
+                      keyboardType: TextInputType.number,
                       controller: whatappContactNoController,
                       textAlign: TextAlign.left,
                     ),
@@ -287,48 +242,6 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
         ),
       );
 
-  weight(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(top: 8),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  "බර කිලෝග්‍රෑම්",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.left,
-                )),
-            Container(
-              child: Row(
-                children: <Widget>[
-                  Icon(Icons.add_shopping_cart),
-                  Padding(
-                    padding: EdgeInsets.only(left: 8, right: 8),
-                  ),
-                  Expanded(
-                    child: TextFormField(
-
-                      inputFormatters: [
-                        WhitelistingTextInputFormatter.digitsOnly
-                      ],
-                      controller: weightController,
-                      maxLength: 10,
-                      validator: (value) {
-                        if (value.length < 1000) {
-                          return ('Weight invalid.');
-                        }
-                      },
-                      textAlign: TextAlign.left,
-                      keyboardType: TextInputType.number,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      );
 
   coordinationOfficerNumber(BuildContext context) => Padding(
         padding: const EdgeInsets.only(top: 8),
@@ -351,24 +264,10 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
 //                  ),
                   Expanded(
                     child: TextFormField(
-
-//                      decoration: InputDecoration(
-////                        fillColor: Colors.black,
-////                          focusColor: Colors.black,
-////                          hoverColor: Colors.black,
-//
-//                          labelStyle:TextStyle(color: Colors.black),
-//                          focusedBorder:  UnderlineInputBorder(
-//                              borderSide: new BorderSide(
-//                                  color: Colors.black
-//                              )
-//                          ),
-//
-//                          labelText: 'සම්බන්ධිකරණ නිලධාරී දුරකථන අංකය'
-//                      ),
-
-                      controller: whatappContactNoController,
+                      controller: coordinationOfficerTextController,
                       textAlign: TextAlign.left,
+                        keyboardType: TextInputType.number
+
                     ),
                   ),
                 ],
@@ -727,7 +626,11 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
             color: Color.fromRGBO(0, 0, 0, 0.9),
             onPressed: () {
               _validateInputs();
-              Navigator.of(context).pushNamed('/cart'); // to connect screen
+              Navigator.of(context)
+                  .pushReplacementNamed(
+                  '/cart'); // to connect screen
+
+//              Navigator.of(context).pushNamed('/cart'); // to connect screen
             },
             child: Text("ඉදිරියට",
                 style: TextStyle(color: Colors.white, fontSize: 20)),
@@ -845,7 +748,7 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
     nicController.dispose();
     noteController.dispose();
     coordinationOfficerTextController.dispose();
-//    super.dispose();
+    super.dispose();
   }
 
   @override

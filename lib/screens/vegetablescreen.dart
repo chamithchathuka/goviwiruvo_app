@@ -480,7 +480,11 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             onPressed: () {
               _validateInputs();
-
+              Navigator.of(context)
+                  .pushReplacementNamed(
+                  '/cart'); // to connect screen
+//              Navigator.of(context).pop(
+//              );
 //              var rng = new Random(3);
 
 //          Vegset v1 = Vegset();
@@ -588,6 +592,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
     weightController.dispose();
     freeprecentagecontroller.dispose();
     rateController.dispose();
+    super.dispose;
   }
 
   @override
@@ -637,16 +642,14 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
     if (_formKey.currentState.validate()) {
       print('Validated 3');
 //    If all data are correct then save data to out variables
-        _formKey.currentState.save();
-      vegservice.addVegSet(veggi);
+//        _formKey.currentState.save();
+//      vegservice.addVegSet(veggi);
 
-      setState(){
+
       _formKey.currentState.reset();
 
-      }
 
-      Navigator.of(context).pop(
-                    ); // to connect screen
+       // to connect screen
 
 
     } else {
