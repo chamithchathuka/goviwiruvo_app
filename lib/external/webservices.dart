@@ -8,7 +8,7 @@ class WebServiceCall {
 
   static final String postsURL = "http://13.71.48.65:3000/vegetables";
 
-  Future<List<VegetableLoad>> getVegetables() async {
+  static Future<List<VegetableLoad>> getVegetables() async {
     Response res = await get(postsURL);
 
     if (res.statusCode == 200) {

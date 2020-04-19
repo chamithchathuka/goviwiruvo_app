@@ -1,4 +1,12 @@
+
+
+import 'package:goviwiruvo_app/dto/vegetableload.dart';
+
 class VegetableService{
 
-//  List<VegetableR>
+
+  static final List<VegetableLoad> vegloadedList =  [];
+//  static final List<Veg> vegloadedList =  [];
+
+
 }

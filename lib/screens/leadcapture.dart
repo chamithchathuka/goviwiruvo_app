@@ -3,26 +3,42 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:goviwiruvo_app/customwidget/multiselectdialog.dart';
 import 'package:goviwiruvo_app/model/VegetableModel.dart';
-import 'package:provider/provider.dart';
 
 
-class LeadCaptureScreen extends StatelessWidget {
+class LeadCaptureScreen extends StatefulWidget {
+  @override
+  _LeadCaptureScreenState createState() => _LeadCaptureScreenState();
+}
+
+class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
   final _formKey = GlobalKey<FormState>();
+
   bool _autoValidate = false;
+
   final areaController = TextEditingController();
+
   final nameController = TextEditingController();
+
   final whatappContactNoController = TextEditingController();
+
   final weightController = TextEditingController();
+
   final coordinationOfficerTextController = TextEditingController();
+
   final contactNoController = TextEditingController();
+
   final nicController = TextEditingController();
+
   final noteController = TextEditingController();
 
   List<String> _channels = ['Please Select', 'Walk-in', 'B', 'C', 'D'];
 
   String selectedVegetable = null;
+
   String selectedProductListStrNames = null;
+
   String selectedNatureOfBusiness = null;
+
   String selectedArea = null;
 
   final items = <MultiSelectDialogItem<int>>[
@@ -48,6 +64,7 @@ class LeadCaptureScreen extends StatelessWidget {
   Set<int> selectedValues = new Set();
 
   var username = "User Name";
+
   final pageName = "Lead Capture";
 
   vegetable(BuildContext context) => Padding(
@@ -173,6 +190,7 @@ class LeadCaptureScreen extends StatelessWidget {
           ],
         ),
       );
+
   contactnumber(BuildContext context) => Padding(
         padding: const EdgeInsets.only(top: 8),
         child: Column(
@@ -214,6 +232,7 @@ class LeadCaptureScreen extends StatelessWidget {
           ],
         ),
       );
+
   contactnumberWhatsApp(BuildContext context) => Padding(
         padding: const EdgeInsets.only(top: 8),
         child: Column(
@@ -478,29 +497,7 @@ class LeadCaptureScreen extends StatelessWidget {
           ],
         ),
       );
-//  listviewscroll(BuildContext context) => Padding(
-//    padding: const EdgeInsets.only(top: 8),
-//    child: Column(
-//      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//      children: [
-//
-//        Container(
-//          child: Container(
-//              height: MediaQuery.of(context).size.height*0.3,
-//              child:  Consumer<VegetableModel>(
-//                builder: (context, todo, child){
-//                  print(todo.vegList.length);
-//                  return
-//                    ListView.builder(
-//                        itemCount: todo.vegList.length,
-//                        itemBuilder: (context, index){
-//                          return Container(
-//                            child: ListTile(
-//                              contentPadding: EdgeInsets.only(left: 32, right: 32, top: 8, bottom: 8),
-//                              title: Text(todo.vegList[index].vegetableId.toString(),
-//                                style : TextStyle(color: Colors.black87,
-//                                    fontWeight: FontWeight.bold),
-//                              ),
+
 ////                            subtitle: Text(todo.vegList[index].grade.toString(), style: TextStyle(color: Colors.black45,
 ////                                fontWeight: FontWeight.bold),),
 //
@@ -518,193 +515,190 @@ class LeadCaptureScreen extends StatelessWidget {
 //    ),
 //  );
 
-  listViewNew(BuildContext context) =>
-      Container(
-        height: MediaQuery.of(context).size.height * 0.1,
-        child: Consumer<VegetableModel>(
-                builder: (context, todo, child){
-          Container(
-            height: 0,
-            width: 0,
-            child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: todo.vegList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: GestureDetector(
-//                    onTap: () =>
-//                        Navigatoar.of(context).pushNamed(todo.vegList[index]),
-                      child: Container(
-                        height: MediaQuery
-                            .of(context)
-                            .size
-                            .height * 0.07,
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width * 0.3,
-                        child: Center(
-                          child: Text(
-                            todo.vegList[index].description.toString(),
-                            style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.blue,
-                          shape: BoxShape.rectangle,
-                          borderRadius: new BorderRadius.circular(8.0),
-//                      image: DecorationImage(
-//                        fit: BoxFit.cover,
-//                        colorFilter: ColorFilter.mode(
-//                            Colors.black.withOpacity(0.4), BlendMode.dstATop),
-//                      image: AssetImage(MyGlobals.MENU_IMAGES[index]),
+//  listViewNew(BuildContext context) =>
+//      Container(
+//        height: MediaQuery.of(context).size.height * 0.1,
+//        child: Container(
+//          height: 0,
+//          width: 0,
+//          child: ListView.builder(
+//              scrollDirection: Axis.horizontal,
+//              itemCount: todo.vegList.length,
+//              itemBuilder: (BuildContext context, int index) {
+//                return Padding(
+//                  padding: const EdgeInsets.all(8.0),
+//                  child: GestureDetector(
+////                    onTap: () =>
+////                        Navigatoar.of(context).pushNamed(todo.vegList[index]),
+//                    child: Container(
+//                      height: MediaQuery
+//                          .of(context)
+//                          .size
+//                          .height * 0.07,
+//                      width: MediaQuery
+//                          .of(context)
+//                          .size
+//                          .width * 0.3,
+//                      child: Center(
+//                        child: Text(
+//                          todo.vegList[index].description.toString(),
+//                          style: TextStyle(
+//                              fontSize: 20,
+//                              color: Colors.white,
+//                              fontWeight: FontWeight.bold),
+//                        ),
 //                      ),
-                          boxShadow: <BoxShadow>[
-                            BoxShadow(
-                              color: Colors.black12,
-                              blurRadius: 10.0,
-                              offset: Offset(0.0, 10.0),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                }),
-          );}
-        ),
-      );
+//                      decoration: BoxDecoration(
+//                        color: Colors.blue,
+//                        shape: BoxShape.rectangle,
+//                        borderRadius: new BorderRadius.circular(8.0),
+////                      image: DecorationImage(
+////                        fit: BoxFit.cover,
+////                        colorFilter: ColorFilter.mode(
+////                            Colors.black.withOpacity(0.4), BlendMode.dstATop),
+////                      image: AssetImage(MyGlobals.MENU_IMAGES[index]),
+////                      ),
+//                        boxShadow: <BoxShadow>[
+//                          BoxShadow(
+//                            color: Colors.black12,
+//                            blurRadius: 10.0,
+//                            offset: Offset(0.0, 10.0),
+//                          ),
+//                        ],
+//                      ),
+//                    ),
+//                  ),
+//                );
+//              }),
+//        );
+//        ),
+//      );
 
-  listviewscroll(BuildContext context) => Padding(
-    padding: const EdgeInsets.only(top: 8),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-
-        Container(
-          child: Container(
-              height: MediaQuery.of(context).size.height*0.15,
-              child:  Consumer<VegetableModel>(
-                builder: (context, todo, child){
-                  print(todo.vegList.length);
-                  return
-                    ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: todo.vegList.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: GestureDetector(
-//                    onTap: () =>
-//                        Navigatoar.of(context).pushNamed(todo.vegList[index]),
-//                                Stack(
-//                                  children: <Widget>[
-//                                    Card(
-//                                      color: Colors.blueAccent,
-//                                      child: Container(
-//                                        height: 100,
-//                                        width: 350,
-//                                        child: Column(
-//                                          children: <Widget>[
-//                                            Text(
-//                                              'Day ${widget._dayNumber}',
-//                                              style: TextStyle(
+//  listviewscroll(BuildContext context) => Padding(
+//    padding: const EdgeInsets.only(top: 8),
+//    child: Column(
+//      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//      children: [
+//
+//        Container(
+//          child: Container(
+//              height: MediaQuery.of(context).size.height*0.15,
+//              child:  Consumer<VegetableModel>(
+//                builder: (context, todo, child){
+//                  print(todo.vegList.length);
+//                  return
+//                    ListView.builder(
+//                        scrollDirection: Axis.horizontal,
+//                        itemCount: todo.vegList.length,
+//                        itemBuilder: (BuildContext context, int index) {
+//                          return Padding(
+//                            padding: const EdgeInsets.all(8.0),
+//                            child: GestureDetector(
+////                    onTap: () =>
+////                        Navigatoar.of(context).pushNamed(todo.vegList[index]),
+////                                Stack(
+////                                  children: <Widget>[
+////                                    Card(
+////                                      color: Colors.blueAccent,
+////                                      child: Container(
+////                                        height: 100,
+////                                        width: 350,
+////                                        child: Column(
+////                                          children: <Widget>[
+////                                            Text(
+////                                              'Day ${widget._dayNumber}',
+////                                              style: TextStyle(
+////                                                color: Colors.white,
+////                                              ),
+////                                            ),
+////                                          ],
+////                                        ),
+////                                      ),
+////                                    ),
+////                                    Positioned(
+////                                      top: 0,
+////                                      right: 0,
+////                                      child: IconButton(
+////                                        onPressed: () {},
+////                                        icon: Icon(Icons.more_vert),
+////                                      ),
+////                                    ),
+////                                  ],
+////                                );
+//                              child: Stack(
+//                                children: <Widget>[
+//
+//                                  Container(
+//                                    height: MediaQuery
+//                                        .of(context)
+//                                        .size
+//                                        .height * 0.15,
+//                                    width: MediaQuery
+//                                        .of(context)
+//                                        .size
+//                                        .width * 0.3,
+//                                    child: Center(
+//                                      child: Column(
+//                                        mainAxisAlignment: MainAxisAlignment.center,
+//                                        children: <Widget>[
+//                                          Text(
+//                                            todo.vegList[index].description.toString(),
+//                                            style: TextStyle(
+//                                                fontSize: 20,
 //                                                color: Colors.white,
-//                                              ),
-//                                            ),
-//                                          ],
+//                                                fontWeight: FontWeight.bold),
+//                                          ),
+//
+////                                      GestureDetector(
+////                                        onTap: () =>null,
+////                                        child: Icon(Icons.remove),
+////                                      ),
+//                                        ],
+//                                      ),
+//                                    ),
+//                                    decoration: BoxDecoration(
+//                                      color: Colors.blue,
+//                                      shape: BoxShape.rectangle,
+//                                      borderRadius: new BorderRadius.circular(8.0),
+////                      image: DecorationImage(
+////                        fit: BoxFit.cover,
+////                        colorFilter: ColorFilter.mode(
+////                            Colors.black.withOpacity(0.4), BlendMode.dstATop),
+////                      image: AssetImage(MyGlobals.MENU_IMAGES[index]),
+////                      ),
+//                                      boxShadow: <BoxShadow>[
+//                                        BoxShadow(
+//                                          color: Colors.black12,
+//                                          blurRadius: 10.0,
+//                                          offset: Offset(0.0, 10.0),
 //                                        ),
-//                                      ),
+//                                      ],
 //                                    ),
-//                                    Positioned(
-//                                      top: 0,
-//                                      right: 0,
-//                                      child: IconButton(
-//                                        onPressed: () {},
-//                                        icon: Icon(Icons.more_vert),
-//                                      ),
+//                                  ),
+//                                  Positioned(
+//                                    top: 0,
+//                                    right: 0,
+//                                    child: IconButton(
+//                                      onPressed: () {
+//                                        Provider.of<VegetableModel>(context).removeVegToList(todo.vegList[index]);
+//                                      },
+//                                      icon: Icon(Icons.clear,color: Colors.white70,),
+//
 //                                    ),
-//                                  ],
-//                                );
-                              child: Stack(
-                                children: <Widget>[
-
-                                  Container(
-                                    height: MediaQuery
-                                        .of(context)
-                                        .size
-                                        .height * 0.15,
-                                    width: MediaQuery
-                                        .of(context)
-                                        .size
-                                        .width * 0.3,
-                                    child: Center(
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: <Widget>[
-                                          Text(
-                                            todo.vegList[index].description.toString(),
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-
-//                                      GestureDetector(
-//                                        onTap: () =>null,
-//                                        child: Icon(Icons.remove),
-//                                      ),
-                                        ],
-                                      ),
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: Colors.blue,
-                                      shape: BoxShape.rectangle,
-                                      borderRadius: new BorderRadius.circular(8.0),
-//                      image: DecorationImage(
-//                        fit: BoxFit.cover,
-//                        colorFilter: ColorFilter.mode(
-//                            Colors.black.withOpacity(0.4), BlendMode.dstATop),
-//                      image: AssetImage(MyGlobals.MENU_IMAGES[index]),
-//                      ),
-                                      boxShadow: <BoxShadow>[
-                                        BoxShadow(
-                                          color: Colors.black12,
-                                          blurRadius: 10.0,
-                                          offset: Offset(0.0, 10.0),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Positioned(
-                                    top: 0,
-                                    right: 0,
-                                    child: IconButton(
-                                      onPressed: () {
-                                        Provider.of<VegetableModel>(context).removeVegToList(todo.vegList[index]);
-                                      },
-                                      icon: Icon(Icons.clear,color: Colors.white70,),
-
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        }
-                    );
-                },
-              )
-          ),
-        ),
-      ],
-    ),
-  );
-
+//                                  ),
+//                                ],
+//                              ),
+//                            ),
+//                          );
+//                        }
+//                    );
+//                },
+//              )
+//          ),
+//        ),
+//      ],
+//    ),
+//  );
 
   saveLead(BuildContext context) => Padding(
         padding: const EdgeInsets.all(8.0),
@@ -734,7 +728,7 @@ class LeadCaptureScreen extends StatelessWidget {
           contactnumberWhatsApp(context),
           coordinationOfficerNumber(context),
 //        listViewNew(context ),
-          listviewscroll(context),
+//          listviewscroll(context),
           saveLead(context),
         ],
       ),
@@ -819,29 +813,6 @@ class LeadCaptureScreen extends StatelessWidget {
     coordinationOfficerTextController.dispose();
 //    super.dispose();
   }
-//
-//  @override
-//  void initState() {
-//    super.initState();
-//    if (listDrop.isEmpty) loadData();
-//  }
-//
-//  void loadData() async {
-//    var list = await service.loadwifiscaninfo();
-//
-//    listDrop = [];
-//
-//    if (list != null) {
-//      list.forEach((n) {
-//        print(n.ssid);
-//        listDrop.add(new DropdownMenuItem(child: Text(n.ssid), value: n.ssid));
-//      });
-//      setState(() {
-//        //_obscureText = !_obscureText;
-//        _inprogress = false;
-//      });
-//    }
-//  }
 
   @override
   Widget build(BuildContext context) {

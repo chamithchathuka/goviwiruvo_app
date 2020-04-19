@@ -9,27 +9,48 @@ import 'package:goviwiruvo_app/dto/vegitablerequestdto.dart';
 import 'package:goviwiruvo_app/external/webservices.dart';
 import 'package:goviwiruvo_app/model/VegetablLoadModel.dart';
 import 'package:goviwiruvo_app/model/VegetableModel.dart';
-import 'package:provider/provider.dart';
 
-class VegitableAddScreen extends StatelessWidget {
+class VegitableAddScreen extends StatefulWidget {
+  @override
+  _VegitableAddScreenState createState() => _VegitableAddScreenState();
+}
+
+class _VegitableAddScreenState extends State<VegitableAddScreen> {
   final _formKey = GlobalKey<FormState>();
+
   bool _autoValidate = false;
+
   final areaController = TextEditingController();
+
   final nameController = TextEditingController();
+
   final whatappContactNoController = TextEditingController();
+
   final weightController = TextEditingController();
+
   final coordinationOfficerTextController = TextEditingController();
+
   final contactNoController = TextEditingController();
+
   final nicController = TextEditingController();
+
   final noteController = TextEditingController();
 
-  List<String> _channels = ['Please Select', 'Walk-in', 'B', 'C', 'D'];
-  List<VegetableLoad> _vegetable = [];
-  List<VegetableLoad> veggiesList = [];
+  bool isDataLoaded = false;
+  bool  isErrorOccurred = false;
 
-  String selectedVegitable = null;
+  List<String> _channels = ['Please Select', 'Walk-in', 'B', 'C', 'D'];
+
+  List<VegetableLoad> _vegetable = [];
+
+  List<VegetableLoad> veggiesList = List();
+
+  String selectedVegetable = null;
+
   String selectedProductListStrNames = null;
+
   String selectedNatureOfBusiness = null;
+
   String selectedArea = null;
 
   final items = <MultiSelectDialogItem<int>>[
@@ -55,6 +76,7 @@ class VegitableAddScreen extends StatelessWidget {
   Set<int> selectedValues = new Set();
 
   var username = "User Name";
+
   final pageName = "Add Vegetable";
 
   vegetable(BuildContext context) => Padding(
@@ -71,41 +93,35 @@ class VegitableAddScreen extends StatelessWidget {
               textAlign: TextAlign.left,
             )),
         Container(
-          child:  Row(
+          child: Row(
             children: <Widget>[
-              Icon(Icons.restaurant_menu),
-              Padding(
-                padding: EdgeInsets.only(left: 8, right: 8),
-              ),
-              Builder(
-                builder: (BuildContext context){
-                  return  Expanded(
-                    child: DropdownButtonFormField(
-                      validator: (value) {
-                        if (selectedVegitable == null) {
-                          return 'පළාත තෝරන්න';
-                        }
-                      },
+//                  Icon(Icons.chat_bubble),
+//                  Padding(
+//                    padding: EdgeInsets.only(left: 8, right: 8),
+//                  ),
+              Expanded(
+                child: DropdownButtonFormField(
+                  validator: (value) {
+                    if (selectedVegetable == null) {
+                      return 'පළාත තෝරන්න';
+                    }
+                  },
 //                      isExpanded: true,
-                      items: _channels
-                          .map((value) => DropdownMenuItem(
-                        child: Text(value),
-                        value: value,
-                      ))
-                          .toList(),
-                      onChanged: (String value) {
-
-//                    setState(() {
-//                      selectedArea = value;
-//                      print("Selected Channel  - $value");
-//                    });
-                      },
-                      value:
-                      selectedVegitable == null ? _channels.first : selectedVegitable,
-                    ),
-                  );
-                },
-
+                  items: veggiesList
+                      .map((value) => DropdownMenuItem(
+                    child: Text('${value.description}'),
+                    value: value.description,
+                  ))
+                      .toList(),
+                  onChanged: (String value) {
+                    setState(() {
+                      selectedVegetable = value;
+                      print("Selected Channel  - $value");
+                    });
+                  },
+                  value:
+                  selectedVegetable == null ? '' : selectedVegetable,
+                ),
               ),
             ],
           ),
@@ -113,7 +129,6 @@ class VegitableAddScreen extends StatelessWidget {
       ],
     ),
   );
-
 
   weight(BuildContext context) => Padding(
     padding: const EdgeInsets.only(top: 8),
@@ -156,30 +171,6 @@ class VegitableAddScreen extends StatelessWidget {
     ),
   );
 
-
-//  listviewscroll(BuildContext context) => Padding(
-//    padding: const EdgeInsets.only(top: 8),
-//    child: Column(
-//      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//      children: [
-//
-//        Container(
-//          child: Container(
-//              height: MediaQuery.of(context).size.height*0.3,
-//              child:  Consumer<VegetableModel>(
-//                builder: (context, todo, child){
-//                  print(todo.vegMap.length);
-//                  return
-//                    ListView.builder(
-//                        itemCount: todo.vegMap.length,
-//                        itemBuilder: (context, index){
-//                          return Container(
-//                            child: ListTile(
-//                              contentPadding: EdgeInsets.only(left: 32, right: 32, top: 8, bottom: 8),
-//                              title: Text(todo.vegMap[index].vegetableId.toString(),
-//                                style : TextStyle(color: Colors.black87,
-//                                    fontWeight: FontWeight.bold),
-//                              ),
 ////                            subtitle: Text(todo.vegList[index].grade.toString(), style: TextStyle(color: Colors.black45,
 ////                                fontWeight: FontWeight.bold),),
 //
@@ -286,6 +277,41 @@ class VegitableAddScreen extends StatelessWidget {
     );
   }
 
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+
+  }
+
+
+  void loadData() async {
+
+    List<VegetableLoad> vegetables = await WebServiceCall.getVegetables();
+
+    setState(() {
+      isDataLoaded = true;
+      veggiesList = vegetables;
+    });
+
+//
+//    try {
+//      assignedJobs = await webs.WebServiceCall.loadAssignedDatawithDate(date);
+//      setState(() {
+//        isLoadingDone = true;
+//        isErrorOccurred = false;
+//      });
+//    } catch (e) {
+//      print(e);
+////      print("Connection exception occurred. ");
+//      setState(() {
+//        isLoadingDone = true;
+//        isErrorOccurred = true;
+//      });
+//    }
+  }
+
+
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
         context: context,
@@ -356,7 +382,7 @@ class VegitableAddScreen extends StatelessWidget {
 //          v1.quantity=100;
 //          v1.date="2013-02-01";
 //          v1.freePercentage = 10;
-          Provider.of<VegetableModel>(context).addVegToList(veggiesList[rng.nextInt(3)]);
+//          Provider.of<VegetableModel>(context).addVegToList(veggiesList[rng.nextInt(3)]);
 
         },
         child: Text("Save",
@@ -394,9 +420,6 @@ class VegitableAddScreen extends StatelessWidget {
       ),
     );
   }
-
-
-
 
   Padding _buildVerticallTabLayout(BuildContext context) {
     double horizontalheight = MediaQuery.of(context).size.width * 0.2;
@@ -468,12 +491,7 @@ class VegitableAddScreen extends StatelessWidget {
     coordinationOfficerTextController.dispose();
 //    super.dispose();
   }
-//
-//  @override
-//  void initState() {
-//   // super.initState();
-//    if (_vegetable.isEmpty) loadData();
-//  }
+
 ////
 //  void loadData() async {
 //    var list = await WebServiceCall.getVegetables();
@@ -493,8 +511,8 @@ class VegitableAddScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-veggiesList = Provider.of<List<VegetableLoad>>(context);
+//
+//veggiesList = Provider.of<List<VegetableLoad>>(context);
 
     return
 
