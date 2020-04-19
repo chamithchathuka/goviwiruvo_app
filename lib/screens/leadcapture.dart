@@ -65,7 +65,7 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
 
   var username = "User Name";
 
-  final pageName = "Lead Capture";
+  final pageName = "ගොවිමහතාගේ තොරතුරු";
 
   vegetable(BuildContext context) => Padding(
         padding: const EdgeInsets.only(top: 8.0),
@@ -75,7 +75,7 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
             Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "Vegetable/එළවළු වර්ගය",
+                  "එළවළු වර්ගය",
                   style: TextStyle(fontWeight: FontWeight.bold),
                   textAlign: TextAlign.left,
                 )),
@@ -98,13 +98,13 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-//            Align(
-//                alignment: Alignment.topLeft,
-//                child: Text(
-//          "ලිපිනය/Address",
-//          style: TextStyle(fontWeight: FontWeight.bold),
-//          textAlign: TextAlign.left,
-//        )),
+            Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+          "ලිපිනය",
+          style: TextStyle(fontWeight: FontWeight.bold),
+          textAlign: TextAlign.left,
+        )),
             Container(
               child: Row(
                 children: <Widget>[
@@ -115,24 +115,25 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
                   Expanded(
 
               child: TextFormField(
-
-              decoration: InputDecoration(
-//                        fillColor: Colors.black,
-//                          focusColor: Colors.black,
-//                          hoverColor: Colors.black,
-
-              labelStyle:TextStyle(color: Colors.black),
-                focusedBorder:  UnderlineInputBorder(
-                    borderSide: new BorderSide(
-                        color: Colors.black
-                    )
-                ),
-
-                labelText: 'ලිපිනය/Address'
-            ),
-
-    controller: addressController,
-    textAlign: TextAlign.left,
+//
+//              decoration: InputDecoration(
+////                        fillColor: Colors.black,
+////                          focusColor: Colors.black,
+////                          hoverColor: Colors.black,
+//
+//              labelStyle:TextStyle(color: Colors.black),
+//                focusedBorder:  UnderlineInputBorder(
+//                    borderSide: new BorderSide(
+//                        color: Colors.black
+//                    )
+//                ),
+//
+//                labelText: 'ලිපිනය'
+//            ),
+                maxLines: null,
+                keyboardType: TextInputType.multiline,
+                controller: addressController,
+                textAlign: TextAlign.left,
   ),
                   ),
                 ],
@@ -147,13 +148,13 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-//            Align(
-//                alignment: Alignment.topLeft,
-//                child: Text(
-//                  "Name/නම",
-//                  style: TextStyle(fontWeight: FontWeight.bold),
-//                  textAlign: TextAlign.left,
-//                )),
+            Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  "නම",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.left,
+                )),
             Container(
               child: Row(
                 children: <Widget>[
@@ -164,20 +165,20 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
                   Expanded(
                     child: TextFormField(
 
-                      decoration: InputDecoration(
-//                        fillColor: Colors.black,
-//                          focusColor: Colors.black,
-//                          hoverColor: Colors.black,
-
-                          labelStyle:TextStyle(color: Colors.black),
-                          focusedBorder:  UnderlineInputBorder(
-                              borderSide: new BorderSide(
-                                  color: Colors.black
-                              )
-                          ),
-
-                          labelText: 'නම/Name'
-                      ),
+//                      decoration: InputDecoration(
+////                        fillColor: Colors.black,
+////                          focusColor: Colors.black,
+////                          hoverColor: Colors.black,
+//
+//                          labelStyle:TextStyle(color: Colors.black),
+//                          focusedBorder:  UnderlineInputBorder(
+//                              borderSide: new BorderSide(
+//                                  color: Colors.black
+//                              )
+//                          ),
+//
+//                          labelText: 'නම'
+//                      ),
 
                       controller: nameController,
                       textAlign: TextAlign.left,
@@ -195,13 +196,13 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-//            Align(
-//                alignment: Alignment.topLeft,
-//                child: Text(
-//                  "දුරකථන අංකය/Contact Number",
-//                  style: TextStyle(fontWeight: FontWeight.bold),
-//                  textAlign: TextAlign.left,
-//                )),
+            Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  "දුරකථන අංකය",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.left,
+                )),
             Container(
               child: Row(
                 children: <Widget>[
@@ -212,20 +213,20 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
                   Expanded(
                     child: TextFormField(
 
-                      decoration: InputDecoration(
-//                        fillColor: Colors.black,
-//                          focusColor: Colors.black,
-//                          hoverColor: Colors.black,
-
-                          labelStyle:TextStyle(color: Colors.black),
-                          focusedBorder:  UnderlineInputBorder(
-                              borderSide: new BorderSide(
-                                  color: Colors.black
-                              )
-                          ),
-
-                          labelText: 'දුරකථන අංකය/Contact Number'
-                      ),
+//                      decoration: InputDecoration(
+////                        fillColor: Colors.black,
+////                          focusColor: Colors.black,
+////                          hoverColor: Colors.black,
+//
+//                          labelStyle:TextStyle(color: Colors.black),
+//                          focusedBorder:  UnderlineInputBorder(
+//                              borderSide: new BorderSide(
+//                                  color: Colors.black
+//                              )
+//                          ),
+//
+//                          labelText: 'දුරකථන අංකය'
+//                      ),
 
                       controller: contactNoController,
                       textAlign: TextAlign.left,
@@ -243,13 +244,13 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-//            Align(
-//                alignment: Alignment.topLeft,
-//                child: Text(
-//                  "WhatsApp දුරකථන අංකය / WhatsApp Contact Number",
-//                  style: TextStyle(fontWeight: FontWeight.bold),
-//                  textAlign: TextAlign.left,
-//                )),
+            Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  "වට්ස්ඇප් දුරකථන අංකය",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.left,
+                )),
             Container(
               child: Row(
                 children: <Widget>[
@@ -260,20 +261,20 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
                   Expanded(
                     child: TextFormField(
 
-                      decoration: InputDecoration(
-//                        fillColor: Colors.black,
-//                          focusColor: Colors.black,
-//                          hoverColor: Colors.black,
-
-                          labelStyle:TextStyle(color: Colors.black),
-                          focusedBorder:  UnderlineInputBorder(
-                              borderSide: new BorderSide(
-                                  color: Colors.black
-                              )
-                          ),
-
-                          labelText: 'WhatsApp දුරකථන අංකය / WhatsApp Contact Number'
-                      ),
+//                      decoration: InputDecoration(
+////                        fillColor: Colors.black,
+////                          focusColor: Colors.black,
+////                          hoverColor: Colors.black,
+//
+//                          labelStyle:TextStyle(color: Colors.black),
+//                          focusedBorder:  UnderlineInputBorder(
+//                              borderSide: new BorderSide(
+//                                  color: Colors.black
+//                              )
+//                          ),
+//
+//                          labelText: 'WhatsApp දුරකථන අංකය'
+//                      ),
 
                       controller: whatappContactNoController,
                       textAlign: TextAlign.left,
@@ -294,7 +295,7 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
             Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "Weight in Kilograms/බර කිලෝග්‍රෑම්",
+                  "බර කිලෝග්‍රෑම්",
                   style: TextStyle(fontWeight: FontWeight.bold),
                   textAlign: TextAlign.left,
                 )),
@@ -334,13 +335,13 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-//            Align(
-//                alignment: Alignment.topLeft,
-//                child: Text(
-//                  "සම්බන්ධිකරණ නිලධාරී අංකය / Coordinating Officer Number",
-//                  style: TextStyle(fontWeight: FontWeight.bold),
-//                  textAlign: TextAlign.left,
-//                )),
+            Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  "සම්බන්ධිකරණ නිලධාරී දුරකථන අංකය",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.left,
+                )),
             Container(
               child: Row(
                 children: <Widget>[
@@ -351,20 +352,20 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
                   Expanded(
                     child: TextFormField(
 
-                      decoration: InputDecoration(
-//                        fillColor: Colors.black,
-//                          focusColor: Colors.black,
-//                          hoverColor: Colors.black,
-
-                          labelStyle:TextStyle(color: Colors.black),
-                          focusedBorder:  UnderlineInputBorder(
-                              borderSide: new BorderSide(
-                                  color: Colors.black
-                              )
-                          ),
-
-                          labelText: 'සම්බන්ධිකරණ නිලධාරී අංකය / Coordinating Officer Number'
-                      ),
+//                      decoration: InputDecoration(
+////                        fillColor: Colors.black,
+////                          focusColor: Colors.black,
+////                          hoverColor: Colors.black,
+//
+//                          labelStyle:TextStyle(color: Colors.black),
+//                          focusedBorder:  UnderlineInputBorder(
+//                              borderSide: new BorderSide(
+//                                  color: Colors.black
+//                              )
+//                          ),
+//
+//                          labelText: 'සම්බන්ධිකරණ නිලධාරී දුරකථන අංකය'
+//                      ),
 
                       controller: whatappContactNoController,
                       textAlign: TextAlign.left,
@@ -587,7 +588,7 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
 //                  ),
 //                );
 //              }),
-//        );
+//        );FF
 //        ),
 //      );
 
@@ -718,19 +719,17 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
 //  );
 
   saveLead(BuildContext context) => Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(0),
         child: Container(
           width: double.infinity,
           height: 50,
           child: RaisedButton(
-            color: Color.fromRGBO(2, 119, 189, 0.9),
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            color: Color.fromRGBO(0, 0, 0, 0.9),
             onPressed: () {
               _validateInputs();
               Navigator.of(context).pushNamed('/cart'); // to connect screen
             },
-            child: Text("Next",
+            child: Text("ඉදිරියට",
                 style: TextStyle(color: Colors.white, fontSize: 20)),
           ),
         ),
@@ -861,6 +860,7 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
 //                      '/leadcapturesearch'); // to connect screen
 //                }),
         ],
+          backgroundColor: Color(0xFFFFFFFF),
         title: new Text(pageName,
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
       ),
