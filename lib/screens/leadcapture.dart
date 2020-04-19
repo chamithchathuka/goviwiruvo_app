@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:goviwiruvo_app/customwidget/multiselectdialog.dart';
 import 'package:goviwiruvo_app/model/VegetableModel.dart';
 import 'package:provider/provider.dart';
+import 'package:international_phone_input/international_phone_input.dart';
 
 
 class LeadCaptureScreen extends StatelessWidget {
@@ -48,7 +49,11 @@ class LeadCaptureScreen extends StatelessWidget {
   Set<int> selectedValues = new Set();
 
   var username = "User Name";
-  final pageName = "Lead Capture";
+  final pageName = "ගොවි මහතාගේ තොරතුරු";
+
+  String phoneNumber;
+  String phoneIsoCode;
+
 
   vegetable(BuildContext context) => Padding(
         padding: const EdgeInsets.only(top: 8.0),
@@ -58,7 +63,7 @@ class LeadCaptureScreen extends StatelessWidget {
             Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "Vegetable/එළවළු වර්ගය",
+                  "එළවළු වර්ගය",
                   style: TextStyle(fontWeight: FontWeight.bold),
                   textAlign: TextAlign.left,
                 )),
@@ -84,7 +89,7 @@ class LeadCaptureScreen extends StatelessWidget {
             Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-          "ලිපිනය/Address ",
+          "ලිපිනය",
           style: TextStyle(fontWeight: FontWeight.bold),
           textAlign: TextAlign.left,
         )),
@@ -96,27 +101,11 @@ class LeadCaptureScreen extends StatelessWidget {
 //                    padding: EdgeInsets.only(left: 8, right: 8),
 //                  ),
                   Expanded(
-                    child: DropdownButtonFormField(
-                      validator: (value) {
-                        if (selectedArea == null) {
-                          return 'පළාත තෝරන්න';
-                        }
-                      },
-//                      isExpanded: true,
-                      items: _channels
-                          .map((value) => DropdownMenuItem(
-                                child: Text(value),
-                                value: value,
-                              ))
-                          .toList(),
-                      onChanged: (String value) {
-//                    setState(() {
-//                      selectedArea = value;
-//                      print("Selected Channel  - $value");
-//                    });
-                      },
-                      value:
-                          selectedArea == null ? _channels.first : selectedArea,
+                    child: TextFormField(
+                      maxLines: null,
+                      keyboardType: TextInputType.multiline,
+                      controller: areaController,
+                      textAlign: TextAlign.left,
                     ),
                   ),
                 ],
@@ -131,13 +120,13 @@ class LeadCaptureScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-//            Align(
-//                alignment: Alignment.topLeft,
-//                child: Text(
-//                  "Name/නම",
-//                  style: TextStyle(fontWeight: FontWeight.bold),
-//                  textAlign: TextAlign.left,
-//                )),
+            Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  "නම",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.left,
+                )),
             Container(
               child: Row(
                 children: <Widget>[
@@ -147,22 +136,9 @@ class LeadCaptureScreen extends StatelessWidget {
 //                  ),
                   Expanded(
                     child: TextFormField(
-
-                      decoration: InputDecoration(
-//                        fillColor: Colors.black,
-//                          focusColor: Colors.black,
-//                          hoverColor: Colors.black,
-
-                          labelStyle:TextStyle(color: Colors.black),
-                          focusedBorder:  UnderlineInputBorder(
-                              borderSide: new BorderSide(
-                                  color: Colors.black
-                              )
-                          ),
-
-                          labelText: 'නම/Name'
-                      ),
-
+                      inputFormatters: [
+                        WhitelistingTextInputFormatter.digitsOnly
+                      ],
                       controller: nameController,
                       textAlign: TextAlign.left,
                     ),
@@ -181,7 +157,7 @@ class LeadCaptureScreen extends StatelessWidget {
             Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "දුරකථන අංකය/Contact Number",
+                  "දුරකථන අංකය",
                   style: TextStyle(fontWeight: FontWeight.bold),
                   textAlign: TextAlign.left,
                 )),
@@ -193,7 +169,16 @@ class LeadCaptureScreen extends StatelessWidget {
 //                    padding: EdgeInsets.only(left: 8, right: 8),
 //                  ),
                   Expanded(
-                    child: TextFormField(
+                    child:InternationalPhoneInput(
+                     // onPhoneNumberChange: onPhoneNumberChange,
+                        hintText: "777363287",
+                      initialPhoneNumber: phoneNumber,
+                      initialSelection: phoneIsoCode,
+                      enabledCountries: ['+94']
+                    //  labelText: "Phone Number",
+                    ),
+
+                 /*   child: TextFormField(
                       inputFormatters: [
                         WhitelistingTextInputFormatter.digitsOnly
                       ],
@@ -206,7 +191,7 @@ class LeadCaptureScreen extends StatelessWidget {
                       },
                       textAlign: TextAlign.left,
                       keyboardType: TextInputType.number,
-                    ),
+                    ),*/
                   ),
                 ],
               ),
@@ -222,7 +207,7 @@ class LeadCaptureScreen extends StatelessWidget {
             Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "WhatsApp දුරකථන අංකය / WhatsApp Contact Number",
+                  "වට්ස්අප්‍ දුරකථන අංකය",
                   style: TextStyle(fontWeight: FontWeight.bold),
                   textAlign: TextAlign.left,
                 )),
@@ -234,20 +219,28 @@ class LeadCaptureScreen extends StatelessWidget {
 //                    padding: EdgeInsets.only(left: 8, right: 8),
 //                  ),
                   Expanded(
-                    child: TextFormField(
-                      inputFormatters: [
-                        WhitelistingTextInputFormatter.digitsOnly
-                      ],
-                      controller: whatappContactNoController,
-                      maxLength: 10,
-                      validator: (value) {
-                        if (value.length != 10) {
-                          return ('Contact Number invalid.');
-                        }
-                      },
-                      textAlign: TextAlign.left,
-                      keyboardType: TextInputType.number,
+                    child:InternationalPhoneInput(
+                      // onPhoneNumberChange: onPhoneNumberChange,
+                        hintText: "777363287",
+                        initialPhoneNumber: phoneNumber,
+                        initialSelection: phoneIsoCode,
+                        enabledCountries: ['+94']
+                      //  labelText: "Phone Number",
                     ),
+//                    child: TextFormField(
+//                      inputFormatters: [
+//                        WhitelistingTextInputFormatter.digitsOnly
+//                      ],
+//                      controller: whatappContactNoController,
+//                      maxLength: 10,
+//                      validator: (value) {
+//                        if (value.length != 10) {
+//                          return ('Contact Number invalid.');
+//                        }
+//                      },
+//                      textAlign: TextAlign.left,
+//                      keyboardType: TextInputType.number,
+//                    ),
                   ),
                 ],
               ),
@@ -264,7 +257,7 @@ class LeadCaptureScreen extends StatelessWidget {
             Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "Weight in Kilograms/බර කිලෝග්‍රෑම්",
+                  "බර කිලෝග්‍රෑම්",
                   style: TextStyle(fontWeight: FontWeight.bold),
                   textAlign: TextAlign.left,
                 )),
@@ -307,7 +300,7 @@ class LeadCaptureScreen extends StatelessWidget {
             Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "සම්බන්ධිකරණ නිලධාරී අංකය / Coordinating Officer Number",
+                  "සම්බන්ධිකරණ මහතාගේ දුරකථන අංකය",
                   style: TextStyle(fontWeight: FontWeight.bold),
                   textAlign: TextAlign.left,
                 )),
@@ -319,20 +312,28 @@ class LeadCaptureScreen extends StatelessWidget {
 //                    padding: EdgeInsets.only(left: 8, right: 8),
 //                  ),
                   Expanded(
-                    child: TextFormField(
-                      inputFormatters: [
-                        WhitelistingTextInputFormatter.digitsOnly
-                      ],
-                      controller: coordinationOfficerTextController,
-                      maxLength: 10,
-                      validator: (value) {
-                        if (value.length != 10) {
-                          return ('Contact Number invalid.');
-                        }
-                      },
-                      textAlign: TextAlign.left,
-                      keyboardType: TextInputType.number,
+                    child:InternationalPhoneInput(
+                      // onPhoneNumberChange: onPhoneNumberChange,
+                        hintText: "777363287",
+                        initialPhoneNumber: phoneNumber,
+                        initialSelection: phoneIsoCode,
+                        enabledCountries: ['+94']
+                      //  labelText: "Phone Number",
                     ),
+//                    child: TextFormField(
+//                      inputFormatters: [
+//                        WhitelistingTextInputFormatter.digitsOnly
+//                      ],
+//                      controller: coordinationOfficerTextController,
+//                      maxLength: 10,
+//                      validator: (value) {
+//                        if (value.length != 10) {
+//                          return ('Contact Number invalid.');
+//                        }
+//                      },
+//                      textAlign: TextAlign.left,
+//                      keyboardType: TextInputType.number,
+//                    ),
                   ),
                 ],
               ),
@@ -587,7 +588,7 @@ class LeadCaptureScreen extends StatelessWidget {
 
         Container(
           child: Container(
-              height: MediaQuery.of(context).size.height*0.15,
+              height: MediaQuery.of(context).size.height*0.2,
               child:  Consumer<VegetableModel>(
                 builder: (context, todo, child){
                   print(todo.vegList.length);
@@ -707,18 +708,18 @@ class LeadCaptureScreen extends StatelessWidget {
 
 
   saveLead(BuildContext context) => Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(0),
         child: Container(
           width: double.infinity,
           height: 50,
           child: RaisedButton(
-            color: Color.fromRGBO(2, 119, 189, 0.9),
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            color: Color.fromRGBO(0, 0, 0, 0.9),
+//            shape:
+//                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             onPressed: () {
               _validateInputs();
             },
-            child: Text("Save Lead",
+            child: Text("ඉදිරියට",
                 style: TextStyle(color: Colors.white, fontSize: 20)),
           ),
         ),
@@ -729,9 +730,13 @@ class LeadCaptureScreen extends StatelessWidget {
       child: Column(
         children: [
           customerName(context),
+          SizedBox(height: 25),
           area(context),
+          SizedBox(height: 25),
           contactnumber(context),
+          SizedBox(height: 25),
           contactnumberWhatsApp(context),
+          SizedBox(height: 25),
           coordinationOfficerNumber(context),
 //        listViewNew(context ),
           listviewscroll(context),
@@ -847,6 +852,7 @@ class LeadCaptureScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: new AppBar(
+        backgroundColor: Color(0xFFFFFFFF),
         actions: <Widget>[
 //            IconButton(
 //                icon: Icon(Icons.search),
@@ -856,16 +862,16 @@ class LeadCaptureScreen extends StatelessWidget {
 //                }),
         ],
         title: new Text(pageName,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
       ),
-      floatingActionButton: FloatingActionButton(
+      /*floatingActionButton: FloatingActionButton(
         onPressed: () {
           // Add your onPressed code here!
           Navigator.of(context).pushNamed('/vegadd'); // to connect screen
         },
         child: Icon(Icons.add_shopping_cart),
         backgroundColor: Colors.redAccent,
-      ),
+      ),*/
       body: SafeArea(
         minimum: const EdgeInsets.all(8.0),
         child: Form(

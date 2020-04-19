@@ -28,6 +28,7 @@ dependencies:
   http: ^0.12.0+2
   auto_size_text: ^2.1.0
   rflutter_alert: ^1.0.3
+  international_phone_input: ^1.0.3
 
 dev_dependencies:
   flutter_test:
