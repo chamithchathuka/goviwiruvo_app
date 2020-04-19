@@ -20,17 +20,12 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
 
   bool _autoValidate = false;
 
-//  final areaController = TextEditingController();
-
-//  final nameController = TextEditingController();
-
   final qualityController = TextEditingController();
-
   final weightController = TextEditingController();
+  final rateController = TextEditingController();
+  final freeprecentagecontroller = TextEditingController();
 
   bool isDataLoaded = false;
-
-  String selectedQualityValue = '';
 
   bool isErrorOccurred = false;
 
@@ -38,14 +33,12 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
 
   List<VegetableLoad> _vegetable = [];
 
-  List<String> veggiesList = [];
+  List<String> veggiesList = ['Please Select'];
 
-  String selectedVegetable = null;
-
+  String selectedQualityValue = null;
+  String selectedVegetable = '';
   String selectedProductListStrNames = null;
-
   String selectedNatureOfBusiness = null;
-
   String selectedArea = null;
 
   final items = <MultiSelectDialogItem<int>>[
@@ -82,28 +75,23 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
             Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "Vegetable/එළවළු වර්ගය",
+                  "Vegetable / එළවළු වර්ගය",
                   style: TextStyle(fontWeight: FontWeight.bold),
                   textAlign: TextAlign.left,
                 )),
             Container(
               child: Row(
                 children: <Widget>[
-//                  Icon(Icons.chat_bubble),
-//                  Padding(
-//                    padding: EdgeInsets.only(left: 8, right: 8),
-//                  ),
                   isDataLoaded == false
                       ? CircularProgressIndicator()
                       : Expanded(
                           child: DropdownButtonFormField(
                             validator: (value) {
-                              if (selectedVegetable == null) {
-                                return 'පළාත තෝරන්න';
+                              if (selectedVegetable .contains('')) {
+                                return 'එළවළු වර්ගය තෝරන්න';
                               }
                             },
-//                      isExpanded: true,
-                            items: veggiesList
+                              items: veggiesList
                                 .map(
                                   (value) => DropdownMenuItem(
                                     child: Text('${value}'),
@@ -117,9 +105,9 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                                 print("Selected Channel  - $value");
                               });
                             },
-                            value: selectedVegetable == ''
-                                ? ''
-                                : selectedVegetable,
+//                            value: selectedVegetable == null
+//                                ? ''
+//                                : selectedVegetable,
                           ),
                         ),
                 ],
@@ -129,47 +117,89 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
         ),
       );
 
-  weight(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(top: 8),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  "බර කිලෝග්‍රෑම්/ Weight in Kilograms",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.left,
-                )),
-            Container(
-              child: Row(
-                children: <Widget>[
-                  Icon(Icons.add_shopping_cart),
-                  Padding(
-                    padding: EdgeInsets.only(left: 8, right: 8),
-                  ),
-                  Expanded(
-                    child: TextFormField(
-                      inputFormatters: [
-                        WhitelistingTextInputFormatter.digitsOnly
-                      ],
-                      controller: weightController,
-                      maxLength: 10,
-                      validator: (value) {
-                        if (value.length < 1000) {
-                          return ('Weight invalid.');
-                        }
-                      },
-                      textAlign: TextAlign.left,
-                      keyboardType: TextInputType.number,
-                    ),
-                  ),
-                ],
+  rate(BuildContext context) => Padding(
+    padding: const EdgeInsets.only(top: 8),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Align(
+            alignment: Alignment.topLeft,
+            child: Text(
+              "කිලෝ 1ක්  සදහා අයකරන මුදල  රුපියල්  / Rate per 1Kg",
+              style: TextStyle(fontWeight: FontWeight.bold),
+              textAlign: TextAlign.left,
+            )),
+        Container(
+          child: Row(
+            children: <Widget>[
+              Icon(Icons.monetization_on),
+              Padding(
+                padding: EdgeInsets.only(left: 8, right: 8),
               ),
-            ),
-          ],
+              Expanded(
+                child: TextFormField(
+                  inputFormatters: [
+                    WhitelistingTextInputFormatter.digitsOnly
+                  ],
+                  controller: rateController,
+                  maxLength: 3,
+                  validator: (value) {
+                    if (value.length < 1000) {
+                      return ('Weight invalid.');
+                    }
+                  },
+                  textAlign: TextAlign.left,
+                  keyboardType: TextInputType.number,
+                ),
+              ),
+            ],
+          ),
         ),
-      );
+      ],
+    ),
+  );
+
+  weight(BuildContext context) => Padding(
+    padding: const EdgeInsets.only(top: 8),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Align(
+            alignment: Alignment.topLeft,
+            child: Text(
+              "බර කිලෝග්‍රෑම් / Weight in Kilograms",
+              style: TextStyle(fontWeight: FontWeight.bold),
+              textAlign: TextAlign.left,
+            )),
+        Container(
+          child: Row(
+            children: <Widget>[
+              Icon(Icons.add_shopping_cart),
+              Padding(
+                padding: EdgeInsets.only(left: 8, right: 8),
+              ),
+              Expanded(
+                child: TextFormField(
+                  inputFormatters: [
+                    WhitelistingTextInputFormatter.digitsOnly
+                  ],
+                  controller: weightController,
+                  maxLength: 3,
+                  validator: (value) {
+                    if (value.length < 1000) {
+                      return ('Weight invalid.');
+                    }
+                  },
+                  textAlign: TextAlign.left,
+                  keyboardType: TextInputType.number,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
 
   quality(BuildContext context) => Padding(
         padding: const EdgeInsets.only(top: 8),
@@ -194,7 +224,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                     child: DropdownButtonFormField(
                       validator: (value) {
                         if (selectedQualityValue == '') {
-                          return 'Select Channel.';
+                          return 'Select Quality.';
                         }
                       },
 //                      isExpanded: true,
@@ -221,7 +251,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
         ),
       );
 
-  quality(BuildContext context) => Padding(
+  freeprecentage(BuildContext context) => Padding(
     padding: const EdgeInsets.only(top: 8),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -229,39 +259,31 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
         Align(
             alignment: Alignment.topLeft,
             child: Text(
-              "ගුණාත්මකභාවය / Quality",
+              "නොමිලේ දෙන ප්‍රතිශතය / Free Precentage",
               style: TextStyle(fontWeight: FontWeight.bold),
               textAlign: TextAlign.left,
             )),
         Container(
           child: Row(
             children: <Widget>[
-              Icon(Icons.add_shopping_cart),
-              Padding(
-                padding: EdgeInsets.only(left: 8, right: 8),
-              ),
+//              Icon(Icons.pre),
+//              Padding(
+//                padding: EdgeInsets.only(left: 8, right: 8),
+//              ),
               Expanded(
-                child: DropdownButtonFormField(
+                child: TextFormField(
+                  inputFormatters: [
+                    WhitelistingTextInputFormatter.digitsOnly
+                  ],
+                  controller: freeprecentagecontroller,
+                  maxLength: 2,
                   validator: (value) {
-                    if (selectedQualityValue == '') {
-                      return 'Select Channel.';
+                    if (value.length < 100) {
+                      return ('invalid Precentage.');
                     }
                   },
-//                      isExpanded: true,
-                  items: qualitygrades
-                      .map((value) => DropdownMenuItem(
-                    child: Text(value),
-                    value: value,
-                  ))
-                      .toList(),
-                  onChanged: (String value) {
-                    setState(() {
-                      selectedQualityValue = value;
-                    });
-                  },
-                  value: selectedQualityValue == ''
-                      ? ''
-                      : selectedQualityValue,
+                  textAlign: TextAlign.left,
+                  keyboardType: TextInputType.number,
                 ),
               ),
             ],
@@ -503,7 +525,9 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                   children: [
                     vegetable(context),
                     weight(context),
-                    quality(context)
+                    quality(context),
+                    rate(context),
+                    freeprecentage(context)
                   ],
                 ),
               ),
@@ -577,20 +601,22 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
   void dispose() {
     qualityController.dispose();
     weightController.dispose();
+    freeprecentagecontroller.dispose();
+    rateController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: new AppBar(
-        actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.search),
-              onPressed: () {
-                Navigator.of(context).pushReplacementNamed(
-                    '/leadcapturesearch'); // to connect screen
-              }),
-        ],
+//        actions: <Widget>[
+//          IconButton(
+//              icon: Icon(Icons.search),
+//              onPressed: () {
+//                Navigator.of(context).pushReplacementNamed(
+//                    '/leadcapturesearch'); // to connect screen
+//              }),
+//        ],
         title: new Text(pageName,
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
       ),
