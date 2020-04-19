@@ -195,13 +195,13 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  "දුරකථන අංකය/Contact Number",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.left,
-                )),
+//            Align(
+//                alignment: Alignment.topLeft,
+//                child: Text(
+//                  "දුරකථන අංකය/Contact Number",
+//                  style: TextStyle(fontWeight: FontWeight.bold),
+//                  textAlign: TextAlign.left,
+//                )),
             Container(
               child: Row(
                 children: <Widget>[
@@ -211,18 +211,24 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
 //                  ),
                   Expanded(
                     child: TextFormField(
-                      inputFormatters: [
-                        WhitelistingTextInputFormatter.digitsOnly
-                      ],
+
+                      decoration: InputDecoration(
+//                        fillColor: Colors.black,
+//                          focusColor: Colors.black,
+//                          hoverColor: Colors.black,
+
+                          labelStyle:TextStyle(color: Colors.black),
+                          focusedBorder:  UnderlineInputBorder(
+                              borderSide: new BorderSide(
+                                  color: Colors.black
+                              )
+                          ),
+
+                          labelText: 'දුරකථන අංකය/Contact Number'
+                      ),
+
                       controller: contactNoController,
-                      maxLength: 10,
-                      validator: (value) {
-                        if (value.length != 10) {
-                          return ('Contact Number invalid.');
-                        }
-                      },
                       textAlign: TextAlign.left,
-                      keyboardType: TextInputType.number,
                     ),
                   ),
                 ],
@@ -237,13 +243,13 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  "WhatsApp දුරකථන අංකය / WhatsApp Contact Number",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.left,
-                )),
+//            Align(
+//                alignment: Alignment.topLeft,
+//                child: Text(
+//                  "WhatsApp දුරකථන අංකය / WhatsApp Contact Number",
+//                  style: TextStyle(fontWeight: FontWeight.bold),
+//                  textAlign: TextAlign.left,
+//                )),
             Container(
               child: Row(
                 children: <Widget>[
@@ -253,18 +259,24 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
 //                  ),
                   Expanded(
                     child: TextFormField(
-                      inputFormatters: [
-                        WhitelistingTextInputFormatter.digitsOnly
-                      ],
+
+                      decoration: InputDecoration(
+//                        fillColor: Colors.black,
+//                          focusColor: Colors.black,
+//                          hoverColor: Colors.black,
+
+                          labelStyle:TextStyle(color: Colors.black),
+                          focusedBorder:  UnderlineInputBorder(
+                              borderSide: new BorderSide(
+                                  color: Colors.black
+                              )
+                          ),
+
+                          labelText: 'WhatsApp දුරකථන අංකය / WhatsApp Contact Number'
+                      ),
+
                       controller: whatappContactNoController,
-                      maxLength: 10,
-                      validator: (value) {
-                        if (value.length != 10) {
-                          return ('Contact Number invalid.');
-                        }
-                      },
                       textAlign: TextAlign.left,
-                      keyboardType: TextInputType.number,
                     ),
                   ),
                 ],
@@ -322,13 +334,13 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  "සම්බන්ධිකරණ නිලධාරී අංකය / Coordinating Officer Number",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.left,
-                )),
+//            Align(
+//                alignment: Alignment.topLeft,
+//                child: Text(
+//                  "සම්බන්ධිකරණ නිලධාරී අංකය / Coordinating Officer Number",
+//                  style: TextStyle(fontWeight: FontWeight.bold),
+//                  textAlign: TextAlign.left,
+//                )),
             Container(
               child: Row(
                 children: <Widget>[
@@ -338,18 +350,24 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
 //                  ),
                   Expanded(
                     child: TextFormField(
-                      inputFormatters: [
-                        WhitelistingTextInputFormatter.digitsOnly
-                      ],
-                      controller: coordinationOfficerTextController,
-                      maxLength: 10,
-                      validator: (value) {
-                        if (value.length != 10) {
-                          return ('Contact Number invalid.');
-                        }
-                      },
+
+                      decoration: InputDecoration(
+//                        fillColor: Colors.black,
+//                          focusColor: Colors.black,
+//                          hoverColor: Colors.black,
+
+                          labelStyle:TextStyle(color: Colors.black),
+                          focusedBorder:  UnderlineInputBorder(
+                              borderSide: new BorderSide(
+                                  color: Colors.black
+                              )
+                          ),
+
+                          labelText: 'සම්බන්ධිකරණ නිලධාරී අංකය / Coordinating Officer Number'
+                      ),
+
+                      controller: whatappContactNoController,
                       textAlign: TextAlign.left,
-                      keyboardType: TextInputType.number,
                     ),
                   ),
                 ],
