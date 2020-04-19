@@ -87,7 +87,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                       : Expanded(
                           child: DropdownButtonFormField(
                             validator: (value) {
-                              if (selectedVegetable .contains('')) {
+                              if (selectedVegetable .isEmpty) {
                                 return 'එළවළු වර්ගය තෝරන්න';
                               }
                             },
@@ -103,11 +103,13 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                               setState(() {
                                 selectedVegetable = value;
                                 print("Selected Channel  - $value");
+
+
                               });
                             },
-//                            value: selectedVegetable == null
-//                                ? ''
-//                                : selectedVegetable,
+//                            value: selectedVegetable == ''
+//                          ? 'Selected Value'
+//                          : selectedVegetable,
                           ),
                         ),
                 ],
@@ -144,8 +146,13 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                   controller: rateController,
                   maxLength: 3,
                   validator: (value) {
-                    if (value.length < 1000) {
-                      return ('Weight invalid.');
+
+                    if(value.isEmpty){
+                      return ('Rate invalid. 1');
+                    }
+                    else
+                    if (int.parse(value) > 2000) {
+                      return ('Rate invalid. 2');
                     }
                   },
                   textAlign: TextAlign.left,
@@ -186,8 +193,12 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                   controller: weightController,
                   maxLength: 3,
                   validator: (value) {
-                    if (value.length < 1000) {
-                      return ('Weight invalid.');
+
+                    if(value.isEmpty){
+                      return ('Weight invalid.1');
+                    }
+                    else if (int.parse(value) > 1000) {
+                      return ('Weight invalid.2');
                     }
                   },
                   textAlign: TextAlign.left,
@@ -223,7 +234,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                   Expanded(
                     child: DropdownButtonFormField(
                       validator: (value) {
-                        if (selectedQualityValue == '') {
+                        if (selectedQualityValue== '') {
                           return 'Select Quality.';
                         }
                       },
@@ -278,8 +289,12 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                   controller: freeprecentagecontroller,
                   maxLength: 2,
                   validator: (value) {
-                    if (value.length < 100) {
-                      return ('invalid Precentage.');
+                    if(value.isEmpty){
+
+                      return ('invalid Precentage.1');
+                    }
+                    if (value.length > 100) {
+                      return ('invalid Precentage.2');
                     }
                   },
                   textAlign: TextAlign.left,
@@ -294,54 +309,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
   );
 
 
-////                            subtitle: Text(todo.vegList[index].grade.toString(), style: TextStyle(color: Colors.black45,
-////                                fontWeight: FontWeight.bold),),
-//
-//                              trailing: Icon(Icons.check_circle, color: Colors.greenAccent,),
-//                            ),
-//                            margin: EdgeInsets.only(bottom: 8, left: 16, right: 16),
-//                          );
-//                        }
-//                    );
-//                },
-//              )
-//          ),
-//        ),
-//      ],
-//    ),
-//  );
 
-//  customerNIC(BuildContext context) => Padding(
-//    padding: const EdgeInsets.only(top: 8),
-//    child: Column(
-//      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//      children: [
-//        Align(
-//            alignment: Alignment.topLeft,
-//            child: Text(
-//              "Customer NIC",
-//              style: TextStyle(fontWeight: FontWeight.bold),
-//              textAlign: TextAlign.left,
-//            )),
-//        Container(
-//          child: Row(
-//            children: <Widget>[
-//              Icon(Icons.perm_identity),
-//              Padding(
-//                padding: EdgeInsets.only(left: 8, right: 8),
-//              ),
-//              Expanded(
-//                child: TextFormField(
-//                  controller: nicController,
-//                  textAlign: TextAlign.left,
-//                ),
-//              ),
-//            ],
-//          ),
-//        ),
-//      ],
-//    ),
-//  );
 
   products(BuildContext context) {
     selectedProductListStrNames = "";
@@ -415,8 +383,22 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
       for (var i = 0; i < vegetables.length; i++) {
         veggiesList.add(vegetables[i].description);
       }
-//      veggiesList = vegetables;
     });
+
+    void _validateInputs() {
+      if (_formKey.currentState.validate()) {
+        print('Validated');
+//    If all data are correct then save data to out variables
+        _formKey.currentState.save();
+        _formKey.currentState.reset();
+      } else {
+        print('invalid');
+//    If all data are not valid then start auto validation.
+        setState(() {
+          _autoValidate = true;
+        });
+      }
+    }
 
 //
 //    try {
@@ -494,9 +476,9 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             onPressed: () {
-              //_validateInputs();
+              _validateInputs();
 
-              var rng = new Random(3);
+//              var rng = new Random(3);
 
 //          Vegset v1 = Vegset();
 //          v1.vegetableId = rng.nextInt(3);
