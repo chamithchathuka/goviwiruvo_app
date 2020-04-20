@@ -56,7 +56,7 @@ class _CartScreenState extends State<CartScreen> {
             Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "Cart Vegetable List",
+                  "",
                   style: TextStyle(fontWeight: FontWeight.bold),
                   textAlign: TextAlign.left,
                 )),
@@ -85,31 +85,31 @@ class _CartScreenState extends State<CartScreen> {
     rows.add(TableRow(children: [
 //                SizedBox(height: 15),//SizeBox Widget
       AutoSizeText(
-        'Name',
+        'බෝග වර්ගය',
         textAlign: TextAlign.center,
         style: TextStyle(fontWeight: FontWeight.bold),
         maxLines: 2,
       ),
       AutoSizeText(
-        'Weight',
+        'බර (kg)',
         textAlign: TextAlign.center,
         style: TextStyle(fontWeight: FontWeight.bold),
         maxLines: 2,
       ),
       AutoSizeText(
-        'Quality',
+        'තත්වය',
         textAlign: TextAlign.center,
         style: TextStyle(fontWeight: FontWeight.bold),
         maxLines: 2,
       ),
       AutoSizeText(
-        'Rate',
+        'මිල',
         textAlign: TextAlign.center,
         style: TextStyle(fontWeight: FontWeight.bold),
         maxLines: 2,
       ),
       AutoSizeText(
-        'Free Precentage',
+        'නොමිලේ ප්‍රතිශතය',
         textAlign: TextAlign.center,
         style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
         maxLines: 2,
@@ -167,6 +167,41 @@ class _CartScreenState extends State<CartScreen> {
         ),
       ]));
     }
+    rows.add(TableRow(children: [
+//                SizedBox(height: 15),//SizeBox Widget
+      SizedBox(height: 15),
+      SizedBox(height: 15),
+      SizedBox(height: 15),
+      SizedBox(height: 15),
+      SizedBox(height: 15),
+      SizedBox(height: 15)
+    ]));
+    rows.add(TableRow(children: [
+//                SizedBox(height: 15),//SizeBox Widget
+
+      SizedBox(height: 15),
+      SizedBox(height: 15),
+      SizedBox(height: 15),
+      SizedBox(height: 15),
+      SizedBox(height: 15),
+      GestureDetector(
+        child: new IconTheme(
+          data: new IconThemeData(
+              color: Colors.redAccent),
+          child: new Icon(Icons.add_circle,size:48),
+        ),
+        onTap: () {
+          setState(() {
+            Navigator.of(context)
+                .pushReplacementNamed('/vegadd');
+//              vegitablesToBeSaved.removeAt(i);
+          });
+        },
+      )
+    ]));
+
+
+
     return Table(
         defaultVerticalAlignment: TableCellVerticalAlignment.middle,
         border: new TableBorder(
@@ -340,7 +375,7 @@ class _CartScreenState extends State<CartScreen> {
 
 
         },
-        child: Text("Submit",
+        child: Text("පුරවන්න",
             style: TextStyle(color: Colors.white, fontSize: 20)),
       ),
     ),
@@ -445,16 +480,16 @@ class _CartScreenState extends State<CartScreen> {
         title: new Text(pageName,
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Add your onPressed code here!
-          Navigator.of(context)
-              .pushReplacementNamed('/vegadd'); // to connect screen
-//          Navigator.of(context).pushNamed('/vegadd'); // to connect screen
-        },
-        child: Icon(Icons.add_shopping_cart),
-        backgroundColor: Colors.redAccent,
-      ),
+//      floatingActionButton: FloatingActionButton(
+//        onPressed: () {
+//          // Add your onPressed code here!
+//          Navigator.of(context)
+//              .pushReplacementNamed('/vegadd'); // to connect screen
+////          Navigator.of(context).pushNamed('/vegadd'); // to connect screen
+//        },
+//        child: Icon(Icons.add_shopping_cart),
+//        backgroundColor: Colors.redAccent,
+//      ),
       body: SafeArea(
         minimum: const EdgeInsets.all(8.0),
         child: OrientationBuilder(builder: (context, orientation) {

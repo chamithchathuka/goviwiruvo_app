@@ -92,7 +92,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                           child: DropdownButtonFormField(
                             validator: (value) {
                               if (selectedVegetable .isEmpty) {
-                                return 'එළවළු වර්ගය තෝරන්න';
+                                return 'බෝග වර්ගය තෝරන්න';
                               }
                             },
                               items: veggiesList
