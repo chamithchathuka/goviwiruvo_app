@@ -69,7 +69,7 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
                     child: TextFormField(
                       validator: (value) {
                         if (value.isEmpty) {
-                          return ('Address Invalid');
+                          return ('ලිපිනය ඇතුලත්කරන්න');
                         }
                       },
 //
@@ -123,7 +123,7 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
                     child: TextFormField(
                       validator: (value) {
                         if (value.isEmpty) {
-                          return ('Name Invalid');
+                          return ('නම ඇතුලත්කරන්න');
                         }
                       },
                       controller: nameController,
@@ -160,10 +160,10 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
                     child: TextFormField(
                       validator: (value) {
                         if (value.isEmpty) {
-                          return ('Contact number Invalid');
+                          return ('දුරකථන අංකය ඇතුලත්කරන්න');
                         }
                         if (value.length<10) {
-                          return ('Contact number Invalid');
+                          return ('දුරකථන අංකය වැරදයි');
                         }
                       },inputFormatters: [
                       WhitelistingTextInputFormatter.digitsOnly
@@ -203,11 +203,11 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
                   Expanded(
                     child: TextFormField(
                       validator: (value) {
-                        if(value.isEmpty){
-                          return ('WhatsApp number invalid');
-                        }
-                        if (value.length<10) {
-                          return ('Contact number Invalid');
+//                        if(value.isEmpty){
+//                          return ('දුරකථන අංකය වැරදයි');
+//                        }
+                        if (!value.isEmpty && value.length<10) {
+                          return ('දුරකථන අංකය වැරදයි');
                         }
                       },
                       inputFormatters: [
@@ -249,10 +249,10 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
                     child: TextFormField(
                         validator: (value) {
                           if(value.isEmpty){
-                            return ('Coordinator number Invalid.');
+                           // return ('Coordinator number Invalid.');
                           }
-                          if (value.length<10) {
-                            return ('Contact number Invalid');
+                          if (!value.isEmpty && value.length<10) {
+                            return ('දුරකථන අංකය වැරදයි');
                           }
 
                         },
