@@ -20,8 +20,14 @@ class VegetableService{
 
   List<Vegset> getVegstobeSaved(){
     print('tem return size ${vegitablesToBeSaved.length}');
-    print('tem return 1 ${vegitablesToBeSaved[0].vegetableDescription}');
+//    print('tem return 1 ${vegitablesToBeSaved[0].vegetableDescription}');
     return vegitablesToBeSaved;
+  }
+
+
+  List<Vegset> removeVegSet(Vegset vegset){
+    vegitablesToBeSaved.remove(vegset);
+
   }
 
 

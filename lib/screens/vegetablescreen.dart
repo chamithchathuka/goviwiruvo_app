@@ -649,6 +649,10 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
         _formKey.currentState.save();
         Vegset v2 = Vegset();
         v2.vegetableDescription = selectedVegetable;
+        v2.freePercentage = int.parse(freeprecentagecontroller.text);
+        v2.grade = int.parse(selectedQualityValue);
+        v2.rate= double.parse(rateController.text);
+        v2.quantity= int.parse(weightController.text);
 
       vegservice.addVegSet(v2);
       _formKey.currentState.reset();

@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -42,7 +43,7 @@ class _CartScreenState extends State<CartScreen> {
 //  DateTime selectedDate = null;
 //
 //  Set<int> selectedValues = new Set();
-  List<Vegset> vegitablesToBeSaved=  [];
+  List<Vegset> vegitablesToBeSaved = [];
 
   var username = "User Name";
 
@@ -53,34 +54,35 @@ class _CartScreenState extends State<CartScreen> {
     super.initState();
     print('cart size ${vegitablesToBeSaved.length}');
     loadData();
-
   }
 
   void loadData() async {
     vegitablesToBeSaved = vegservice.getVegstobeSaved();
     print('cart size 2 ${vegitablesToBeSaved.length}');
-
   }
 
   listViewVegs(BuildContext context) => Padding(
-    padding: const EdgeInsets.only(top: 8),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        Align(
-            alignment: Alignment.topLeft,
-            child:
-            Text(
-              "Cart Vegetable List",
-              style: TextStyle(fontWeight: FontWeight.bold),
-              textAlign: TextAlign.left,
-            )),
-        Container(
-          height: MediaQuery.of(context).size.height/2,
-        //  color: Colors.white,
-        //  padding: EdgeInsets.all(20.0),
-          child:
-          createTable(),
+        padding: const EdgeInsets.only(top: 8),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  "Cart Vegetable List",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.left,
+                )),
+            Container(
+              height: MediaQuery.of(context).size.height / 2,
+              //  color: Colors.white,
+              //  padding: EdgeInsets.all(20.0),
+              child: Column(
+                children: <Widget>[
+                  SizedBox(height: 15),
+                  Expanded(child: createTable()),
+                ],
+              ),
 
 //          ListView.builder
 //            (
@@ -89,42 +91,104 @@ class _CartScreenState extends State<CartScreen> {
 //                return new Text('${vegitablesToBeSaved[index].vegetableDescription}');
 //              }
 //          )
+            ),
+          ],
         ),
-      ],
-    ),
-  );
-
+      );
 
   Widget createTable() {
     List<TableRow> rows = [];
+    rows.add(TableRow(children: [
+//                SizedBox(height: 15),//SizeBox Widget
+      AutoSizeText(
+        'Name',
+        textAlign: TextAlign.center,
+        style: TextStyle(fontWeight: FontWeight.bold),
+        maxLines: 2,
+      ),
+      AutoSizeText(
+        'Weight',
+        textAlign: TextAlign.center,
+        style: TextStyle(fontWeight: FontWeight.bold),
+        maxLines: 2,
+      ),
+      AutoSizeText(
+        'Quality',
+        textAlign: TextAlign.center,
+        style: TextStyle(fontWeight: FontWeight.bold),
+        maxLines: 2,
+      ),
+      AutoSizeText(
+        'Rate',
+        textAlign: TextAlign.center,
+        style: TextStyle(fontWeight: FontWeight.bold),
+        maxLines: 2,
+      ),
+      AutoSizeText(
+        'Free Precentage',
+        textAlign: TextAlign.center,
+        style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+        maxLines: 2,
+      ),
+      AutoSizeText(
+        '',
+        textAlign: TextAlign.center,
+        style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+        maxLines: 2,
+      ),
+    ]));
+    rows.add(TableRow(children: [
+//                SizedBox(height: 15),//SizeBox Widget
+      SizedBox(height: 15),
+      SizedBox(height: 15),
+      SizedBox(height: 15),
+      SizedBox(height: 15),
+      SizedBox(height: 15),
+      SizedBox(height: 15)
+    ]));
     for (int i = 0; i < vegitablesToBeSaved.length; ++i) {
-      rows.add(
-          TableRow(
-              children: [
-                SizedBox(height: 15),//SizeBox Widget
-                SizedBox(height: 15),
-                SizedBox(height: 15),
-                SizedBox(height: 15),
-                SizedBox(height: 15)
-              ]
-          )
+      rows.add(TableRow(children: [
+//                SizedBox(height: 15),//SizeBox Widget
+        SizedBox(height: 15),
+        SizedBox(height: 15),
+        SizedBox(height: 15),
+        SizedBox(height: 15),
+        SizedBox(height: 15),
+        SizedBox(height: 15)
+      ]));
 
-      );
-      rows.add(TableRow(
-          children: [
-        Text(i.toString()),
+      rows.add(TableRow(children: [
+//        Text(i.toString()),
         Text('${vegitablesToBeSaved[i].vegetableDescription}'),
-        Text("squared " + (i * i).toString()),
-        Text("squared " + (i * i).toString()),
-        Text("squared " + (i * i).toString())
+        Text(
+          '${vegitablesToBeSaved[i].quantity} KG',
+          textAlign: TextAlign.right,
+        ),
+        Text(
+          '${vegitablesToBeSaved[i].grade}',
+          textAlign: TextAlign.center,
+        ),
+        Text('Rs.  ${vegitablesToBeSaved[i].rate}',
+          textAlign: TextAlign.right,),
+        Text('${vegitablesToBeSaved[i].freePercentage} %',
+          textAlign: TextAlign.right,),
+        GestureDetector(
+          child: Icon(Icons.clear),
+          onTap: () {
+            setState(() {
+              vegservice.removeVegSet(vegitablesToBeSaved[i]);
+//              vegitablesToBeSaved.removeAt(i);
+            });
+          },
+        ),
       ]));
     }
     return Table(
-        defaultVerticalAlignment:TableCellVerticalAlignment.middle,
+        defaultVerticalAlignment: TableCellVerticalAlignment.middle,
         border: new TableBorder(
 //            horizontalInside:   new BorderSide(color: Colors.black),
-        //    horizontalInside: new BorderSide(color: Colors.black)
-        ),
+            //    horizontalInside: new BorderSide(color: Colors.black)
+            ),
         children: rows);
   }
 
@@ -132,21 +196,17 @@ class _CartScreenState extends State<CartScreen> {
     return Text(vegitablesToBeSaved[index].vegetableDescription);
   }
 
-
   saveLead(BuildContext context) => Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: Container(
-      width: double.infinity,
-      height: 50,
-      child: RaisedButton(
-        color: Color.fromRGBO(2, 119, 189, 0.9),
-        shape:
-        RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        onPressed: () {
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          width: double.infinity,
+          height: 50,
+          child: RaisedButton(
+            color: Color.fromRGBO(2, 119, 189, 0.9),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            onPressed: () {
 //          _validateInputs();
-
-
-
 
 //              var rng = new Random(3);
 
@@ -158,21 +218,19 @@ class _CartScreenState extends State<CartScreen> {
 //          v1.date="2013-02-01";
 //          v1.freePercentage = 10;
 //          Provider.of<VegetableModel>(context).addVegToList(veggiesList[rng.nextInt(3)]);
-        },
-        child: Text("Save",
-            style: TextStyle(color: Colors.white, fontSize: 20)),
-      ),
-    ),
-  );
+            },
+            child: Text("Save",
+                style: TextStyle(color: Colors.white, fontSize: 20)),
+          ),
+        ),
+      );
 
   _buildVerticalLayout(BuildContext context) {
     return Container(
       child: SingleChildScrollView(
         child: Container(
           child: Column(
-            children: [
-              listViewVegs(context)
-            ],
+            children: [listViewVegs(context)],
           ),
         ),
       ),
@@ -214,11 +272,11 @@ class _CartScreenState extends State<CartScreen> {
             child: GridView.count(
                 childAspectRatio: MediaQuery.of(context).size.width > 1200
                     ? (MediaQuery.of(context).size.width *
-                    0.6 /
-                    (horizontalheight))
+                        0.6 /
+                        (horizontalheight))
                     : MediaQuery.of(context).size.width *
-                    0.3 /
-                    (horizontalheight),
+                        0.3 /
+                        (horizontalheight),
                 crossAxisCount: 2,
                 crossAxisSpacing: 8,
                 children: <Widget>[
@@ -230,8 +288,6 @@ class _CartScreenState extends State<CartScreen> {
       ),
     );
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -249,13 +305,11 @@ class _CartScreenState extends State<CartScreen> {
         title: new Text(pageName,
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
       ),
-
-    floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
         onPressed: () {
           // Add your onPressed code here!
           Navigator.of(context)
-              .pushReplacementNamed(
-              '/vegadd'); // to connect screen
+              .pushReplacementNamed('/vegadd'); // to connect screen
 //          Navigator.of(context).pushNamed('/vegadd'); // to connect screen
         },
         child: Icon(Icons.add_shopping_cart),
@@ -266,20 +320,20 @@ class _CartScreenState extends State<CartScreen> {
         child: OrientationBuilder(builder: (context, orientation) {
           return orientation == Orientation.portrait
               ? LayoutBuilder(builder: (context, constraints) {
-            if (constraints.maxWidth < 600) {
-              return _buildVerticalLayout(context);
-            } else {
-              return _buildVerticallTabLayout(context);
-            }
-          })
+                  if (constraints.maxWidth < 600) {
+                    return _buildVerticalLayout(context);
+                  } else {
+                    return _buildVerticallTabLayout(context);
+                  }
+                })
               : LayoutBuilder(builder: (context, constraints) {
-            if (constraints.maxWidth < 600) {
-              return _buildHorizontalLayout(context);
-            } else {
-              //Todo Change this
-              return _buildHorizontalLayout(context);
-            }
-          });
+                  if (constraints.maxWidth < 600) {
+                    return _buildHorizontalLayout(context);
+                  } else {
+                    //Todo Change this
+                    return _buildHorizontalLayout(context);
+                  }
+                });
         }),
       ),
     );
