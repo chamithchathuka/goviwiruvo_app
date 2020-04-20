@@ -11,8 +11,9 @@ import 'package:goviwiruvo_app/external/webservices.dart';
 import 'package:goviwiruvo_app/model/VegetablLoadModel.dart';
 import 'package:goviwiruvo_app/model/VegetableModel.dart';
 import 'package:goviwiruvo_app/services/vegetableservice.dart';
+
 import 'package:rflutter_alert/rflutter_alert.dart';
-import 'package:location/location.dart';
+import 'package:location/location.dart' as mylocation;
 
 class CartScreen extends StatefulWidget {
   @override
@@ -20,31 +21,15 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-//  final _formKey = GlobalKey<FormState>();
 
-//  Vegset veggi = Vegset();
+  bool _serviceEnabled;
+  mylocation.Location _locationService = new mylocation.Location();
+  bool _permission = false;
+  String error;
 
-//  bool _autoValidate = false;
 
-//  final qualityController = TextEditingController();
-//  final weightController = TextEditingController();
-//  final rateController = TextEditingController();
-//  final freeprecentagecontroller = TextEditingController();
   VegetableService vegservice = VegetableService();
 
-//  bool isDataLoaded = false;
-//
-//  bool isErrorOccurred = false;
-//
-//  String selectedQualityValue = null;
-//  String selectedVegetable = '';
-//  String selectedProductListStrNames = null;
-//  String selectedNatureOfBusiness = null;
-//  String selectedArea = null;
-//
-//  DateTime selectedDate = null;
-//
-//  Set<int> selectedValues = new Set();
   List<Vegset> vegitablesToBeSaved = [];
 
   var username = "User Name";
@@ -90,13 +75,6 @@ class _CartScreenState extends State<CartScreen> {
                 ],
               ),
 
-//          ListView.builder
-//            (
-//              itemCount: vegitablesToBeSaved.length,
-//              itemBuilder: (BuildContext ctxt, int index) {
-//                return new Text('${vegitablesToBeSaved[index].vegetableDescription}');
-//              }
-//          )
             ),
           ],
         ),
@@ -207,122 +185,140 @@ class _CartScreenState extends State<CartScreen> {
       child: RaisedButton(
         color: Color.fromRGBO(0, 0, 0, 0.9),
         onPressed: () async {
-
-
           if(vegservice.getVegstobeSaved().length>0){
 
-            Location location = new Location();
+            var currentLocation = null;
+            mylocation.PermissionStatus _permission ;
 
-            bool _serviceEnabled;
-            PermissionStatus _permissionGranted;
-            LocationData _locationData;
+            mylocation.LocationData location;
 
-            _serviceEnabled = await location.serviceEnabled();
-            if (!_serviceEnabled) {
-              _serviceEnabled = await location.requestService();
-              if (!_serviceEnabled) {
-                return;
-              }
-            }
 
-            _permissionGranted = await location.hasPermission();
-            if (_permissionGranted == PermissionStatus.denied) {
-              _permissionGranted = await location.requestPermission();
-              if (_permissionGranted != PermissionStatus.granted) {
-                return;
-              }
-            }
 
-            _locationData = await location.getLocation();
+            try {
+              bool serviceStatus = await _locationService.serviceEnabled();
+              print("Service status: $serviceStatus");
+              if (serviceStatus) {
+                _permission = await _locationService.requestPermission();
+                print("Permission: $_permission");
+                if (_permission==mylocation.PermissionStatus.granted) {
+                  location = await _locationService.getLocation();
+                  print('start lat ${location.latitude.toString()} ?');
+                  print('start lng  ${location.longitude.toString()} ?');
 
-            print(' lat ${_locationData.latitude}. long  - ${_locationData.longitude}');
+                  print('lat long');
+                  print(location.latitude.toString());
+                  print(location.longitude.toString());
 
-            Alert(
-                context: context,
-                title: "Submit Confirmation",
-                content: Column(
-                  children: <Widget>[
+                  Alert(
+                      context: context,
+                      title: "Submit Confirmation",
+                      content: Column(
+                        children: <Widget>[
 //                  Padding(
 //                    padding: const EdgeInsets.all(10.0),
 //                    child: Image.network(
 //                      'https://avatars2.githubusercontent.com/u/17052727?s=400&v=4',
 //                    ),
 //                  ),
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Text(
-                        'Are you sure you want to submit?',
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Text(
+                              'Are you sure you want to submit?',
+                            ),
+                          )
+                        ],
                       ),
-                    )
-                  ],
-                ),
-                buttons: [
-                  DialogButton(
-                    color: Colors.teal,
-                    onPressed: () => Navigator.pop(context),
-                    child: Text(
-                      "Cancel",
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                    ),
-                  ),
-                  DialogButton(
-                    onPressed: () async {
+                      buttons: [
+                        DialogButton(
+                          color: Colors.teal,
+                          onPressed: () => Navigator.pop(context),
+                          child: Text(
+                            "Cancel",
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                          ),
+                        ),
+                        DialogButton(
+                          onPressed: () async {
 
-                      bool issuccess  = await vegservice.callWebServicePostRequest();
+                            bool issuccess  = await vegservice.callWebServicePostRequest();
 
-                      print( issuccess);
+                            print( issuccess);
 
-                      Navigator.pop(context);
+                            Navigator.pop(context);
 
 
-                      if(issuccess){
-                        Alert(
-                          context: context,
-                          type: AlertType.success,
-                          title: "Result Message",
-                          desc: "Success.",
-                          buttons: [
-                            DialogButton(
-                              child: Text(
-                                "COOL",
-                                style: TextStyle(color: Colors.white, fontSize: 20),
-                              ),
-                              onPressed: () => Navigator.pop(context),
-                              width: 120,
-                            )
-                          ],
-                        ).show();
-                      }else{
-                        Alert(
-                          context: context,
-                          type: AlertType.error,
-                          title: "Result Message",
-                          desc: "Failed.",
-                          buttons: [
-                            DialogButton(
-                              child: Text(
-                                "Error Occurred. Please try again. ",
-                                style: TextStyle(color: Colors.white, fontSize: 20),
-                              ),
-                              onPressed: () => Navigator.pop(context),
-                              width: 120,
-                            )
-                          ],
-                        ).show();
-                      }
-                      //Navigator.pop(context);
+                            if(issuccess){
+                              Alert(
+                                context: context,
+                                type: AlertType.success,
+                                title: "Result Message",
+                                desc: "Success.",
+                                buttons: [
+                                  DialogButton(
+                                    child: Text(
+                                      "COOL",
+                                      style: TextStyle(color: Colors.white, fontSize: 20),
+                                    ),
+                                    onPressed: () => Navigator.pop(context),
+                                    width: 120,
+                                  )
+                                ],
+                              ).show();
+                            }else{
+                              Alert(
+                                context: context,
+                                type: AlertType.error,
+                                title: "Result Message",
+                                desc: "Failed.",
+                                buttons: [
+                                  DialogButton(
+                                    child: Text(
+                                      "Error Occurred. Please try again. ",
+                                      style: TextStyle(color: Colors.white, fontSize: 20),
+                                    ),
+                                    onPressed: () => Navigator.pop(context),
+                                    width: 120,
+                                  )
+                                ],
+                              ).show();
+                            }
+                            //Navigator.pop(context);
 //                    await storage.deleteAll();
 //                    Navigator.of(context).pushNamedAndRemoveUntil(
 //                        '/login', (Route<dynamic> route) => false);
 ////                          Navigator.of(context).popAndPushNamed(
 ////                              '/login'); // to connect screen
-                    },
-                    child: Text(
-                      "Confirm",
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                    ),
-                  ),
-                ]).show();
+                          },
+                          child: Text(
+                            "Confirm",
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                          ),
+                        ),
+                      ]).show();
+
+
+                 // await _goToMyLocation(location.latitude, location.longitude);
+                } else {
+                  print('permission not available');
+
+                  //_showDialog();
+                }
+              }
+            } on PlatformException catch (e) {
+              if (e.code == 'PERMISSION_DENIED') {
+                error = e.message;
+                print('permission denied');
+              } else if (e.code == 'SERVICE_STATUS_ERROR') {
+                error = e.message;
+              }
+              location = null;
+            } on Exception catch (ex) {
+              print(ex);
+
+              error = ex.toString();
+            }
+
+
           }else{
             Alert(
               context: context,
@@ -355,35 +351,6 @@ class _CartScreenState extends State<CartScreen> {
   Widget buildBody(BuildContext ctxt, int index) {
     return Text(vegitablesToBeSaved[index].vegetableDescription);
   }
-
-  saveLead(BuildContext context) => Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
-          width: double.infinity,
-          height: 50,
-          child: RaisedButton(
-            color: Color.fromRGBO(2, 119, 189, 0.9),
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-            onPressed: () {
-//          _validateInputs();
-
-//              var rng = new Random(3);
-
-//          Vegset v1 = Vegset();
-//          v1.vegetableId = rng.nextInt(3);
-//          v1.grade=2;
-//          v1.rate=3;
-//          v1.quantity=100;
-//          v1.date="2013-02-01";
-//          v1.freePercentage = 10;
-//          Provider.of<VegetableModel>(context).addVegToList(veggiesList[rng.nextInt(3)]);
-            },
-            child: Text("Save",
-                style: TextStyle(color: Colors.white, fontSize: 20)),
-          ),
-        ),
-      );
 
   _buildVerticalLayout(BuildContext context) {
     return Container(
@@ -427,7 +394,8 @@ class _CartScreenState extends State<CartScreen> {
 //                  targetDate(context),
                 ]),
           ),
-          saveLead(context),
+//          saveLead(context),
+          submitRequestButton(context),
         ],
       ),
     );
@@ -455,7 +423,7 @@ class _CartScreenState extends State<CartScreen> {
 //                  targetDate(context),
                 ]),
           ),
-          saveLead(context),
+          submitRequestButton(context),
         ],
       ),
     );
