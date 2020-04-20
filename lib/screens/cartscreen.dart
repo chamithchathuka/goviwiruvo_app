@@ -17,11 +17,11 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  final _formKey = GlobalKey<FormState>();
+//  final _formKey = GlobalKey<FormState>();
 
 //  Vegset veggi = Vegset();
 
-  bool _autoValidate = false;
+//  bool _autoValidate = false;
 
 //  final qualityController = TextEditingController();
 //  final weightController = TextEditingController();
@@ -75,11 +75,14 @@ class _CartScreenState extends State<CartScreen> {
               textAlign: TextAlign.left,
             )),
         Container(
-          child: Row(
-            children: <Widget>[
-
-            ],
-          ),
+          height: MediaQuery.of(context).size.height/2,
+          child: ListView.builder
+            (
+              itemCount: vegitablesToBeSaved.length,
+              itemBuilder: (BuildContext ctxt, int index) {
+                return new Text('${vegitablesToBeSaved[index].vegetableDescription}');
+              }
+          )
         ),
       ],
     ),
@@ -189,11 +192,7 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 
-  @override
-  void dispose() {
-    super.dispose;
 
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -224,28 +223,24 @@ class _CartScreenState extends State<CartScreen> {
       ),
       body: SafeArea(
         minimum: const EdgeInsets.all(8.0),
-        child: Form(
-          key: _formKey,
-          autovalidate: _autoValidate,
-          child: OrientationBuilder(builder: (context, orientation) {
-            return orientation == Orientation.portrait
-                ? LayoutBuilder(builder: (context, constraints) {
-              if (constraints.maxWidth < 600) {
-                return _buildVerticalLayout(context);
-              } else {
-                return _buildVerticallTabLayout(context);
-              }
-            })
-                : LayoutBuilder(builder: (context, constraints) {
-              if (constraints.maxWidth < 600) {
-                return _buildHorizontalLayout(context);
-              } else {
-                //Todo Change this
-                return _buildHorizontalLayout(context);
-              }
-            });
-          }),
-        ),
+        child: OrientationBuilder(builder: (context, orientation) {
+          return orientation == Orientation.portrait
+              ? LayoutBuilder(builder: (context, constraints) {
+            if (constraints.maxWidth < 600) {
+              return _buildVerticalLayout(context);
+            } else {
+              return _buildVerticallTabLayout(context);
+            }
+          })
+              : LayoutBuilder(builder: (context, constraints) {
+            if (constraints.maxWidth < 600) {
+              return _buildHorizontalLayout(context);
+            } else {
+              //Todo Change this
+              return _buildHorizontalLayout(context);
+            }
+          });
+        }),
       ),
     );
   }

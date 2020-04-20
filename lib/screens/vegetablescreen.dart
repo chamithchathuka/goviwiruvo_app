@@ -112,7 +112,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                               });
                             },
                             onSaved: (val) =>
-                                setState(() => veggi.vegetableDescription = val),
+                                setState(() { veggi.vegetableDescription = val;}),
 //                            value: selectedVegetable == ''
 //                          ? 'Selected Value'
 //                          : selectedVegetable,
@@ -141,9 +141,9 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
           child: Row(
             children: <Widget>[
          //     Icon(Icons.monetization_on),
-              Padding(
-                padding: EdgeInsets.only(left: 8, right: 8),
-              ),
+//              Padding(
+//                padding: EdgeInsets.only(left: 8, right: 8),
+//              ),
               Expanded(
                 child: TextFormField(
 
@@ -190,9 +190,9 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
           child: Row(
             children: <Widget>[
          //     Icon(Icons.add_shopping_cart),
-              Padding(
-                padding: EdgeInsets.only(left: 8, right: 8),
-              ),
+//              Padding(
+//                padding: EdgeInsets.only(left: 8, right: 8),
+//              ),
               Expanded(
                 child: TextFormField(
                   onSaved: (val) =>
@@ -238,9 +238,9 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
               child: Row(
                 children: <Widget>[
 //                  Icon(Icons.add_shopping_cart),
-                  Padding(
-                    padding: EdgeInsets.only(left: 8, right: 8),
-                  ),
+//                  Padding(
+//                    padding: EdgeInsets.only(left: 8, right: 8),
+//                  ),
                   Expanded(
                     child: DropdownButtonFormField(
                       validator: (value) {
@@ -584,15 +584,15 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
       ),
     );
   }
-
-  @override
-  void dispose() {
-    qualityController.dispose();
-    weightController.dispose();
-    freeprecentagecontroller.dispose();
-    rateController.dispose();
-    super.dispose;
-  }
+//
+//  @override
+//  void dispose() {
+////    qualityController.dispose();
+////    weightController.dispose();
+////    freeprecentagecontroller.dispose();
+////    rateController.dispose();
+////    super.dispose;
+//  }
 
   @override
   Widget build(BuildContext context) {
@@ -641,16 +641,12 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
   void _validateInputs() {
     if (_formKey.currentState.validate()) {
       print('Validated 3');
-//    If all data are correct then save data to out variables
-//        _formKey.currentState.save();
-//      vegservice.addVegSet(veggi);
+        _formKey.currentState.save();
+        Vegset v2 = Vegset();
+        v2.vegetableDescription = selectedVegetable;
 
-
+      vegservice.addVegSet(v2);
       _formKey.currentState.reset();
-
-
-       // to connect screen
-
 
     } else {
       print('invalid');
