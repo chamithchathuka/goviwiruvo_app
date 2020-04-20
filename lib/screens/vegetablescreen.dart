@@ -69,7 +69,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
 
   var username = "User Name";
 
-  final pageName = "Add Vegetable";
+  final pageName = "බෝග එකතු කරන්න";
 
   vegetable(BuildContext context) => Padding(
         padding: const EdgeInsets.only(top: 8.0),
@@ -79,7 +79,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
             Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "Vegetable / එළවළු වර්ගය",
+                  "බෝග වර්ගය",
                   style: TextStyle(fontWeight: FontWeight.bold),
                   textAlign: TextAlign.left,
                 )),
@@ -133,14 +133,14 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
         Align(
             alignment: Alignment.topLeft,
             child: Text(
-              "කිලෝ 1ක්  සදහා අයකරන මුදල  රුපියල්  / Rate per 1Kg",
+              "කිලෝ 1ක් සදහා අයකරන මුදල රුපියල්",
               style: TextStyle(fontWeight: FontWeight.bold),
               textAlign: TextAlign.left,
             )),
         Container(
           child: Row(
             children: <Widget>[
-              Icon(Icons.monetization_on),
+         //     Icon(Icons.monetization_on),
               Padding(
                 padding: EdgeInsets.only(left: 8, right: 8),
               ),
@@ -151,11 +151,10 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                     WhitelistingTextInputFormatter.digitsOnly
                   ],
                   controller: rateController,
-                  maxLength: 3,
+                  maxLength: 6,
                   onSaved: (val) =>
                       setState(() => veggi.rate = double.parse(val)),
                   validator: (value) {
-
                     if(value.isEmpty){
                       return ('Rate invalid. 1');
                     }
@@ -183,14 +182,14 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
         Align(
             alignment: Alignment.topLeft,
             child: Text(
-              "බර කිලෝග්‍රෑම් / Weight in Kilograms",
+              "බර කිලෝග්‍රෑම්",
               style: TextStyle(fontWeight: FontWeight.bold),
               textAlign: TextAlign.left,
             )),
         Container(
           child: Row(
             children: <Widget>[
-              Icon(Icons.add_shopping_cart),
+         //     Icon(Icons.add_shopping_cart),
               Padding(
                 padding: EdgeInsets.only(left: 8, right: 8),
               ),
@@ -202,7 +201,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                     WhitelistingTextInputFormatter.digitsOnly
                   ],
                   controller: weightController,
-                  maxLength: 3,
+                  maxLength: 6,
                   validator: (value) {
 
                     if(value.isEmpty){
@@ -231,14 +230,14 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
             Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "ගුණාත්මකභාවය / Quality",
+                  "තත්වය",
                   style: TextStyle(fontWeight: FontWeight.bold),
                   textAlign: TextAlign.left,
                 )),
             Container(
               child: Row(
                 children: <Widget>[
-                  Icon(Icons.add_shopping_cart),
+//                  Icon(Icons.add_shopping_cart),
                   Padding(
                     padding: EdgeInsets.only(left: 8, right: 8),
                   ),
@@ -284,7 +283,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
         Align(
             alignment: Alignment.topLeft,
             child: Text(
-              "නොමිලේ දෙන ප්‍රතිශතය / Free Precentage",
+              "නොමිලේ දෙන ප්‍රතිශතය (%)",
               style: TextStyle(fontWeight: FontWeight.bold),
               textAlign: TextAlign.left,
             )),
@@ -301,7 +300,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                     WhitelistingTextInputFormatter.digitsOnly
                   ],
                   controller: freeprecentagecontroller,
-                  maxLength: 2,
+                  maxLength: 6,
                   validator: (value) {
                     if(value.isEmpty){
 
@@ -470,14 +469,14 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
       );
 
   saveLead(BuildContext context) => Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(0),
         child: Container(
           width: double.infinity,
           height: 50,
           child: RaisedButton(
-            color: Color.fromRGBO(2, 119, 189, 0.9),
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            color: Color.fromRGBO(0, 0, 0, 0.9),
+//            shape:
+//                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             onPressed: () {
               _validateInputs();
               Navigator.of(context)
@@ -496,7 +495,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
 //          v1.freePercentage = 10;
 //          Provider.of<VegetableModel>(context).addVegToList(veggiesList[rng.nextInt(3)]);
             },
-            child: Text("Save",
+            child: Text("එකතුකරන්න",
                 style: TextStyle(color: Colors.white, fontSize: 20)),
           ),
         ),
@@ -607,6 +606,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
 //                    '/leadcapturesearch'); // to connect screen
 //              }),
 //        ],
+        backgroundColor: Color(0xFFFFFFFF),
         title: new Text(pageName,
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
       ),
