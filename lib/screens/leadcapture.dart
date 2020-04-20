@@ -43,6 +43,7 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
 
   var username = "User Name";
 
+
   final pageName = "ගොවිමහතාගේ තොරතුරු";
 
   address(BuildContext context) => Padding(

@@ -27,6 +27,9 @@ class _CartScreenState extends State<CartScreen> {
   bool _permission = false;
   String error;
 
+  double lat = 0.0;
+  double lon = 0.0;
+
 
   VegetableService vegservice = VegetableService();
 
@@ -111,7 +114,7 @@ class _CartScreenState extends State<CartScreen> {
       AutoSizeText(
         'නොමිලේ ප්‍රතිශතය',
         textAlign: TextAlign.center,
-        style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+        style: TextStyle(fontWeight: FontWeight.bold),
         maxLines: 2,
       ),
       AutoSizeText(
@@ -202,6 +205,8 @@ class _CartScreenState extends State<CartScreen> {
 
 
 
+
+
     return Table(
         defaultVerticalAlignment: TableCellVerticalAlignment.middle,
         border: new TableBorder(
@@ -210,6 +215,110 @@ class _CartScreenState extends State<CartScreen> {
             ),
         children: rows);
   }
+
+  locationButton(BuildContext context) => Padding(
+    padding: const EdgeInsets.all(0),
+    child: Container(
+      width: double.infinity,
+      height: 50,
+      child: RaisedButton(
+        color: Color.fromRGBO(0, 0, 0, 0.9),
+        onPressed: () async {
+          if(vegservice.getVegstobeSaved().length>0){
+
+            var currentLocation = null;
+            mylocation.PermissionStatus _permission ;
+
+            mylocation.LocationData location;
+
+
+            try {
+              bool serviceStatus = await _locationService.serviceEnabled();
+              print("Service status: $serviceStatus");
+              if (serviceStatus) {
+                _permission = await _locationService.requestPermission();
+                print("Permission: $_permission");
+                if (_permission==mylocation.PermissionStatus.granted) {
+                  location = await _locationService.getLocation();
+                  print('start lat ${location.latitude.toString()} ?');
+                  print('start lng  ${location.longitude.toString()} ?');
+
+                  print('lat long');
+                  print(location.latitude.toString());
+                  print(location.longitude.toString());
+
+                  lat = location.latitude;
+                  lon = location.longitude;
+
+                  vegservice.saveLatLon( lat, lon);
+
+
+                  Alert(
+                    context: context,
+                    type: AlertType.success,
+                    title: "Location",
+                    desc: "permission ${location.latitude.toString()} Longitude ${location.longitude.toString()} ",
+                    buttons: [
+                      DialogButton(
+                        child: Text(
+                          "close",
+                          style: TextStyle(color: Colors.white, fontSize: 20),
+                        ),
+                        onPressed: () => Navigator.pop(context),
+                        width: 120,
+                      )
+                    ],
+                  ).show();
+
+
+                  // await _goToMyLocation(location.latitude, location.longitude);
+                } else {
+                  print('permission not available');
+                  Alert(
+                    context: context,
+                    type: AlertType.error,
+                    title: "Unable to Retrieve Location",
+                    desc: "permission ${location.latitude.toString()} Longitude ${location.longitude.toString()} ",
+                    buttons: [
+                      DialogButton(
+                        child: Text(
+                          "close",
+                          style: TextStyle(color: Colors.white, fontSize: 20),
+                        ),
+                        onPressed: () => Navigator.pop(context),
+                        width: 120,
+                      )
+                    ],
+                  ).show();
+                  //_showDialog();
+                }
+              }
+            } on PlatformException catch (e) {
+              if (e.code == 'PERMISSION_DENIED') {
+                error = e.message;
+                print('permission denied');
+              } else if (e.code == 'SERVICE_STATUS_ERROR') {
+                error = e.message;
+              }
+              location = null;
+            } on Exception catch (ex) {
+              print(ex);
+
+              error = ex.toString();
+            }
+
+
+          }else{
+
+          }
+
+
+        },
+        child: Text("Location",
+            style: TextStyle(color: Colors.white, fontSize: 20)),
+      ),
+    ),
+  );
 
 
   submitRequestButton(BuildContext context) => Padding(
@@ -397,15 +506,13 @@ class _CartScreenState extends State<CartScreen> {
                 child: Column(
                   children: [
                     listViewVegs(context),
-
-
                   ],
-
                 ),
               ),
             ),
           ),
           submitRequestButton(context),
+          locationButton(context),
         ],
       ),
     );
