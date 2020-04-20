@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:goviwiruvo_app/customwidget/multiselectdialog.dart';
 import 'package:goviwiruvo_app/model/VegetableModel.dart';
-
+import 'package:goviwiruvo_app/services/vegetableservice.dart';
 
 class LeadCaptureScreen extends StatefulWidget {
   @override
@@ -12,7 +12,7 @@ class LeadCaptureScreen extends StatefulWidget {
 
 class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
   final _formKey = GlobalKey<FormState>();
-
+  VegetableService vs = VegetableService();
   bool _autoValidate = false;
 
   final addressController = TextEditingController();
@@ -41,33 +41,11 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
 
   String selectedArea = null;
 
-  final items = <MultiSelectDialogItem<int>>[
-    MultiSelectDialogItem(1, 'Auto Loan'),
-    MultiSelectDialogItem(2, 'Educational Loan'),
-    MultiSelectDialogItem(3, 'Business Loan'),
-    MultiSelectDialogItem(4, 'Business 1'),
-    MultiSelectDialogItem(5, 'Business 2'),
-    MultiSelectDialogItem(6, 'Business 3'),
-    MultiSelectDialogItem(7, 'Business 4'),
-    MultiSelectDialogItem(8, 'Business 5'),
-    MultiSelectDialogItem(9, 'Business 6'),
-    MultiSelectDialogItem(10, 'Business 7'),
-    MultiSelectDialogItem(11, 'Business 8'),
-    MultiSelectDialogItem(12, 'Business 9'),
-    MultiSelectDialogItem(13, 'Business 10'),
-    MultiSelectDialogItem(14, 'Business 11'),
-    MultiSelectDialogItem(15, 'Business 12'),
-  ];
-
-  DateTime selectedDate = null;
-
-  Set<int> selectedValues = new Set();
-
   var username = "User Name";
 
   final pageName = "ගොවිමහතාගේ තොරතුරු";
 
-  vegetable(BuildContext context) => Padding(
+  address(BuildContext context) => Padding(
         padding: const EdgeInsets.only(top: 8.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -75,36 +53,10 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
             Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "එළවළු වර්ගය",
+                  "ලිපිනය",
                   style: TextStyle(fontWeight: FontWeight.bold),
                   textAlign: TextAlign.left,
                 )),
-            Container(
-              child: Row(
-                children: <Widget>[
-                  Icon(Icons.restaurant_menu),
-                  Padding(
-                    padding: EdgeInsets.only(left: 8, right: 8),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      );
-
-  area(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(top: 8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-          "ලිපිනය",
-          style: TextStyle(fontWeight: FontWeight.bold),
-          textAlign: TextAlign.left,
-        )),
             Container(
               child: Row(
                 children: <Widget>[
@@ -113,8 +65,12 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
 //                    padding: EdgeInsets.only(left: 8, right: 8),
 //                  ),
                   Expanded(
-
-              child: TextFormField(
+                    child: TextFormField(
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return ('Address Invalid');
+                        }
+                      },
 //
 //              decoration: InputDecoration(
 ////                        fillColor: Colors.black,
@@ -130,11 +86,11 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
 //
 //                labelText: 'ලිපිනය'
 //            ),
-                maxLines: null,
-                keyboardType: TextInputType.multiline,
-                controller: addressController,
-                textAlign: TextAlign.left,
-  ),
+                      maxLines: null,
+                      keyboardType: TextInputType.multiline,
+                      controller: addressController,
+                      textAlign: TextAlign.left,
+                    ),
                   ),
                 ],
               ),
@@ -164,7 +120,11 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
 //                  ),
                   Expanded(
                     child: TextFormField(
-
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return ('Name Invalid');
+                        }
+                      },
                       controller: nameController,
                       textAlign: TextAlign.left,
                     ),
@@ -197,6 +157,11 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
 //                  ),
                   Expanded(
                     child: TextFormField(
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return ('Contact number Invalid');
+                        }
+                      },
                       keyboardType: TextInputType.number,
                       controller: contactNoController,
                       textAlign: TextAlign.left,
@@ -230,6 +195,12 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
 //                  ),
                   Expanded(
                     child: TextFormField(
+                      validator: (value) {
+                        if(value.isEmpty){
+                          return ('WhatsApp number invalid');
+                        }
+
+                      },
                       keyboardType: TextInputType.number,
                       controller: whatappContactNoController,
                       textAlign: TextAlign.left,
@@ -241,7 +212,6 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
           ],
         ),
       );
-
 
   coordinationOfficerNumber(BuildContext context) => Padding(
         padding: const EdgeInsets.only(top: 8),
@@ -264,11 +234,15 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
 //                  ),
                   Expanded(
                     child: TextFormField(
-                      controller: coordinationOfficerTextController,
-                      textAlign: TextAlign.left,
-                        keyboardType: TextInputType.number
+                        validator: (value) {
+                          if(value.isEmpty){
+                            return ('Coordinator number Invalid.');
+                          }
 
-                    ),
+                        },
+                        controller: coordinationOfficerTextController,
+                        textAlign: TextAlign.left,
+                        keyboardType: TextInputType.number),
                   ),
                 ],
               ),
@@ -277,345 +251,6 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
         ),
       );
 
-  customerNIC(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(top: 8),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  "Customer NIC",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.left,
-                )),
-            Container(
-              child: Row(
-                children: <Widget>[
-                  Icon(Icons.perm_identity),
-                  Padding(
-                    padding: EdgeInsets.only(left: 8, right: 8),
-                  ),
-                  Expanded(
-                    child: TextFormField(
-                      controller: nicController,
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      );
-
-  products(BuildContext context) {
-    selectedProductListStrNames = "";
-
-    if (selectedValues != null) {
-      selectedValues.forEach((element) => selectedProductListStrNames =
-          selectedProductListStrNames +
-              items.elementAt(element - 1).label +
-              ",");
-    } else {
-      selectedValues = Set();
-    }
-
-    return Padding(
-      padding: const EdgeInsets.only(top: 8),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Align(
-              alignment: Alignment.topLeft,
-              child: Text(
-                "Products",
-                style: TextStyle(fontWeight: FontWeight.bold),
-                textAlign: TextAlign.left,
-              )),
-          Container(
-            child: Row(
-              children: <Widget>[
-                Icon(Icons.shopping_cart),
-                Padding(
-                  padding: EdgeInsets.only(left: 8, right: 8),
-                ),
-                Expanded(
-                  child: MaterialButton(
-                    child: selectedValues.length == 0
-                        ? Text(
-                            "Select Products",
-                            style: selectedValues.length == 0
-                                ? TextStyle(color: Colors.red)
-                                : TextStyle(color: Colors.black),
-                          )
-                        : Text(
-                            "${selectedProductListStrNames}",
-                            textAlign: TextAlign.center,
-                          ),
-                    onPressed: () {
-                      _showMultiSelect(context);
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Future<Null> _selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
-        context: context,
-        initialDate: selectedDate == null
-            ? DateTime.now().add(
-                Duration(days: 2),
-              )
-            : selectedDate,
-        firstDate: DateTime.now(),
-        lastDate: DateTime(2022));
-    if (picked != null && picked != selectedDate) print(picked.day);
-//    setState(() {
-//      selectedDate = picked;
-//    });
-  }
-
-  targetDate(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(top: 8),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  "Target Date",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.left,
-                )),
-            Container(
-              child: Row(
-                children: <Widget>[
-                  Icon(Icons.calendar_today),
-                  Padding(
-                    padding: EdgeInsets.only(left: 8, right: 8),
-                  ),
-                  Expanded(
-                    child: MaterialButton(
-                        child: Text(selectedDate == null
-                            ? "Select Date"
-                            : "${selectedDate.toLocal().day} - ${selectedDate.toLocal().month} - ${selectedDate.toLocal().year}"),
-                        onPressed: () => _selectDate(context)),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      );
-
-////                            subtitle: Text(todo.vegList[index].grade.toString(), style: TextStyle(color: Colors.black45,
-////                                fontWeight: FontWeight.bold),),
-//
-//                              trailing: Icon(Icons.check_circle, color: Colors.greenAccent,),
-//                            ),
-//                            margin: EdgeInsets.only(bottom: 8, left: 16, right: 16),
-//                          );
-//                        }
-//                    );
-//                },
-//              )
-//          ),
-//        ),
-//      ],
-//    ),
-//  );
-
-//  listViewNew(BuildContext context) =>
-//      Container(
-//        height: MediaQuery.of(context).size.height * 0.1,
-//        child: Container(
-//          height: 0,
-//          width: 0,
-//          child: ListView.builder(
-//              scrollDirection: Axis.horizontal,
-//              itemCount: todo.vegList.length,
-//              itemBuilder: (BuildContext context, int index) {
-//                return Padding(
-//                  padding: const EdgeInsets.all(8.0),
-//                  child: GestureDetector(
-////                    onTap: () =>
-////                        Navigatoar.of(context).pushNamed(todo.vegList[index]),
-//                    child: Container(
-//                      height: MediaQuery
-//                          .of(context)
-//                          .size
-//                          .height * 0.07,
-//                      width: MediaQuery
-//                          .of(context)
-//                          .size
-//                          .width * 0.3,
-//                      child: Center(
-//                        child: Text(
-//                          todo.vegList[index].description.toString(),
-//                          style: TextStyle(
-//                              fontSize: 20,
-//                              color: Colors.white,
-//                              fontWeight: FontWeight.bold),
-//                        ),
-//                      ),
-//                      decoration: BoxDecoration(
-//                        color: Colors.blue,
-//                        shape: BoxShape.rectangle,
-//                        borderRadius: new BorderRadius.circular(8.0),
-////                      image: DecorationImage(
-////                        fit: BoxFit.cover,
-////                        colorFilter: ColorFilter.mode(
-////                            Colors.black.withOpacity(0.4), BlendMode.dstATop),
-////                      image: AssetImage(MyGlobals.MENU_IMAGES[index]),
-////                      ),
-//                        boxShadow: <BoxShadow>[
-//                          BoxShadow(
-//                            color: Colors.black12,
-//                            blurRadius: 10.0,
-//                            offset: Offset(0.0, 10.0),
-//                          ),
-//                        ],
-//                      ),
-//                    ),
-//                  ),
-//                );
-//              }),
-//        );FF
-//        ),
-//      );
-
-//  listviewscroll(BuildContext context) => Padding(
-//    padding: const EdgeInsets.only(top: 8),
-//    child: Column(
-//      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//      children: [
-//
-//        Container(
-//          child: Container(
-//              height: MediaQuery.of(context).size.height*0.15,
-//              child:  Consumer<VegetableModel>(
-//                builder: (context, todo, child){
-//                  print(todo.vegList.length);
-//                  return
-//                    ListView.builder(
-//                        scrollDirection: Axis.horizontal,
-//                        itemCount: todo.vegList.length,
-//                        itemBuilder: (BuildContext context, int index) {
-//                          return Padding(
-//                            padding: const EdgeInsets.all(8.0),
-//                            child: GestureDetector(
-////                    onTap: () =>
-////                        Navigatoar.of(context).pushNamed(todo.vegList[index]),
-////                                Stack(
-////                                  children: <Widget>[
-////                                    Card(
-////                                      color: Colors.blueAccent,
-////                                      child: Container(
-////                                        height: 100,
-////                                        width: 350,
-////                                        child: Column(
-////                                          children: <Widget>[
-////                                            Text(
-////                                              'Day ${widget._dayNumber}',
-////                                              style: TextStyle(
-////                                                color: Colors.white,
-////                                              ),
-////                                            ),
-////                                          ],
-////                                        ),
-////                                      ),
-////                                    ),
-////                                    Positioned(
-////                                      top: 0,
-////                                      right: 0,
-////                                      child: IconButton(
-////                                        onPressed: () {},
-////                                        icon: Icon(Icons.more_vert),
-////                                      ),
-////                                    ),
-////                                  ],
-////                                );
-//                              child: Stack(
-//                                children: <Widget>[
-//
-//                                  Container(
-//                                    height: MediaQuery
-//                                        .of(context)
-//                                        .size
-//                                        .height * 0.15,
-//                                    width: MediaQuery
-//                                        .of(context)
-//                                        .size
-//                                        .width * 0.3,
-//                                    child: Center(
-//                                      child: Column(
-//                                        mainAxisAlignment: MainAxisAlignment.center,
-//                                        children: <Widget>[
-//                                          Text(
-//                                            todo.vegList[index].description.toString(),
-//                                            style: TextStyle(
-//                                                fontSize: 20,
-//                                                color: Colors.white,
-//                                                fontWeight: FontWeight.bold),
-//                                          ),
-//
-////                                      GestureDetector(
-////                                        onTap: () =>null,
-////                                        child: Icon(Icons.remove),
-////                                      ),
-//                                        ],
-//                                      ),
-//                                    ),
-//                                    decoration: BoxDecoration(
-//                                      color: Colors.blue,
-//                                      shape: BoxShape.rectangle,
-//                                      borderRadius: new BorderRadius.circular(8.0),
-////                      image: DecorationImage(
-////                        fit: BoxFit.cover,
-////                        colorFilter: ColorFilter.mode(
-////                            Colors.black.withOpacity(0.4), BlendMode.dstATop),
-////                      image: AssetImage(MyGlobals.MENU_IMAGES[index]),
-////                      ),
-//                                      boxShadow: <BoxShadow>[
-//                                        BoxShadow(
-//                                          color: Colors.black12,
-//                                          blurRadius: 10.0,
-//                                          offset: Offset(0.0, 10.0),
-//                                        ),
-//                                      ],
-//                                    ),
-//                                  ),
-//                                  Positioned(
-//                                    top: 0,
-//                                    right: 0,
-//                                    child: IconButton(
-//                                      onPressed: () {
-//                                        Provider.of<VegetableModel>(context).removeVegToList(todo.vegList[index]);
-//                                      },
-//                                      icon: Icon(Icons.clear,color: Colors.white70,),
-//
-//                                    ),
-//                                  ),
-//                                ],
-//                              ),
-//                            ),
-//                          );
-//                        }
-//                    );
-//                },
-//              )
-//          ),
-//        ),
-//      ],
-//    ),
-//  );
 
   saveLead(BuildContext context) => Padding(
         padding: const EdgeInsets.all(0),
@@ -626,9 +261,8 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
             color: Color.fromRGBO(0, 0, 0, 0.9),
             onPressed: () {
               _validateInputs();
-              Navigator.of(context)
-                  .pushReplacementNamed(
-                  '/cart'); // to connect screen
+
+
 
 //              Navigator.of(context).pushNamed('/cart'); // to connect screen
             },
@@ -643,24 +277,20 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
       child: Column(
         children: <Widget>[
           Expanded(
-            child:
-            SingleChildScrollView(
+            child: SingleChildScrollView(
               child: Container(
                 child: Column(
-
-                    children: <Widget>[
+                  children: <Widget>[
                     SizedBox(height: 15),
                     customerName(context),
                     SizedBox(height: 20),
-                    area(context),
+                    address(context),
                     SizedBox(height: 20),
                     contactnumber(context),
                     SizedBox(height: 20),
                     contactnumberWhatsApp(context),
                     SizedBox(height: 20),
                     coordinationOfficerNumber(context),
-
-
                   ],
                 ),
               ),
@@ -691,17 +321,14 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
                 crossAxisCount: 2,
                 crossAxisSpacing: 8,
                 children: <Widget>[
-                  vegetable(context),
-                  area(context),
+                  address(context),
                   customerName(context),
                   contactnumber(context),
                   contactnumberWhatsApp(context),
-                  customerNIC(context),
-                  products(context),
-                  targetDate(context),
+
                 ]),
           ),
-            saveLead(context),
+          saveLead(context),
         ],
       ),
     );
@@ -726,14 +353,11 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
                 crossAxisCount: 2,
                 crossAxisSpacing: 8,
                 children: <Widget>[
-                  vegetable(context),
-                  area(context),
+                  address(context),
                   customerName(context),
                   contactnumber(context),
 //                  natureOfBusiness(context),
-                  customerNIC(context),
-                  products(context),
-                  targetDate(context),
+
                 ]),
           ),
           saveLead(context),
@@ -767,7 +391,7 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
 //                      '/leadcapturesearch'); // to connect screen
 //                }),
         ],
-          backgroundColor: Color(0xFFFFFFFF),
+        backgroundColor: Color(0xFFFFFFFF),
         title: new Text(pageName,
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
       ),
@@ -788,8 +412,7 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
             return orientation == Orientation.portrait
                 ? LayoutBuilder(builder: (context, constraints) {
                     if (constraints.maxWidth < 600) {
-                      return
-                        _buildVerticalLayout(context);
+                      return _buildVerticalLayout(context);
                     } else {
                       return _buildVerticallTabLayout(context);
                     }
@@ -813,7 +436,16 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
       print('Validated');
 //    If all data are correct then save data to out variables
       _formKey.currentState.save();
+
+
+      vs.saveRequestInfo( nameController.text, addressController.text, contactNoController.text,
+         whatappContactNoController.text,coordinationOfficerTextController.text);
+
+
       _formKey.currentState.reset();
+
+      Navigator.of(context).pushReplacementNamed('/cart'); // to connect screen
+
     } else {
       print('invalid');
 //    If all data are not valid then start auto validation.
@@ -821,22 +453,5 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
 //        _autoValidate = true;
 //      });
     }
-  }
-
-  void _showMultiSelect(BuildContext context) async {
-    Set<int> selectedValuesLocal = await showDialog<Set<int>>(
-      context: context,
-      builder: (BuildContext context) {
-        return MultiSelectDialog(
-          items: items,
-          initialSelectedValues:
-              selectedValues.length == 0 ? [1].toSet() : selectedValues.toSet(),
-        );
-      },
-    );
-
-//    setState(() {
-//      selectedValues = selectedValuesLocal;
-//    });
   }
 }

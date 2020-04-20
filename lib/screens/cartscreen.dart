@@ -73,6 +73,10 @@ class _CartScreenState extends State<CartScreen> {
                   style: TextStyle(fontWeight: FontWeight.bold),
                   textAlign: TextAlign.left,
                 )),
+
+            new Divider(
+              color: Colors.red,
+            ),
             Container(
               height: MediaQuery.of(context).size.height / 2,
               //  color: Colors.white,

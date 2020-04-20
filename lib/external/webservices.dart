@@ -1,4 +1,5 @@
 import 'package:goviwiruvo_app/dto/vegetableload.dart';
+import 'package:goviwiruvo_app/dto/vegetablerequestdto.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -6,10 +7,11 @@ import 'package:http/http.dart' as http;
 class WebServiceCall {
 
 
-  static final String postsURL = "http://13.71.48.65:3000/vegetables";
+  static final String getURL = "http://13.71.48.65:3000/vegetables";
+  static final String postURL = "http://13.71.48.65:3000/createVegetableList";
 
   static Future<List<VegetableLoad>> getVegetables() async {
-    Response res = await get(postsURL);
+    Response res = await get(getURL);
 
     if (res.statusCode == 200) {
       List<dynamic> body = jsonDecode(res.body);
@@ -29,26 +31,25 @@ class WebServiceCall {
     }
   }
 
-//  static Future<http.Response> validateUserPOST(AuthTokenDTO ath) async {
-//    String _validateurl = '${MyGlobals.hostURL}/login/authenticate';
-//
-//    Future<http.Response> response = null;
-//
-//    String token = "";
-//    token = json.encode(ath.toJson());
-//
-//    print("json map :"+token);
-//
-//    try {
-//      response = http.post(_validateurl,
-//          headers: {"Content-Type": "application/json"}, body: token);
-//    } on Exception catch (e) {
-//      print(e);
-//
-//    }
-//    return response;
-//  }
+  static Future<http.Response> createVegRequestPOST(VegetableRequest vegetableRequest) async {
 
+    Future<http.Response> response = null;
+
+    String bodyd = "";
+    bodyd = json.encode(vegetableRequest.toJson());
+
+    print("json map :"+bodyd);
+
+    try {
+      response = http.post(postURL,
+          headers: {"Content-Type": "application/json"}, body: bodyd);
+    } on Exception catch (e) {
+      print(e);
+
+    }
+    return response;
+  }
+//
 //  static Future<http.Response> changeJobStatus(ResetPasswordDTO resetPasswordDTO) async {
 //    String _changeResponse = '${MyGlobals.hostURL}/login/reset';
 //
