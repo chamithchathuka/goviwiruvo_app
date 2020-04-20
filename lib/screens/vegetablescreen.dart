@@ -299,6 +299,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                   inputFormatters: [
                     WhitelistingTextInputFormatter.digitsOnly
                   ],
+                  keyboardType: TextInputType.number,
                   controller: freeprecentagecontroller,
                   maxLength: 6,
                   validator: (value) {
@@ -313,7 +314,6 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                   onSaved: (val) =>
                       setState(() => veggi.freePercentage = int.parse(val)),
                   textAlign: TextAlign.left,
-                  keyboardType: TextInputType.number,
                 ),
               ),
             ],

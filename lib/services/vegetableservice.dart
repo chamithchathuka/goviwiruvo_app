@@ -50,8 +50,10 @@ class VegetableService {
     vegetableRequest.vegset = vegitablesToBeSaved;
     http.Response response =
         await WebServiceCall.createVegRequestPOST(vegetableRequest);
+    print('response code ${response.statusCode}');
 
     if (response.statusCode == 200) {
+
       return true;
     } else {
       if (response != null) {

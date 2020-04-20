@@ -161,9 +161,15 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
                         if (value.isEmpty) {
                           return ('Contact number Invalid');
                         }
-                      },
+                        if (value.length<10) {
+                          return ('Contact number Invalid');
+                        }
+                      },inputFormatters: [
+                      WhitelistingTextInputFormatter.digitsOnly
+                      ],
                       keyboardType: TextInputType.number,
                       controller: contactNoController,
+                      maxLength: 10,
                       textAlign: TextAlign.left,
                     ),
                   ),
@@ -199,9 +205,15 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
                         if(value.isEmpty){
                           return ('WhatsApp number invalid');
                         }
-
+                        if (value.length<10) {
+                          return ('Contact number Invalid');
+                        }
                       },
+                      inputFormatters: [
+                        WhitelistingTextInputFormatter.digitsOnly
+                      ],
                       keyboardType: TextInputType.number,
+                      maxLength: 10,
                       controller: whatappContactNoController,
                       textAlign: TextAlign.left,
                     ),
@@ -238,11 +250,19 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
                           if(value.isEmpty){
                             return ('Coordinator number Invalid.');
                           }
+                          if (value.length<10) {
+                            return ('Contact number Invalid');
+                          }
 
                         },
+                        maxLength: 10,
                         controller: coordinationOfficerTextController,
                         textAlign: TextAlign.left,
-                        keyboardType: TextInputType.number),
+                      inputFormatters: [
+                        WhitelistingTextInputFormatter.digitsOnly
+                      ],
+                      keyboardType: TextInputType.number,
+                    ),
                   ),
                 ],
               ),

@@ -11,6 +11,8 @@ import 'package:goviwiruvo_app/external/webservices.dart';
 import 'package:goviwiruvo_app/model/VegetablLoadModel.dart';
 import 'package:goviwiruvo_app/model/VegetableModel.dart';
 import 'package:goviwiruvo_app/services/vegetableservice.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:location/location.dart';
 
 class CartScreen extends StatefulWidget {
   @override
@@ -196,6 +198,160 @@ class _CartScreenState extends State<CartScreen> {
         children: rows);
   }
 
+
+  submitRequestButton(BuildContext context) => Padding(
+    padding: const EdgeInsets.all(0),
+    child: Container(
+      width: double.infinity,
+      height: 50,
+      child: RaisedButton(
+        color: Color.fromRGBO(0, 0, 0, 0.9),
+        onPressed: () async {
+
+
+          if(vegservice.getVegstobeSaved().length>0){
+
+            Location location = new Location();
+
+            bool _serviceEnabled;
+            PermissionStatus _permissionGranted;
+            LocationData _locationData;
+
+            _serviceEnabled = await location.serviceEnabled();
+            if (!_serviceEnabled) {
+              _serviceEnabled = await location.requestService();
+              if (!_serviceEnabled) {
+                return;
+              }
+            }
+
+            _permissionGranted = await location.hasPermission();
+            if (_permissionGranted == PermissionStatus.denied) {
+              _permissionGranted = await location.requestPermission();
+              if (_permissionGranted != PermissionStatus.granted) {
+                return;
+              }
+            }
+
+            _locationData = await location.getLocation();
+
+            print(' lat ${_locationData.latitude}. long  - ${_locationData.longitude}');
+
+            Alert(
+                context: context,
+                title: "Submit Confirmation",
+                content: Column(
+                  children: <Widget>[
+//                  Padding(
+//                    padding: const EdgeInsets.all(10.0),
+//                    child: Image.network(
+//                      'https://avatars2.githubusercontent.com/u/17052727?s=400&v=4',
+//                    ),
+//                  ),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text(
+                        'Are you sure you want to submit?',
+                      ),
+                    )
+                  ],
+                ),
+                buttons: [
+                  DialogButton(
+                    color: Colors.teal,
+                    onPressed: () => Navigator.pop(context),
+                    child: Text(
+                      "Cancel",
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                    ),
+                  ),
+                  DialogButton(
+                    onPressed: () async {
+
+                      bool issuccess  = await vegservice.callWebServicePostRequest();
+
+                      print( issuccess);
+
+                      Navigator.pop(context);
+
+
+                      if(issuccess){
+                        Alert(
+                          context: context,
+                          type: AlertType.success,
+                          title: "Result Message",
+                          desc: "Success.",
+                          buttons: [
+                            DialogButton(
+                              child: Text(
+                                "COOL",
+                                style: TextStyle(color: Colors.white, fontSize: 20),
+                              ),
+                              onPressed: () => Navigator.pop(context),
+                              width: 120,
+                            )
+                          ],
+                        ).show();
+                      }else{
+                        Alert(
+                          context: context,
+                          type: AlertType.error,
+                          title: "Result Message",
+                          desc: "Failed.",
+                          buttons: [
+                            DialogButton(
+                              child: Text(
+                                "Error Occurred. Please try again. ",
+                                style: TextStyle(color: Colors.white, fontSize: 20),
+                              ),
+                              onPressed: () => Navigator.pop(context),
+                              width: 120,
+                            )
+                          ],
+                        ).show();
+                      }
+                      //Navigator.pop(context);
+//                    await storage.deleteAll();
+//                    Navigator.of(context).pushNamedAndRemoveUntil(
+//                        '/login', (Route<dynamic> route) => false);
+////                          Navigator.of(context).popAndPushNamed(
+////                              '/login'); // to connect screen
+                    },
+                    child: Text(
+                      "Confirm",
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                    ),
+                  ),
+                ]).show();
+          }else{
+            Alert(
+              context: context,
+              type: AlertType.error,
+              title: "Cannot Submit",
+              desc: "Cart is Empty.",
+              buttons: [
+                DialogButton(
+                  child: Text(
+                    "close",
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                  onPressed: () => Navigator.pop(context),
+                  width: 120,
+                )
+              ],
+            ).show();
+          }
+
+
+        },
+        child: Text("Submit",
+            style: TextStyle(color: Colors.white, fontSize: 20)),
+      ),
+    ),
+  );
+
+
+
   Widget buildBody(BuildContext ctxt, int index) {
     return Text(vegitablesToBeSaved[index].vegetableDescription);
   }
@@ -231,12 +387,24 @@ class _CartScreenState extends State<CartScreen> {
 
   _buildVerticalLayout(BuildContext context) {
     return Container(
-      child: SingleChildScrollView(
-        child: Container(
-          child: Column(
-            children: [listViewVegs(context)],
+      child: Column(
+        children: <Widget>[
+          Expanded(
+            child: SingleChildScrollView(
+              child: Container(
+                child: Column(
+                  children: [
+                    listViewVegs(context),
+
+
+                  ],
+
+                ),
+              ),
+            ),
           ),
-        ),
+          submitRequestButton(context),
+        ],
       ),
     );
   }
