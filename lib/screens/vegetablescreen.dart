@@ -29,13 +29,16 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
   final freeprecentagecontroller = TextEditingController();
   VegetableService vegservice = VegetableService();
 
-  bool isDataLoaded = false;
 
+  List<DropdownMenuItem<VegetableLoad>> _vegLoadItems;
+  VegetableLoad _selectedVegetable;
+
+  bool isDataLoaded = false;
   bool isErrorOccurred = false;
 
   List<String> qualitygrades = ['Please Select', '1', '2', '3'];
 
-  List<VegetableLoad> _vegetable = [];
+  List<VegetableLoad> _vegetableList = [];
 
   List<String> veggiesList = ['Please Select'];
 
@@ -71,6 +74,12 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
 
   final pageName = "බෝග එකතු කරන්න";
 
+  onChangeDropDownItem(VegetableLoad vegetableLoad){
+    setState(() {
+      _selectedVegetable = vegetableLoad;
+    });
+  }
+
   vegetable(BuildContext context) => Padding(
         padding: const EdgeInsets.only(top: 8.0),
         child: Column(
@@ -90,29 +99,49 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                       ? CircularProgressIndicator()
                       : Expanded(
                           child: DropdownButtonFormField(
-                            validator: (value) {
-                              if (selectedVegetable .isEmpty) {
-                                return 'බෝග වර්ගය තෝරන්න';
-                              }
-                            },
-                              items: veggiesList
-                                .map(
-                                  (value) => DropdownMenuItem(
-                                    child: Text('${value}'),
-                                    value: value,
-                                  ),
-                                )
-                                .toList(),
-                            onChanged: (String value) {
-                              setState(() {
-                                selectedVegetable = value;
-                                print("Selected Channel  - $value");
+                            value: _selectedVegetable,
+                            items: _vegLoadItems,
+                            onChanged: onChangeDropDownItem,
+//                            validator: (value) {
+//                              if (selectedVegetable.contains('Select')) {
+//                                return 'Select Veg.';
+//                              }
+//                            },
+//                              items:veggiesList.map((String ){
+//                                return DropdownMenuItem<String>(
+//                                  value: val.description,
+//                                  child: new Text(val.description),
+//                                );
+//                              }).toList(),
+//                              hint:Text(_SelectdType),
+//                              onChanged:(String val){
+//                                _SelectdType= val;
+//                                setState(() {});
+//                              }
 
-
-                              });
-                            },
-                            onSaved: (val) =>
-                                setState(() { veggi.vegetableDescription = val;}),
+//                            validator: (value) {
+//                              if (selectedVegetable .isEmpty) {
+//                                return 'බෝග වර්ගය තෝරන්න';
+//                              }
+//                            },
+//                              items: veggiesList
+//                                .map(
+//                                  (value) => DropdownMenuItem(
+//                                    child: Text('${value}'),
+//                                    value: value,
+//                                  ),
+//                                )
+//                                .toList(),
+//                            onChanged: (String value) {
+//                              setState(() {
+//                                selectedVegetable = value;
+//                                print("Selected Channel  - $value");
+//
+//
+//                              });
+//                            },
+//                            onSaved: (val) =>
+//                                setState(() { veggi.vegetableDescription = val;}),
 //                            value: selectedVegetable == ''
 //                          ? 'Selected Value'
 //                          : selectedVegetable,
@@ -390,33 +419,27 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
   }
 
   void loadData() async {
-    List<VegetableLoad> vegetables = await WebServiceCall.getVegetables();
+//    List<VegetableLoad> vegetables = await WebServiceCall.getVegetables();
+    _vegetableList = await WebServiceCall.getVegetables();
+    _vegLoadItems = buildDropDownMenuItems(_vegetableList);
+    _selectedVegetable = _vegLoadItems[0].value;
 
     setState(() {
       isDataLoaded = true;
-
-      for (var i = 0; i < vegetables.length; i++) {
-        veggiesList.add(vegetables[i].description);
-      }
     });
+  }
 
+  List<DropdownMenuItem<VegetableLoad>> buildDropDownMenuItems(List vegebleLoads){
+    List<DropdownMenuItem<VegetableLoad>> items = List();
 
+    for (VegetableLoad vegetable in vegebleLoads){
+      items.add(DropdownMenuItem(
+          value:vegetable ,
+          child:Text(vegetable.description)
+      ));
+    }
 
-//
-//    try {
-//      assignedJobs = await webs.WebServiceCall.loadAssignedDatawithDate(date);
-//      setState(() {
-//        isLoadingDone = true;
-//        isErrorOccurred = false;
-//      });
-//    } catch (e) {
-//      print(e);
-////      print("Connection exception occurred. ");
-//      setState(() {
-//        isLoadingDone = true;
-//        isErrorOccurred = true;
-//      });
-//    }
+    return items;
   }
 
   Future<Null> _selectDate(BuildContext context) async {
@@ -648,7 +671,8 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
       print('Validated 3');
         _formKey.currentState.save();
         Vegset v2 = Vegset();
-        v2.vegetableDescription = selectedVegetable;
+        v2.vegetableDescription = _selectedVegetable.description;
+        v2.vegId = _selectedVegetable.id;
         v2.freePercentage = int.parse(freeprecentagecontroller.text);
         v2.grade = int.parse(selectedQualityValue);
         v2.rate= double.parse(rateController.text);

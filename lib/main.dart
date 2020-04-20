@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:goviwiruvo_app/screens/cartscreen.dart';
+import 'package:goviwiruvo_app/screens/leadcapture.dart';
 import 'package:goviwiruvo_app/screens/vegetablescreen.dart';
 
-import 'package:goviwiruvo_app/screens/leadcapture.dart';
 import 'external/webservices.dart';
 import 'model/VegetablLoadModel.dart';
 import 'model/VegetableModel.dart';
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.lightBlue[50],
         fontFamily: 'Montserrat',
       ),
-      home:LeadCaptureScreen(),
+      home:VegitableAddScreen(),
 
 
 
