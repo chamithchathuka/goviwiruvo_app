@@ -46,6 +46,16 @@ class VegetableService {
 
   }
 
+  saveLatLon(double lat,double long) {
+
+    vegetableRequest.lat = lat;
+    vegetableRequest.lon = long;
+
+    print('name in service lat lon - ${vegetableRequest.lat} ${vegetableRequest.lon}');
+
+
+  }
+
   Future<bool> callWebServicePostRequest() async {
     vegetableRequest.vegset = vegitablesToBeSaved;
     http.Response response =
