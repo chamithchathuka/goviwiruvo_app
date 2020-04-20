@@ -46,7 +46,7 @@ class _CartScreenState extends State<CartScreen> {
 
   var username = "User Name";
 
-  final pageName = "Vegetable List";
+  final pageName = "මිලදීගත් බෝග";
 
   @override
   void initState() {
@@ -69,25 +69,64 @@ class _CartScreenState extends State<CartScreen> {
       children: [
         Align(
             alignment: Alignment.topLeft,
-            child: Text(
+            child:
+            Text(
               "Cart Vegetable List",
               style: TextStyle(fontWeight: FontWeight.bold),
               textAlign: TextAlign.left,
             )),
         Container(
           height: MediaQuery.of(context).size.height/2,
-          child: ListView.builder
-            (
-              itemCount: vegitablesToBeSaved.length,
-              itemBuilder: (BuildContext ctxt, int index) {
-                return new Text('${vegitablesToBeSaved[index].vegetableDescription}');
-              }
-          )
+        //  color: Colors.white,
+        //  padding: EdgeInsets.all(20.0),
+          child:
+          createTable(),
+
+//          ListView.builder
+//            (
+//              itemCount: vegitablesToBeSaved.length,
+//              itemBuilder: (BuildContext ctxt, int index) {
+//                return new Text('${vegitablesToBeSaved[index].vegetableDescription}');
+//              }
+//          )
         ),
       ],
     ),
   );
 
+
+  Widget createTable() {
+    List<TableRow> rows = [];
+    for (int i = 0; i < vegitablesToBeSaved.length; ++i) {
+      rows.add(
+          TableRow(
+              children: [
+                SizedBox(height: 15),//SizeBox Widget
+                SizedBox(height: 15),
+                SizedBox(height: 15),
+                SizedBox(height: 15),
+                SizedBox(height: 15)
+              ]
+          )
+
+      );
+      rows.add(TableRow(
+          children: [
+        Text(i.toString()),
+        Text('${vegitablesToBeSaved[i].vegetableDescription}'),
+        Text("squared " + (i * i).toString()),
+        Text("squared " + (i * i).toString()),
+        Text("squared " + (i * i).toString())
+      ]));
+    }
+    return Table(
+        defaultVerticalAlignment:TableCellVerticalAlignment.middle,
+        border: new TableBorder(
+//            horizontalInside:   new BorderSide(color: Colors.black),
+        //    horizontalInside: new BorderSide(color: Colors.black)
+        ),
+        children: rows);
+  }
 
   Widget buildBody(BuildContext ctxt, int index) {
     return Text(vegitablesToBeSaved[index].vegetableDescription);
@@ -206,6 +245,7 @@ class _CartScreenState extends State<CartScreen> {
 //                    '/leadcapturesearch'); // to connect screen
 //              }),
 //        ],
+        backgroundColor: Color(0xFFFFFFFF),
         title: new Text(pageName,
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
       ),

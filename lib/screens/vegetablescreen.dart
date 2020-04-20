@@ -511,10 +511,15 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
               child: Container(
                 child: Column(
                   children: [
+                    SizedBox(height: 15),
                     vegetable(context),
+                    SizedBox(height: 20),
                     weight(context),
+                    SizedBox(height: 20),
                     quality(context),
+                    SizedBox(height: 20),
                     rate(context),
+                    SizedBox(height: 20),
                     freeprecentage(context)
                   ],
                 ),
