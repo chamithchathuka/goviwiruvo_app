@@ -738,8 +738,9 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
         v2.grade = selectedQualityValue;
         v2.rate= double.parse(rateController.text);
         v2.quantity= int.parse(weightController.text);
-
+        v2.date = selectedDate;
       vegservice.addVegSet(v2);
+
 
 
       _formKey.currentState.reset();

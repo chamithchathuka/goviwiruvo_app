@@ -365,6 +365,9 @@ class _CartScreenState extends State<CartScreen> {
                   print(location.latitude.toString());
                   print(location.longitude.toString());
 
+                  lat = location.latitude;
+                  lon = location.longitude;
+
                   Alert(
                       context: context,
                       title: "තහවුරු කරන්න",
@@ -398,6 +401,8 @@ class _CartScreenState extends State<CartScreen> {
                         ),
                         DialogButton(
                           onPressed: () async {
+
+                            vegservice.saveLatLon(lat, lon);
 
                             bool issuccess  = await vegservice.callWebServicePostRequest();
 
@@ -459,9 +464,43 @@ class _CartScreenState extends State<CartScreen> {
                  // await _goToMyLocation(location.latitude, location.longitude);
                 } else {
                   print('permission not available');
-
+                  Alert(
+                    context: context,
+                    type: AlertType.error,
+                    title: "Allow GPS Location Access",
+                    desc: "Please allow location access and try again.",
+                    buttons: [
+                      DialogButton(
+                        child: Text(
+                          "Close",
+                          style: TextStyle(color: Colors.white, fontSize: 20),
+                        ),
+                        onPressed: () => Navigator.pop(context),
+                        width: 120,
+                      )
+                    ],
+                  ).show();
                   //_showDialog();
                 }
+              }else{
+                Alert(
+                  context: context,
+                  type: AlertType.error,
+                  title: "Turn on  GPS ",
+                  desc: "Please turn on location try again.",
+                  buttons: [
+                    DialogButton(
+                      child: Text(
+                        "Close",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                      onPressed: () => Navigator.pop(context),
+                      width: 120,
+                    )
+                  ],
+                ).show();
+
+
               }
             } on PlatformException catch (e) {
               if (e.code == 'PERMISSION_DENIED') {
