@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:goviwiruvo_app/screens/cartscreen.dart';
 import 'package:goviwiruvo_app/screens/leadcapture.dart';
 import 'package:goviwiruvo_app/screens/vegetablescreen.dart';
+import 'package:splashscreen/splashscreen.dart';
 
 import 'external/webservices.dart';
 import 'model/VegetablLoadModel.dart';
@@ -28,7 +29,18 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.lightBlue[50],
         fontFamily: 'Montserrat',
       ),
-      home:LeadCaptureScreen(),
+      home:
+       SplashScreen(
+          seconds: 3,
+          navigateAfterSeconds: LeadCaptureScreen(),
+          title: new Text('මව්බිම වෙනුවෙන් එක්වෙමු'),
+          image: new Image.asset('assets/splashimage.png'),
+          backgroundColor: Colors.white,
+          styleTextUnderTheLoader: new TextStyle(),
+          photoSize: 100.0,
+          loaderColor: Colors.red
+      ),
+
 
 
 
