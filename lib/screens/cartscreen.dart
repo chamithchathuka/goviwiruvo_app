@@ -368,7 +368,7 @@ class _CartScreenState extends State<CartScreen> {
                     Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Text(
-                        "ඔබ දත්ත ඇතුලත් කිරීම තහවුරු කරන්න",
+                        "ඔබ දත්ත ඇතුලත් කිරීම ස්තිර කරන්න",
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.black, fontSize: 20),
                       )
@@ -378,7 +378,7 @@ class _CartScreenState extends State<CartScreen> {
                 ),
                 buttons: [
                   DialogButton(
-                    color: Colors.red,
+                    color: Colors.redAccent,
                     onPressed: () => Navigator.pop(context),
                     child: Text(
                       "පෙර මෙනුවට",
@@ -386,6 +386,7 @@ class _CartScreenState extends State<CartScreen> {
                     ),
                   ),
                   keepWaiting?CircularProgressIndicator():DialogButton(
+                    color: Colors.green,
                     onPressed: () async {
 //                      ModalProgressHUD(child: _buildWidget(), inAsyncCall: _saving),
 
@@ -405,8 +406,8 @@ class _CartScreenState extends State<CartScreen> {
 ////                              '/login'); // to connect screen
                     },
                     child: Text(
-          "Confirm",
-          style: TextStyle(color: Colors.white, fontSize: 20),
+          "ස්තිරයි",
+          style: TextStyle(color: Colors.black, fontSize: 20),
           ),
                   ),
                 ]).show();
@@ -421,8 +422,8 @@ class _CartScreenState extends State<CartScreen> {
             Alert(
               context: context,
               type: AlertType.error,
-              title: "Cannot Submit",
-              desc: "Cart is Empty.",
+              title: "ඇතුලත්කල නොහැක",
+              desc: "බෝග වර්ග ඇතුලත්කර උත්සහ කරන්න",
               buttons: [
                 DialogButton(
                   child: Text(
@@ -492,7 +493,7 @@ class _CartScreenState extends State<CartScreen> {
           context: context,
           type: AlertType.error,
           title: "Turn on  GPS ",
-          desc: "Please turn on location try again.",
+          desc: "Please turn on location and try again",
           buttons: [
             DialogButton(
               child: Text(

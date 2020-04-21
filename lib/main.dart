@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
        SplashScreen(
           seconds: 3,
           navigateAfterSeconds: LeadCaptureScreen(),
-          title: new Text('මව්බිම වෙනුවෙන් එක්වෙමු'),
+          title: new Text('ගොවි විරුවන් රැකගනිමු'),
           image: new Image.asset('assets/splashimage.png'),
           backgroundColor: Colors.white,
           styleTextUnderTheLoader: new TextStyle(),
