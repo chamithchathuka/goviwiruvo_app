@@ -102,10 +102,12 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                             value: _selectedVegetable,
                             items: _vegLoadItems,
                             onChanged: onChangeDropDownItem,
-//                            validator: (value) {
-//                              if (selectedVegetable.contains('Select')) {
-//                                return 'Select Veg.';
-//                              }
+                            validator: (value) {
+                              if (_selectedVegetable == null) {
+                                return 'Select Veg.';
+                              }
+                            },
+
 //                            },
 //                              items:veggiesList.map((String ){
 //                                return DropdownMenuItem<String>(
@@ -273,8 +275,10 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                   Expanded(
                     child: DropdownButtonFormField(
                       validator: (value) {
-                        if (selectedQualityValue.contains('Select Quality')) {
+                        if (selectedQualityValue == null) {
                           return 'Select Quality.';
+                        }else if(selectedQualityValue.isEmpty ) {
+                          print('error ');
                         }
                       },
 //                      isExpanded: true,
@@ -288,6 +292,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                       onChanged: (String value) {
                         setState(() {
                           selectedQualityValue = value;
+
                         });
                         onSaved: (val) =>
                             setState(() => veggi.grade = int.parse(val));
@@ -502,9 +507,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
 //                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             onPressed: () {
               _validateInputs();
-              Navigator.of(context)
-                  .pushReplacementNamed(
-                  '/cart'); // to connect screen
+
 //              Navigator.of(context).pop(
 //              );
 //              var rng = new Random(3);
@@ -649,15 +652,15 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                     if (constraints.maxWidth < 600) {
                       return _buildVerticalLayout(context);
                     } else {
-                      return _buildVerticallTabLayout(context);
+                      return _buildVerticalLayout(context);
                     }
                   })
                 : LayoutBuilder(builder: (context, constraints) {
                     if (constraints.maxWidth < 600) {
-                      return _buildHorizontalLayout(context);
+                      return _buildVerticalLayout(context);
                     } else {
                       //Todo Change this
-                      return _buildHorizontalLayout(context);
+                      return _buildVerticalLayout(context);
                     }
                   });
           }),
@@ -679,14 +682,20 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
         v2.quantity= int.parse(weightController.text);
 
       vegservice.addVegSet(v2);
+
+
       _formKey.currentState.reset();
+      Navigator.of(context)
+          .pushReplacementNamed(
+          '/cart'); // to connect screen
+
 
     } else {
       print('invalid');
-//    If all data are not valid then start auto validation.
-      setState(() {
-        _autoValidate = true;
-      });
+    //If all data are not valid then start auto validation.
+//      setState(() {
+//        _autoValidate = true;
+//      });
     }
   }
 

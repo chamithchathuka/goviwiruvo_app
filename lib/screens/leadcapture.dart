@@ -435,15 +435,15 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
                     if (constraints.maxWidth < 600) {
                       return _buildVerticalLayout(context);
                     } else {
-                      return _buildVerticallTabLayout(context);
+                      return _buildVerticalLayout(context);
                     }
                   })
                 : LayoutBuilder(builder: (context, constraints) {
                     if (constraints.maxWidth < 600) {
-                      return _buildHorizontalLayout(context);
+                      return _buildVerticalLayout(context);
                     } else {
                       //Todo Change this
-                      return _buildHorizontalLayout(context);
+                      return _buildVerticalLayout(context);
                     }
                   });
           }),
