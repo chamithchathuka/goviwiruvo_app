@@ -423,7 +423,15 @@ class _CartScreenState extends State<CartScreen> {
                                       "",
                                       style: TextStyle(color: Colors.white, fontSize: 20),
                                     ),
-                                    onPressed: () => Navigator.pop(context),
+                                    onPressed: () {
+
+                            Navigator.pop(context);
+                            setState(() {
+                              vegitablesToBeSaved.clear();
+                              vegservice.setNewVegRequest();
+
+                            });
+                            } ,
                                     width: 120,
                                   )
                                 ],

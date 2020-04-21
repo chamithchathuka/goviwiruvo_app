@@ -29,6 +29,7 @@ class VegetableService {
 
   setNewVegRequest() {
     vegetableRequest = VegetableRequest();
+    vegitablesToBeSaved.clear();
   }
 
   saveRequestInfo(String name, String address, String contactNo,
