@@ -203,10 +203,10 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
                   Expanded(
                     child: TextFormField(
                       validator: (value) {
-                        if(value.isEmpty){
-                          return ('දුරකථන අංකය වැරදයි');
-                        }
-                        if (value.length!=10) {
+//                        if(value.isEmpty){
+//                          return ('දුරකථන අංකය වැරදයි');
+//                        }
+                        if (!value.isEmpty && value.length<10) {
                           return ('දුරකථන අංකය වැරදයි');
                         }
                       },
@@ -249,9 +249,9 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
                     child: TextFormField(
                         validator: (value) {
                           if(value.isEmpty){
-                            return ('දුරකථන අංකය වැරදයි');
+                           // return ('Coordinator number Invalid.');
                           }
-                          if (value.length!=10) {
+                          if (!value.isEmpty && value.length<10) {
                             return ('දුරකථන අංකය වැරදයි');
                           }
 
