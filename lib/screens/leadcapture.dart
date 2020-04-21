@@ -253,7 +253,7 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
                           }
                           if (value.length!=10) {
                             return ('දුරකථන අංකය වැරදයි');
-                          }github
+                          }
 
                         },
                         maxLength: 10,
