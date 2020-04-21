@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.lightBlue[50],
         fontFamily: 'Montserrat',
       ),
-      home:VegitableAddScreen(),
+      home:LeadCaptureScreen(),
 
 
 

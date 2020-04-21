@@ -10,6 +10,7 @@ import 'package:goviwiruvo_app/external/webservices.dart';
 import 'package:goviwiruvo_app/model/VegetablLoadModel.dart';
 import 'package:goviwiruvo_app/model/VegetableModel.dart';
 import 'package:goviwiruvo_app/services/vegetableservice.dart';
+import 'package:intl/intl.dart';
 
 class VegitableAddScreen extends StatefulWidget {
   @override
@@ -66,7 +67,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
     MultiSelectDialogItem(15, 'Business 12'),
   ];
 
-  DateTime selectedDate = null;
+  String selectedDate = null;
 
   Set<int> selectedValues = new Set();
 
@@ -253,6 +254,86 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
     ),
   );
 
+  datepicker(BuildContext context) => Padding(
+    padding: const EdgeInsets.only(top: 8),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Align(
+            alignment: Alignment.topLeft,
+            child: Text(
+              "Harvested Date",
+              style: TextStyle(fontWeight: FontWeight.bold),
+              textAlign: TextAlign.left,
+            )),
+        Container(
+          child:
+          FlatButton(
+            child: Text('$selectedDate'),
+            color: Colors.blueAccent,
+            textColor: Colors.white,
+            onPressed: () {
+              print('meek meek');
+
+              DateTime today = new DateTime.now();
+              DateTime before = today.subtract(new Duration(days: 30));
+              DateTime after = today.add(new Duration(days: 30));
+
+
+              showDatePicker(
+                  context: context,
+                  initialDate: today,
+                  firstDate: before,
+                  lastDate: after)
+                  .then((date) {
+                setState(() {
+                  print('date ${date}');
+                  if (date != null) {
+                    var formatter = new DateFormat('dd-MM-yyyy');
+                    String formatted = formatter.format(date);
+                    print(formatted);
+                    selectedDate = formatted;
+                  }
+                });
+              });
+            },
+          ),
+
+//          GestureDetector(
+//            onTap: (){
+//              print('tapped');
+//
+//            showDatePicker(
+//                context: context,
+//                initialDate: DateTime.now(),
+//                firstDate: DateTime(DateTime.now().year),
+//                lastDate: DateTime(DateTime.now().year))
+//                .then((date) {
+//              setState(() {
+//                print('date ${date}');
+//                if (date != null) {
+//                  var formatter = new DateFormat('dd-MM-yyyy');
+//                  String formatted = formatter.format(date);
+//                  print(formatted);
+//                  selectedDate = formatted;
+//                }
+//              });
+//            });
+//
+//            },
+//            child: Row(
+//              children: <Widget>[
+//                Expanded(
+//                  child: Text(selectedDate),
+//                ),
+//              ],
+//            ),
+//          ),
+        ),
+      ],
+    ),
+  );
+
   quality(BuildContext context) => Padding(
         padding: const EdgeInsets.only(top: 8),
         child: Column(
@@ -335,7 +416,8 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                   ],
                   keyboardType: TextInputType.number,
                   controller: freeprecentagecontroller,
-                  maxLength: 6,
+                  maxLength: 3,
+
                   validator: (value) {
                     if(value.isEmpty){
 
@@ -420,6 +502,10 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
   @override
   void initState() {
     super.initState();
+    var now = new DateTime.now();
+    var formatter = new DateFormat('dd-MM-yyyy');
+    String formatted = formatter.format(now);
+    selectedDate = formatted;
     loadData();
   }
 
@@ -463,38 +549,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
 //    });
   }
 
-  targetDate(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(top: 8),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  "Target Date",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.left,
-                )),
-            Container(
-              child: Row(
-                children: <Widget>[
-                  Icon(Icons.calendar_today),
-                  Padding(
-                    padding: EdgeInsets.only(left: 8, right: 8),
-                  ),
-                  Expanded(
-                    child: MaterialButton(
-                        child: Text(selectedDate == null
-                            ? "Select Date"
-                            : "${selectedDate.toLocal().day} - ${selectedDate.toLocal().month} - ${selectedDate.toLocal().year}"),
-                        onPressed: () => _selectDate(context)),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      );
+
 
   saveLead(BuildContext context) => Padding(
         padding: const EdgeInsets.all(0),
@@ -546,7 +601,9 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                     SizedBox(height: 20),
                     rate(context),
                     SizedBox(height: 20),
-                    freeprecentage(context)
+                    freeprecentage(context),
+                    SizedBox(height: 20),
+                    datepicker(context)
                   ],
                 ),
               ),
@@ -576,7 +633,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                   vegetable(context),
                   //customerNIC(context),
                   products(context),
-                  targetDate(context),
+//                  targetDate(context),
                 ]),
           ),
           saveLead(context),
@@ -607,7 +664,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                   vegetable(context),
                   //customerNIC(context),
                   products(context),
-                  targetDate(context),
+//                  targetDate(context),
                 ]),
           ),
           saveLead(context),

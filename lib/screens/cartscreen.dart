@@ -331,12 +331,10 @@ class _CartScreenState extends State<CartScreen> {
         onPressed: () async {
           if(vegservice.getVegstobeSaved().length>0){
 
-            var currentLocation = null;
+//            var currentLocation = null;
             mylocation.PermissionStatus _permission ;
 
             mylocation.LocationData location;
-
-
 
             try {
               bool serviceStatus = await _locationService.serviceEnabled();

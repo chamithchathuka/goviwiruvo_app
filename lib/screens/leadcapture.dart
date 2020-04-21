@@ -454,14 +454,13 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
 
   void _validateInputs() {
     if (_formKey.currentState.validate()) {
-      print('Validated');
-//    If all data are correct then save data to out variables
-      _formKey.currentState.save();
 
+      //    If all data are correct then save data to out variables
+
+      _formKey.currentState.save();
 
       vs.saveRequestInfo( nameController.text, addressController.text, contactNoController.text,
          whatappContactNoController.text,coordinationOfficerTextController.text);
-
 
       _formKey.currentState.reset();
 
