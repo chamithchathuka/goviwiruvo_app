@@ -464,6 +464,71 @@ class _CartScreenState extends State<CartScreen> {
 
           lat = location.latitude;
           lon = location.longitude;
+          
+          vegservice.saveLatLon(lat, lon);
+
+    bool issuccess  = await vegservice.callWebServicePostRequest();
+
+    print( issuccess);
+
+    Navigator.pop(context);
+
+
+    if(issuccess){
+      setState(() {
+
+        keepWaiting = false;
+      });
+
+
+      Alert(
+        context: context,
+        type: AlertType.success,
+        title: "දත්ත ඇතුලත් කිරීම",
+        desc: "සාර්තකයි.",
+        buttons: [
+          DialogButton(
+            child: Text(
+              "",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+            onPressed: () {
+
+              Navigator.pop(context);
+              setState(() {
+                vegitablesToBeSaved.clear();
+                vegservice.setNewVegRequest();
+
+              });
+            } ,
+            width: 120,
+          )
+        ],
+      ).show();
+    }else{
+      setState(() {
+
+        keepWaiting = false;
+      });
+
+      Alert(
+        context: context,
+        type: AlertType.error,
+        title: "දත්ත ඇතුලත් කිරීම",
+        desc: "අසාර්තකයි",
+        buttons: [
+          DialogButton(
+            child: Text(
+              "දෝෂයකි, නැවත උත්සහ කරන්න",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+            onPressed: () => Navigator.pop(context),
+            width: 120,
+          )
+        ],
+      ).show();
+    }
+
 
 
 
@@ -572,70 +637,7 @@ class _CartScreenState extends State<CartScreen> {
       error = ex.toString();
     }
 
-    vegservice.saveLatLon(lat, lon);
-
-    bool issuccess  = await vegservice.callWebServicePostRequest();
-
-    print( issuccess);
-
-    Navigator.pop(context);
-
-
-    if(issuccess){
-      setState(() {
-
-        keepWaiting = false;
-      });
-
-
-      Alert(
-        context: context,
-        type: AlertType.success,
-        title: "දත්ත ඇතුලත් කිරීම",
-        desc: "සාර්තකයි.",
-        buttons: [
-          DialogButton(
-            child: Text(
-              "",
-              style: TextStyle(color: Colors.white, fontSize: 20),
-            ),
-            onPressed: () {
-
-              Navigator.pop(context);
-              setState(() {
-                vegitablesToBeSaved.clear();
-                vegservice.setNewVegRequest();
-
-              });
-            } ,
-            width: 120,
-          )
-        ],
-      ).show();
-    }else{
-      setState(() {
-
-        keepWaiting = false;
-      });
-
-      Alert(
-        context: context,
-        type: AlertType.error,
-        title: "දත්ත ඇතුලත් කිරීම",
-        desc: "අසාර්තකයි",
-        buttons: [
-          DialogButton(
-            child: Text(
-              "දෝෂයකි, නැවත උත්සහ කරන්න",
-              style: TextStyle(color: Colors.white, fontSize: 20),
-            ),
-            onPressed: () => Navigator.pop(context),
-            width: 120,
-          )
-        ],
-      ).show();
-    }
-  }
+   }
 
   Widget buildBody(BuildContext ctxt, int index) {
     return Text(vegitablesToBeSaved[index].vegetableDescription);
