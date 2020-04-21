@@ -82,7 +82,7 @@ class Connector {
 class Vegset {
   String vegetableDescription;
   int vegId;
-  int grade;
+  String grade;
   double rate;
   int quantity;
   String date;

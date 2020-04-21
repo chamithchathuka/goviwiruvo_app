@@ -94,25 +94,31 @@ class _CartScreenState extends State<CartScreen> {
         maxLines: 2,
       ),
       AutoSizeText(
-        'බර (kg)',
+        'බර kg',
         textAlign: TextAlign.center,
         style: TextStyle(fontWeight: FontWeight.bold),
         maxLines: 2,
       ),
       AutoSizeText(
-        'තත්වය',
+        'නොමිලේ ප්‍රමානය kg',
         textAlign: TextAlign.center,
         style: TextStyle(fontWeight: FontWeight.bold),
         maxLines: 2,
       ),
       AutoSizeText(
-        'මිල',
+        'ඒකක මිල',
         textAlign: TextAlign.center,
         style: TextStyle(fontWeight: FontWeight.bold),
         maxLines: 2,
       ),
       AutoSizeText(
-        'නොමිලේ ප්‍රතිශතය',
+          'මුලු මුදල',
+        textAlign: TextAlign.center,
+        style: TextStyle(fontWeight: FontWeight.bold),
+        maxLines: 2,
+      ),
+      AutoSizeText(
+        'දිනය',
         textAlign: TextAlign.center,
         style: TextStyle(fontWeight: FontWeight.bold),
         maxLines: 2,
@@ -121,11 +127,12 @@ class _CartScreenState extends State<CartScreen> {
         '',
         textAlign: TextAlign.center,
         style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
-        maxLines: 2,
+        maxLines: 1,
       ),
     ]));
     rows.add(TableRow(children: [
 //                SizedBox(height: 15),//SizeBox Widget
+      SizedBox(height: 15),
       SizedBox(height: 15),
       SizedBox(height: 15),
       SizedBox(height: 15),
@@ -141,24 +148,29 @@ class _CartScreenState extends State<CartScreen> {
         SizedBox(height: 15),
         SizedBox(height: 15),
         SizedBox(height: 15),
+        SizedBox(height: 15),
         SizedBox(height: 15)
       ]));
+
+      double price =  (vegitablesToBeSaved[i].quantity- vegitablesToBeSaved[i].freePercentage)* vegitablesToBeSaved[i].rate;
 
       rows.add(TableRow(children: [
 //        Text(i.toString()),
         Text('${vegitablesToBeSaved[i].vegetableDescription}'),
         Text(
-          '${vegitablesToBeSaved[i].quantity} KG',
-          textAlign: TextAlign.right,
-        ),
-        Text(
-          '${vegitablesToBeSaved[i].grade}',
+          '${vegitablesToBeSaved[i].quantity}',
           textAlign: TextAlign.center,
         ),
-        Text('Rs.  ${vegitablesToBeSaved[i].rate}',
-          textAlign: TextAlign.right,),
-        Text('${vegitablesToBeSaved[i].freePercentage} %',
-          textAlign: TextAlign.right,),
+        Text(
+          '${vegitablesToBeSaved[i].freePercentage}',
+          textAlign: TextAlign.center,
+        ),
+        Text('${vegitablesToBeSaved[i].rate}',
+          textAlign: TextAlign.center,),
+        Text('${price}',
+          textAlign: TextAlign.center,),
+        Text('${vegitablesToBeSaved[i].date}',
+          textAlign: TextAlign.center,),
         GestureDetector(
           child: Icon(Icons.clear),
           onTap: () {
@@ -167,11 +179,12 @@ class _CartScreenState extends State<CartScreen> {
 //              vegitablesToBeSaved.removeAt(i);
             });
           },
-        ),
+        )
       ]));
     }
     rows.add(TableRow(children: [
 //                SizedBox(height: 15),//SizeBox Widget
+      SizedBox(height: 15),
       SizedBox(height: 15),
       SizedBox(height: 15),
       SizedBox(height: 15),
@@ -182,6 +195,7 @@ class _CartScreenState extends State<CartScreen> {
     rows.add(TableRow(children: [
 //                SizedBox(height: 15),//SizeBox Widget
 
+      SizedBox(height: 15),
       SizedBox(height: 15),
       SizedBox(height: 15),
       SizedBox(height: 15),
@@ -353,7 +367,7 @@ class _CartScreenState extends State<CartScreen> {
 
                   Alert(
                       context: context,
-                      title: "Submit Confirmation",
+                      title: "තහවුරු කරන්න",
                       content: Column(
                         children: <Widget>[
 //                  Padding(
@@ -365,18 +379,21 @@ class _CartScreenState extends State<CartScreen> {
                           Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: Text(
-                              'Are you sure you want to submit?',
-                            ),
+                              "ඔබ දත්ත ඇතුලත් කිරීම තහවුරු කරන්න",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: Colors.black, fontSize: 20),
+                            )
+                           ,
                           )
                         ],
                       ),
                       buttons: [
                         DialogButton(
-                          color: Colors.teal,
+                          color: Colors.red,
                           onPressed: () => Navigator.pop(context),
                           child: Text(
-                            "Cancel",
-                            style: TextStyle(color: Colors.white, fontSize: 20),
+                            "පෙර මෙනුවට",
+                            style: TextStyle(color: Colors.black, fontSize: 20),
                           ),
                         ),
                         DialogButton(
@@ -393,12 +410,12 @@ class _CartScreenState extends State<CartScreen> {
                               Alert(
                                 context: context,
                                 type: AlertType.success,
-                                title: "Result Message",
-                                desc: "Success.",
+                                title: "දත්ත ඇතුලත් කිරීම",
+                                desc: "සාර්තකයි.",
                                 buttons: [
                                   DialogButton(
                                     child: Text(
-                                      "COOL",
+                                      "",
                                       style: TextStyle(color: Colors.white, fontSize: 20),
                                     ),
                                     onPressed: () => Navigator.pop(context),
@@ -410,12 +427,12 @@ class _CartScreenState extends State<CartScreen> {
                               Alert(
                                 context: context,
                                 type: AlertType.error,
-                                title: "Result Message",
-                                desc: "Failed.",
+                                title: "දත්ත ඇතුලත් කිරීම",
+                                desc: "අසාර්තකයි",
                                 buttons: [
                                   DialogButton(
                                     child: Text(
-                                      "Error Occurred. Please try again. ",
+                                      "දෝෂයකි, නැවත උත්සහ කරන්න",
                                       style: TextStyle(color: Colors.white, fontSize: 20),
                                     ),
                                     onPressed: () => Navigator.pop(context),

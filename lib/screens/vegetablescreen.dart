@@ -37,7 +37,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
   bool isDataLoaded = false;
   bool isErrorOccurred = false;
 
-  List<String> qualitygrades = ['Please Select', '1', '2', '3'];
+  List<String> qualitygrades = ['තරමක් හොදයි', 'හොදයි', 'ඉතා හොදයි'];
 
   List<VegetableLoad> _vegetableList = [];
 
@@ -165,7 +165,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
         Align(
             alignment: Alignment.topLeft,
             child: Text(
-              "කිලෝ 1ක් සදහා අයකරන මුදල රුපියල්",
+              "ඒකකයක මිල (කිලෝ 1ක් සදහා)",
               style: TextStyle(fontWeight: FontWeight.bold),
               textAlign: TextAlign.left,
             )),
@@ -183,17 +183,17 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                     WhitelistingTextInputFormatter.digitsOnly
                   ],
                   controller: rateController,
-                  maxLength: 6,
+                  maxLength: 7,
                   onSaved: (val) =>
                       setState(() => veggi.rate = double.parse(val)),
                   validator: (value) {
                     if(value.isEmpty){
-                      return ('Rate invalid. 1');
+                      return ('මිල ඇතුලත් කරන්න');
                     }
-                    else
-                    if (int.parse(value) > 2000) {
-                      return ('Rate invalid. 2');
-                    }
+//                    else
+//                    if (int.parse(value) > 2000) {
+//                      return ('මිල වැරදයි');
+//                    }
                   },
                   textAlign: TextAlign.left,
                   keyboardType: TextInputType.number,
@@ -237,11 +237,11 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                   validator: (value) {
 
                     if(value.isEmpty){
-                      return ('Weight invalid.1');
+                      return ('බර ඇතුලත් කරන්න');
                     }
-                    else if (int.parse(value) > 1000) {
-                      return ('Weight invalid.2');
-                    }
+//                    else if (int.parse(value) > 1000) {
+//                      return ('බර වැරදයි');
+//                    }
                   },
                   textAlign: TextAlign.left,
                   keyboardType: TextInputType.number,
@@ -262,7 +262,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
         Align(
             alignment: Alignment.topLeft,
             child: Text(
-              "Harvested Date",
+              "අස්වනු නෙලාගත් දිනය",
               style: TextStyle(fontWeight: FontWeight.bold),
               textAlign: TextAlign.left,
             )),
@@ -270,10 +270,10 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
           child:
           FlatButton(
             child: Text('$selectedDate'),
-            color: Colors.blueAccent,
-            textColor: Colors.white,
+            color: Colors.amberAccent,
+            textColor: Colors.black,
             onPressed: () {
-              print('meek meek');
+           //   print('meek meek');
 
               DateTime today = new DateTime.now();
               DateTime before = today.subtract(new Duration(days: 30));
@@ -357,9 +357,9 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                     child: DropdownButtonFormField(
                       validator: (value) {
                         if (selectedQualityValue == null) {
-                          return 'Select Quality.';
+                          return 'තත්වය ඇතුලත් කරන්න';
                         }else if(selectedQualityValue.isEmpty ) {
-                          print('error ');
+                          return 'තත්වය ඇතුලත් කරන්න';
                         }
                       },
 //                      isExpanded: true,
@@ -376,7 +376,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
 
                         });
                         onSaved: (val) =>
-                            setState(() => veggi.grade = int.parse(val));
+                            setState(() => veggi.grade = val);
                       },
                       value: selectedQualityValue == ''
                           ? ''
@@ -398,7 +398,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
         Align(
             alignment: Alignment.topLeft,
             child: Text(
-              "නොමිලේ දෙන ප්‍රතිශතය (%)",
+              "නොමිලේ දෙන ප්‍රමානය (කිලෝ)",
               style: TextStyle(fontWeight: FontWeight.bold),
               textAlign: TextAlign.left,
             )),
@@ -416,16 +416,16 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                   ],
                   keyboardType: TextInputType.number,
                   controller: freeprecentagecontroller,
-                  maxLength: 3,
+                  maxLength: 7,
 
                   validator: (value) {
                     if(value.isEmpty){
 
-                      return ('invalid Precentage.1');
+                      return ('ප්‍රමානය ඇතුලත් කරන්න');
                     }
-                    if (value.length > 100) {
-                      return ('invalid Precentage.2');
-                    }
+//                    if (value.length > 100) {
+//                      return ('invalid වැරදයි');
+//                    }
                   },
                   onSaved: (val) =>
                       setState(() => veggi.freePercentage = int.parse(val)),
@@ -592,7 +592,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
               child: Container(
                 child: Column(
                   children: [
-                    SizedBox(height: 15),
+                    SizedBox(height: 5),
                     vegetable(context),
                     SizedBox(height: 20),
                     weight(context),
@@ -603,7 +603,8 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                     SizedBox(height: 20),
                     freeprecentage(context),
                     SizedBox(height: 20),
-                    datepicker(context)
+                    datepicker(context),
+                    SizedBox(height: 5)
                   ],
                 ),
               ),
@@ -734,7 +735,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
         v2.vegetableDescription = _selectedVegetable.description;
         v2.vegId = _selectedVegetable.id;
         v2.freePercentage = int.parse(freeprecentagecontroller.text);
-        v2.grade = int.parse(selectedQualityValue);
+        v2.grade = selectedQualityValue;
         v2.rate= double.parse(rateController.text);
         v2.quantity= int.parse(weightController.text);
 
