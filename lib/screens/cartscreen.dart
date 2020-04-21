@@ -11,6 +11,7 @@ import 'package:goviwiruvo_app/external/webservices.dart';
 import 'package:goviwiruvo_app/model/VegetablLoadModel.dart';
 import 'package:goviwiruvo_app/model/VegetableModel.dart';
 import 'package:goviwiruvo_app/services/vegetableservice.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:location/location.dart' as mylocation;
@@ -24,11 +25,15 @@ class _CartScreenState extends State<CartScreen> {
 
   bool _serviceEnabled;
   mylocation.Location _locationService = new mylocation.Location();
-  bool _permission = false;
+  mylocation.PermissionStatus _permission ;
   String error;
 
   double lat = 0.0;
   double lon = 0.0;
+
+
+
+  mylocation.LocationData location;
 
 
   VegetableService vegservice = VegetableService();
@@ -38,6 +43,8 @@ class _CartScreenState extends State<CartScreen> {
   var username = "User Name";
 
   final pageName = "මිලදීගත් බෝග";
+
+  bool keepWaiting = false;
 
   @override
   void initState() {
@@ -346,183 +353,68 @@ class _CartScreenState extends State<CartScreen> {
           if(vegservice.getVegstobeSaved().length>0){
 
 //            var currentLocation = null;
-            mylocation.PermissionStatus _permission ;
 
-            mylocation.LocationData location;
-
-            try {
-              bool serviceStatus = await _locationService.serviceEnabled();
-              print("Service status: $serviceStatus");
-              if (serviceStatus) {
-                _permission = await _locationService.requestPermission();
-                print("Permission: $_permission");
-                if (_permission==mylocation.PermissionStatus.granted) {
-                  location = await _locationService.getLocation();
-                  print('start lat ${location.latitude.toString()} ?');
-                  print('start lng  ${location.longitude.toString()} ?');
-
-                  print('lat long');
-                  print(location.latitude.toString());
-                  print(location.longitude.toString());
-
-                  lat = location.latitude;
-                  lon = location.longitude;
-
-                  Alert(
-                      context: context,
-                      title: "තහවුරු කරන්න",
-                      content: Column(
-                        children: <Widget>[
+            Alert(
+                context: context,
+                title: "තහවුරු කරන්න",
+                content: Column(
+                  children: <Widget>[
 //                  Padding(
 //                    padding: const EdgeInsets.all(10.0),
 //                    child: Image.network(
 //                      'https://avatars2.githubusercontent.com/u/17052727?s=400&v=4',
 //                    ),
 //                  ),
-                          Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Text(
-                              "ඔබ දත්ත ඇතුලත් කිරීම තහවුරු කරන්න",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(color: Colors.black, fontSize: 20),
-                            )
-                           ,
-                          )
-                        ],
-                      ),
-                      buttons: [
-                        DialogButton(
-                          color: Colors.red,
-                          onPressed: () => Navigator.pop(context),
-                          child: Text(
-                            "පෙර මෙනුවට",
-                            style: TextStyle(color: Colors.black, fontSize: 20),
-                          ),
-                        ),
-                        DialogButton(
-                          onPressed: () async {
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text(
+                        "ඔබ දත්ත ඇතුලත් කිරීම තහවුරු කරන්න",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.black, fontSize: 20),
+                      )
+                      ,
+                    )
+                  ],
+                ),
+                buttons: [
+                  DialogButton(
+                    color: Colors.red,
+                    onPressed: () => Navigator.pop(context),
+                    child: Text(
+                      "පෙර මෙනුවට",
+                      style: TextStyle(color: Colors.black, fontSize: 20),
+                    ),
+                  ),
+                  keepWaiting?CircularProgressIndicator():DialogButton(
+                    onPressed: () async {
+//                      ModalProgressHUD(child: _buildWidget(), inAsyncCall: _saving),
 
-                            vegservice.saveLatLon(lat, lon);
-
-                            bool issuccess  = await vegservice.callWebServicePostRequest();
-
-                            print( issuccess);
-
-                            Navigator.pop(context);
+                      setState(() {
+                        keepWaiting = true;
+                      });
 
 
-                            if(issuccess){
-                              Alert(
-                                context: context,
-                                type: AlertType.success,
-                                title: "දත්ත ඇතුලත් කිරීම",
-                                desc: "සාර්තකයි.",
-                                buttons: [
-                                  DialogButton(
-                                    child: Text(
-                                      "",
-                                      style: TextStyle(color: Colors.white, fontSize: 20),
-                                    ),
-                                    onPressed: () {
+                      getLocationAccess(context);
 
-                            Navigator.pop(context);
-                            setState(() {
-                              vegitablesToBeSaved.clear();
-                              vegservice.setNewVegRequest();
 
-                            });
-                            } ,
-                                    width: 120,
-                                  )
-                                ],
-                              ).show();
-                            }else{
-                              Alert(
-                                context: context,
-                                type: AlertType.error,
-                                title: "දත්ත ඇතුලත් කිරීම",
-                                desc: "අසාර්තකයි",
-                                buttons: [
-                                  DialogButton(
-                                    child: Text(
-                                      "දෝෂයකි, නැවත උත්සහ කරන්න",
-                                      style: TextStyle(color: Colors.white, fontSize: 20),
-                                    ),
-                                    onPressed: () => Navigator.pop(context),
-                                    width: 120,
-                                  )
-                                ],
-                              ).show();
-                            }
-                            //Navigator.pop(context);
+                      //Navigator.pop(context);
 //                    await storage.deleteAll();
 //                    Navigator.of(context).pushNamedAndRemoveUntil(
 //                        '/login', (Route<dynamic> route) => false);
 ////                          Navigator.of(context).popAndPushNamed(
 ////                              '/login'); // to connect screen
-                          },
-                          child: Text(
-                            "Confirm",
-                            style: TextStyle(color: Colors.white, fontSize: 20),
-                          ),
-                        ),
-                      ]).show();
+                    },
+                    child: Text(
+          "Confirm",
+          style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+                  ),
+                ]).show();
 
 
-                 // await _goToMyLocation(location.latitude, location.longitude);
-                } else {
-                  print('permission not available');
-                  Alert(
-                    context: context,
-                    type: AlertType.error,
-                    title: "Allow GPS Location Access",
-                    desc: "Please allow location access and try again.",
-                    buttons: [
-                      DialogButton(
-                        child: Text(
-                          "Close",
-                          style: TextStyle(color: Colors.white, fontSize: 20),
-                        ),
-                        onPressed: () => Navigator.pop(context),
-                        width: 120,
-                      )
-                    ],
-                  ).show();
-                  //_showDialog();
-                }
-              }else{
-                Alert(
-                  context: context,
-                  type: AlertType.error,
-                  title: "Turn on  GPS ",
-                  desc: "Please turn on location try again.",
-                  buttons: [
-                    DialogButton(
-                      child: Text(
-                        "Close",
-                        style: TextStyle(color: Colors.white, fontSize: 20),
-                      ),
-                      onPressed: () => Navigator.pop(context),
-                      width: 120,
-                    )
-                  ],
-                ).show();
 
 
-              }
-            } on PlatformException catch (e) {
-              if (e.code == 'PERMISSION_DENIED') {
-                error = e.message;
-                print('permission denied');
-              } else if (e.code == 'SERVICE_STATUS_ERROR') {
-                error = e.message;
-              }
-              location = null;
-            } on Exception catch (ex) {
-              print(ex);
 
-              error = ex.toString();
-            }
 
 
           }else{
@@ -553,6 +445,196 @@ class _CartScreenState extends State<CartScreen> {
   );
 
 
+  getLocationAccess(BuildContext context) async{
+    try {
+      bool serviceStatus = await _locationService.serviceEnabled();
+      print("Service status: $serviceStatus");
+      if (serviceStatus) {
+        _permission = await _locationService.requestPermission();
+        print("Permission: $_permission");
+        if (_permission==mylocation.PermissionStatus.granted) {
+          location = await _locationService.getLocation();
+          print('start lat ${location.latitude.toString()} ?');
+          print('start lng  ${location.longitude.toString()} ?');
+
+          print('lat long');
+          print(location.latitude.toString());
+          print(location.longitude.toString());
+
+          lat = location.latitude;
+          lon = location.longitude;
+
+
+
+          // await _goToMyLocation(location.latitude, location.longitude);
+        } else {
+          print('permission not available');
+          Alert(
+            context: context,
+            type: AlertType.error,
+            title: "Allow GPS Location Access",
+            desc: "Please allow location access and try again.",
+            buttons: [
+              DialogButton(
+                child: Text(
+                  "Close",
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+                onPressed: () => Navigator.pop(context),
+                width: 120,
+              )
+            ],
+          ).show();
+          //_showDialog();
+        }
+      }else{
+        Alert(
+          context: context,
+          type: AlertType.error,
+          title: "Turn on  GPS ",
+          desc: "Please turn on location try again.",
+          buttons: [
+            DialogButton(
+              child: Text(
+                "Close",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () => Navigator.pop(context),
+              width: 120,
+            )
+          ],
+        ).show();
+
+
+      }
+    } on PlatformException catch (e) {
+
+
+
+      if (e.code == 'PERMISSION_DENIED') {
+        error = e.message;
+        print('permission denied');
+        Alert(
+          context: context,
+          type: AlertType.error,
+          title: "Allow GPS Location Access",
+          desc: "Please allow location access and try again.",
+          buttons: [
+            DialogButton(
+              child: Text(
+                "Close",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () => Navigator.pop(context),
+              width: 120,
+            )
+          ],
+        ).show();
+      } else if (e.code == 'SERVICE_STATUS_ERROR') {
+        error = e.message;
+      }
+      location = null;
+
+      setState(() {
+
+        keepWaiting = false;
+      });
+
+
+
+    } on Exception catch (ex) {
+      print(ex);
+
+      setState(() {
+
+        keepWaiting = false;
+      });
+
+      Alert(
+        context: context,
+        type: AlertType.error,
+        title: "Allow GPS Location Access",
+        desc: "Please allow location access and try again.",
+        buttons: [
+          DialogButton(
+            child: Text(
+              "Close",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+            onPressed: () => Navigator.pop(context),
+            width: 120,
+          )
+        ],
+      ).show();
+
+
+      error = ex.toString();
+    }
+
+    vegservice.saveLatLon(lat, lon);
+
+    bool issuccess  = await vegservice.callWebServicePostRequest();
+
+    print( issuccess);
+
+    Navigator.pop(context);
+
+
+    if(issuccess){
+      setState(() {
+
+        keepWaiting = false;
+      });
+
+
+      Alert(
+        context: context,
+        type: AlertType.success,
+        title: "දත්ත ඇතුලත් කිරීම",
+        desc: "සාර්තකයි.",
+        buttons: [
+          DialogButton(
+            child: Text(
+              "",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+            onPressed: () {
+
+              Navigator.pop(context);
+              setState(() {
+                vegitablesToBeSaved.clear();
+                vegservice.setNewVegRequest();
+
+              });
+            } ,
+            width: 120,
+          )
+        ],
+      ).show();
+    }else{
+      setState(() {
+
+        keepWaiting = false;
+      });
+
+      Alert(
+        context: context,
+        type: AlertType.error,
+        title: "දත්ත ඇතුලත් කිරීම",
+        desc: "අසාර්තකයි",
+        buttons: [
+          DialogButton(
+            child: Text(
+              "දෝෂයකි, නැවත උත්සහ කරන්න",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+            onPressed: () => Navigator.pop(context),
+            width: 120,
+          )
+        ],
+      ).show();
+    }
+  }
 
   Widget buildBody(BuildContext ctxt, int index) {
     return Text(vegitablesToBeSaved[index].vegetableDescription);
@@ -568,6 +650,8 @@ class _CartScreenState extends State<CartScreen> {
                 child: Column(
                   children: [
                     listViewVegs(context),
+
+
                   ],
                 ),
               ),
