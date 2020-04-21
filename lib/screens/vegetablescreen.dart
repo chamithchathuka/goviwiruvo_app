@@ -420,12 +420,11 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
 
                   validator: (value) {
                     if(value.isEmpty){
-
                       return ('ප්‍රමානය ඇතුලත් කරන්න');
                     }
-//                    if (value.length > 100) {
-//                      return ('invalid වැරදයි');
-//                    }
+                    if (int.parse(weightController.text)< int.parse(value)) {
+                      return ('invalid වැරදයි');
+                    }
                   },
                   onSaved: (val) =>
                       setState(() => veggi.freePercentage = int.parse(val)),
