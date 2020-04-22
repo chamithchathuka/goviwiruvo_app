@@ -7,8 +7,8 @@ import 'package:http/http.dart' as http;
 class WebServiceCall {
 
 
-  static final String getURL = "http://13.71.48.65:3000/vegetables";
-  static final String postURL = "http://13.71.48.65:3000/createVegetableList";
+  static final String getURL = "http://sit.algattasweb.com:3000/vegetables";
+  static final String postURL = "http://sit.algattasweb.com:3000/createVegetableList";
 
   static Future<List<VegetableLoad>> getVegetables() async {
     Response res = await get(getURL);
