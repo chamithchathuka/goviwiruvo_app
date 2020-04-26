@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:goviwiruvo_app/customwidget/multiselectdialog.dart';
+import 'package:goviwiruvo_app/dto/vegetablerequestdto.dart';
 import 'package:goviwiruvo_app/model/VegetableModel.dart';
 import 'package:goviwiruvo_app/services/vegetableservice.dart';
 
@@ -45,6 +46,29 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
 
 
   final pageName = "ගොවිමහතාගේ තොරතුරු";
+
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+  }
+
+  void loadData() async {
+//    List<VegetableLoad> vegetables = await WebServiceCall.getVegetables();
+    VegetableRequest vegRequest = await vs.loadVegRequestFromState();
+
+    if(vegRequest!=null){
+
+      addressController.text = vegRequest.address;
+      nameController.text = vegRequest.name;
+      contactNoController.text = vegRequest.phone;
+      whatappContactNoController.text = vegRequest.whatsapp;
+      coordinationOfficerTextController.text = vegRequest.connector.phone;
+
+
+    }
+
+  }
 
   address(BuildContext context) => Padding(
         padding: const EdgeInsets.only(top: 8.0),
