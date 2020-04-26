@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
           seconds: 3,
           navigateAfterSeconds: LeadCaptureScreen(),
           title: new Text('ගොවි විරුවන් රැකගනිමු'),
-          image: new Image.asset('assets/splashimage.png'),
+          image: new Image.asset('assets/pnglogo.png'),
           backgroundColor: Colors.white,
           styleTextUnderTheLoader: new TextStyle(),
           photoSize: 100.0,

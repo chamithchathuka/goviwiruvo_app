@@ -92,7 +92,7 @@ class VegetableService {
     String vegRequestString = jsonEncode(vegetableRequest);
     print(vegRequestString);
     prefs.setString('vegRequest', vegRequestString);
-    
+
 
   }
 
