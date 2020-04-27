@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:goviwiruvo_app/screens/cartscreen.dart';
+import 'package:goviwiruvo_app/screens/leadcapture.dart';
+import 'package:goviwiruvo_app/screens/lognscreen.dart';
 import 'package:goviwiruvo_app/screens/vegetablescreen.dart';
 import 'package:provider/provider.dart';
 
@@ -16,39 +19,30 @@ class MyApp extends StatelessWidget {
   WebServiceCall webserive = new WebServiceCall();
   @override
   Widget build(BuildContext context) {
-    return   MultiProvider(
-        providers: [
-          ChangeNotifierProvider<VegetableModel>(create: (_) => VegetableModel()),
-          ChangeNotifierProvider<VegetableLoadModel>(create: (_) => VegetableLoadModel()),
-          FutureProvider(create: (_) => webserive.getVegetables()
-          ,
-          catchError: (context,error){
-            print(error);
-          },),
-        ],
-//      builder:(context) => VegetableModel(),
-      child: MaterialApp(
+    return   MaterialApp(
 
-        routes: <String, WidgetBuilder>{
-          '/lead': (BuildContext context) => LeadCaptureScreen(),
-          '/vegadd': (BuildContext context) => VegitableAddScreen(),
-        },
-        title: MyGlobals.AppName,
-        theme: ThemeData(
-          primaryColor: Colors.lightBlue[50],
-//          accentColor: Colors.lightBlue[800],
-          fontFamily: 'Montserrat',
-//        textTheme: TextTheme(
-//          headline: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
-//          title: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
-//          body1: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
-//        ),
-        ),
-        home:LeadCaptureScreen(),
-
-
-
+      routes: <String, WidgetBuilder>{
+        '/lead': (BuildContext context) => LeadCaptureScreen(),
+        '/vegadd': (BuildContext context) => VegitableAddScreen(),
+        '/cart': (BuildContext context) => CartScreen(),
+      },
+      title: MyGlobals.AppName,
+      theme: ThemeData(
+        primaryColor: Colors.lightBlue[50],
+        fontFamily: 'Montserrat',
       ),
+      home:
+       SplashScreen(
+          seconds: 3,
+          navigateAfterSeconds: LoginScreen(),
+          title: new Text('ගොවි විරුවන් රැකගනිමු'),
+          image: new Image.asset('assets/pnglogo.png'),
+          backgroundColor: Colors.white,
+          styleTextUnderTheLoader: new TextStyle(),
+          photoSize: 100.0,
+          loaderColor: Colors.red
+      ),
+
     );
 
 
