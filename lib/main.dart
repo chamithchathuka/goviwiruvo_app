@@ -3,9 +3,8 @@ import 'package:goviwiruvo_app/screens/cartscreen.dart';
 import 'package:goviwiruvo_app/screens/leadcapture.dart';
 import 'package:goviwiruvo_app/screens/lognscreen.dart';
 import 'package:goviwiruvo_app/screens/vegetablescreen.dart';
-import 'package:provider/provider.dart';
+import 'package:splashscreen/splashscreen.dart';
 
-import 'package:goviwiruvo_app/screens/leadcapture.dart';
 import 'external/webservices.dart';
 import 'model/VegetablLoadModel.dart';
 import 'model/VegetableModel.dart';
@@ -43,10 +42,10 @@ class MyApp extends StatelessWidget {
           loaderColor: Colors.red
       ),
 
+   
+
     );
 
-
-//      MyHomePage(title: MyGlobals.AppName),
 
   }
 }

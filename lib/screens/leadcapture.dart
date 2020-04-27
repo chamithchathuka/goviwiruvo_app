@@ -2,55 +2,75 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:goviwiruvo_app/customwidget/multiselectdialog.dart';
+import 'package:goviwiruvo_app/dto/vegetablerequestdto.dart';
 import 'package:goviwiruvo_app/model/VegetableModel.dart';
-import 'package:provider/provider.dart';
+import 'package:goviwiruvo_app/services/vegetableservice.dart';
 
+class LeadCaptureScreen extends StatefulWidget {
+  @override
+  _LeadCaptureScreenState createState() => _LeadCaptureScreenState();
+}
 
-class LeadCaptureScreen extends StatelessWidget {
+class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
   final _formKey = GlobalKey<FormState>();
+  VegetableService vs = VegetableService();
   bool _autoValidate = false;
-  final areaController = TextEditingController();
+
+  final addressController = TextEditingController();
+
   final nameController = TextEditingController();
+
   final whatappContactNoController = TextEditingController();
+
   final weightController = TextEditingController();
+
   final coordinationOfficerTextController = TextEditingController();
+
   final contactNoController = TextEditingController();
+
   final nicController = TextEditingController();
+
   final noteController = TextEditingController();
 
   List<String> _channels = ['Please Select', 'Walk-in', 'B', 'C', 'D'];
 
   String selectedVegetable = null;
+
   String selectedProductListStrNames = null;
+
   String selectedNatureOfBusiness = null;
+
   String selectedArea = null;
 
-  final items = <MultiSelectDialogItem<int>>[
-    MultiSelectDialogItem(1, 'Auto Loan'),
-    MultiSelectDialogItem(2, 'Educational Loan'),
-    MultiSelectDialogItem(3, 'Business Loan'),
-    MultiSelectDialogItem(4, 'Business 1'),
-    MultiSelectDialogItem(5, 'Business 2'),
-    MultiSelectDialogItem(6, 'Business 3'),
-    MultiSelectDialogItem(7, 'Business 4'),
-    MultiSelectDialogItem(8, 'Business 5'),
-    MultiSelectDialogItem(9, 'Business 6'),
-    MultiSelectDialogItem(10, 'Business 7'),
-    MultiSelectDialogItem(11, 'Business 8'),
-    MultiSelectDialogItem(12, 'Business 9'),
-    MultiSelectDialogItem(13, 'Business 10'),
-    MultiSelectDialogItem(14, 'Business 11'),
-    MultiSelectDialogItem(15, 'Business 12'),
-  ];
-
-  DateTime selectedDate = null;
-
-  Set<int> selectedValues = new Set();
-
   var username = "User Name";
-  final pageName = "Lead Capture";
 
-  vegetable(BuildContext context) => Padding(
+
+  final pageName = "ගොවිමහතාගේ තොරතුරු";
+
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+  }
+
+  void loadData() async {
+//    List<VegetableLoad> vegetables = await WebServiceCall.getVegetables();
+    VegetableRequest vegRequest = await vs.loadVegRequestFromState();
+
+    if(vegRequest!=null){
+
+      addressController.text = vegRequest.address;
+      nameController.text = vegRequest.name;
+      contactNoController.text = vegRequest.phone;
+      whatappContactNoController.text = vegRequest.whatsapp;
+      coordinationOfficerTextController.text = vegRequest.connector.phone;
+
+
+    }
+
+  }
+
+  address(BuildContext context) => Padding(
         padding: const EdgeInsets.only(top: 8.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -58,36 +78,10 @@ class LeadCaptureScreen extends StatelessWidget {
             Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "Vegetable/එළවළු වර්ගය",
+                  "ලිපිනය",
                   style: TextStyle(fontWeight: FontWeight.bold),
                   textAlign: TextAlign.left,
                 )),
-            Container(
-              child: Row(
-                children: <Widget>[
-                  Icon(Icons.restaurant_menu),
-                  Padding(
-                    padding: EdgeInsets.only(left: 8, right: 8),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      );
-
-  area(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(top: 8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-          "ලිපිනය/Address ",
-          style: TextStyle(fontWeight: FontWeight.bold),
-          textAlign: TextAlign.left,
-        )),
             Container(
               child: Row(
                 children: <Widget>[
@@ -96,27 +90,31 @@ class LeadCaptureScreen extends StatelessWidget {
 //                    padding: EdgeInsets.only(left: 8, right: 8),
 //                  ),
                   Expanded(
-                    child: DropdownButtonFormField(
+                    child: TextFormField(
                       validator: (value) {
-                        if (selectedArea == null) {
-                          return 'පළාත තෝරන්න';
+                        if (value.isEmpty) {
+                          return ('ලිපිනය ඇතුලත්කරන්න');
                         }
                       },
-//                      isExpanded: true,
-                      items: _channels
-                          .map((value) => DropdownMenuItem(
-                                child: Text(value),
-                                value: value,
-                              ))
-                          .toList(),
-                      onChanged: (String value) {
-//                    setState(() {
-//                      selectedArea = value;
-//                      print("Selected Channel  - $value");
-//                    });
-                      },
-                      value:
-                          selectedArea == null ? _channels.first : selectedArea,
+//
+//              decoration: InputDecoration(
+////                        fillColor: Colors.black,
+////                          focusColor: Colors.black,
+////                          hoverColor: Colors.black,
+//
+//              labelStyle:TextStyle(color: Colors.black),
+//                focusedBorder:  UnderlineInputBorder(
+//                    borderSide: new BorderSide(
+//                        color: Colors.black
+//                    )
+//                ),
+//
+//                labelText: 'ලිපිනය'
+//            ),
+                      maxLines: null,
+                      keyboardType: TextInputType.multiline,
+                      controller: addressController,
+                      textAlign: TextAlign.left,
                     ),
                   ),
                 ],
@@ -131,13 +129,13 @@ class LeadCaptureScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-//            Align(
-//                alignment: Alignment.topLeft,
-//                child: Text(
-//                  "Name/නම",
-//                  style: TextStyle(fontWeight: FontWeight.bold),
-//                  textAlign: TextAlign.left,
-//                )),
+            Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  "නම",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.left,
+                )),
             Container(
               child: Row(
                 children: <Widget>[
@@ -147,22 +145,11 @@ class LeadCaptureScreen extends StatelessWidget {
 //                  ),
                   Expanded(
                     child: TextFormField(
-
-                      decoration: InputDecoration(
-//                        fillColor: Colors.black,
-//                          focusColor: Colors.black,
-//                          hoverColor: Colors.black,
-
-                          labelStyle:TextStyle(color: Colors.black),
-                          focusedBorder:  UnderlineInputBorder(
-                              borderSide: new BorderSide(
-                                  color: Colors.black
-                              )
-                          ),
-
-                          labelText: 'නම/Name'
-                      ),
-
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return ('නම ඇතුලත්කරන්න');
+                        }
+                      },
                       controller: nameController,
                       textAlign: TextAlign.left,
                     ),
@@ -173,6 +160,7 @@ class LeadCaptureScreen extends StatelessWidget {
           ],
         ),
       );
+
   contactnumber(BuildContext context) => Padding(
         padding: const EdgeInsets.only(top: 8),
         child: Column(
@@ -181,7 +169,7 @@ class LeadCaptureScreen extends StatelessWidget {
             Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "දුරකථන අංකය/Contact Number",
+                  "දුරකථන අංකය",
                   style: TextStyle(fontWeight: FontWeight.bold),
                   textAlign: TextAlign.left,
                 )),
@@ -194,18 +182,20 @@ class LeadCaptureScreen extends StatelessWidget {
 //                  ),
                   Expanded(
                     child: TextFormField(
-                      inputFormatters: [
-                        WhitelistingTextInputFormatter.digitsOnly
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return ('දුරකථන අංකය ඇතුලත්කරන්න');
+                        }
+                        if (value.length<10) {
+                          return ('දුරකථන අංකය වැරදයි');
+                        }
+                      },inputFormatters: [
+                      WhitelistingTextInputFormatter.digitsOnly
                       ],
+                      keyboardType: TextInputType.number,
                       controller: contactNoController,
                       maxLength: 10,
-                      validator: (value) {
-                        if (value.length != 10) {
-                          return ('Contact Number invalid.');
-                        }
-                      },
                       textAlign: TextAlign.left,
-                      keyboardType: TextInputType.number,
                     ),
                   ),
                 ],
@@ -214,6 +204,7 @@ class LeadCaptureScreen extends StatelessWidget {
           ],
         ),
       );
+
   contactnumberWhatsApp(BuildContext context) => Padding(
         padding: const EdgeInsets.only(top: 8),
         child: Column(
@@ -222,7 +213,7 @@ class LeadCaptureScreen extends StatelessWidget {
             Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "WhatsApp දුරකථන අංකය / WhatsApp Contact Number",
+                  "වට්ස්ඇප් දුරකථන අංකය",
                   style: TextStyle(fontWeight: FontWeight.bold),
                   textAlign: TextAlign.left,
                 )),
@@ -235,61 +226,21 @@ class LeadCaptureScreen extends StatelessWidget {
 //                  ),
                   Expanded(
                     child: TextFormField(
+                      validator: (value) {
+//                        if(value.isEmpty){
+//                          return ('දුරකථන අංකය වැරදයි');
+//                        }
+                        if (!value.isEmpty && value.length<10) {
+                          return ('දුරකථන අංකය වැරදයි');
+                        }
+                      },
                       inputFormatters: [
                         WhitelistingTextInputFormatter.digitsOnly
                       ],
+                      keyboardType: TextInputType.number,
+                      maxLength: 10,
                       controller: whatappContactNoController,
-                      maxLength: 10,
-                      validator: (value) {
-                        if (value.length != 10) {
-                          return ('Contact Number invalid.');
-                        }
-                      },
                       textAlign: TextAlign.left,
-                      keyboardType: TextInputType.number,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      );
-
-  weight(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(top: 8),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  "Weight in Kilograms/බර කිලෝග්‍රෑම්",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.left,
-                )),
-            Container(
-              child: Row(
-                children: <Widget>[
-                  Icon(Icons.add_shopping_cart),
-                  Padding(
-                    padding: EdgeInsets.only(left: 8, right: 8),
-                  ),
-                  Expanded(
-                    child: TextFormField(
-
-                      inputFormatters: [
-                        WhitelistingTextInputFormatter.digitsOnly
-                      ],
-                      controller: weightController,
-                      maxLength: 10,
-                      validator: (value) {
-                        if (value.length < 1000) {
-                          return ('Weight invalid.');
-                        }
-                      },
-                      textAlign: TextAlign.left,
-                      keyboardType: TextInputType.number,
                     ),
                   ),
                 ],
@@ -307,7 +258,7 @@ class LeadCaptureScreen extends StatelessWidget {
             Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "සම්බන්ධිකරණ නිලධාරී අංකය / Coordinating Officer Number",
+                  "සම්බන්ධිකරණ නිලධාරී දුරකථන අංකය",
                   style: TextStyle(fontWeight: FontWeight.bold),
                   textAlign: TextAlign.left,
                 )),
@@ -320,17 +271,21 @@ class LeadCaptureScreen extends StatelessWidget {
 //                  ),
                   Expanded(
                     child: TextFormField(
+                        validator: (value) {
+                          if(value.isEmpty){
+                           // return ('Coordinator number Invalid.');
+                          }
+                          if (!value.isEmpty && value.length<10) {
+                            return ('දුරකථන අංකය වැරදයි');
+                          }
+
+                        },
+                        maxLength: 10,
+                        controller: coordinationOfficerTextController,
+                        textAlign: TextAlign.left,
                       inputFormatters: [
                         WhitelistingTextInputFormatter.digitsOnly
                       ],
-                      controller: coordinationOfficerTextController,
-                      maxLength: 10,
-                      validator: (value) {
-                        if (value.length != 10) {
-                          return ('Contact Number invalid.');
-                        }
-                      },
-                      textAlign: TextAlign.left,
                       keyboardType: TextInputType.number,
                     ),
                   ),
@@ -341,401 +296,56 @@ class LeadCaptureScreen extends StatelessWidget {
         ),
       );
 
-  customerNIC(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(top: 8),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  "Customer NIC",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.left,
-                )),
-            Container(
-              child: Row(
-                children: <Widget>[
-                  Icon(Icons.perm_identity),
-                  Padding(
-                    padding: EdgeInsets.only(left: 8, right: 8),
-                  ),
-                  Expanded(
-                    child: TextFormField(
-                      controller: nicController,
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      );
-
-  products(BuildContext context) {
-    selectedProductListStrNames = "";
-
-    if (selectedValues != null) {
-      selectedValues.forEach((element) => selectedProductListStrNames =
-          selectedProductListStrNames +
-              items.elementAt(element - 1).label +
-              ",");
-    } else {
-      selectedValues = Set();
-    }
-
-    return Padding(
-      padding: const EdgeInsets.only(top: 8),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Align(
-              alignment: Alignment.topLeft,
-              child: Text(
-                "Products",
-                style: TextStyle(fontWeight: FontWeight.bold),
-                textAlign: TextAlign.left,
-              )),
-          Container(
-            child: Row(
-              children: <Widget>[
-                Icon(Icons.shopping_cart),
-                Padding(
-                  padding: EdgeInsets.only(left: 8, right: 8),
-                ),
-                Expanded(
-                  child: MaterialButton(
-                    child: selectedValues.length == 0
-                        ? Text(
-                            "Select Products",
-                            style: selectedValues.length == 0
-                                ? TextStyle(color: Colors.red)
-                                : TextStyle(color: Colors.black),
-                          )
-                        : Text(
-                            "${selectedProductListStrNames}",
-                            textAlign: TextAlign.center,
-                          ),
-                    onPressed: () {
-                      _showMultiSelect(context);
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Future<Null> _selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
-        context: context,
-        initialDate: selectedDate == null
-            ? DateTime.now().add(
-                Duration(days: 2),
-              )
-            : selectedDate,
-        firstDate: DateTime.now(),
-        lastDate: DateTime(2022));
-    if (picked != null && picked != selectedDate) print(picked.day);
-//    setState(() {
-//      selectedDate = picked;
-//    });
-  }
-
-  targetDate(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(top: 8),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  "Target Date",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.left,
-                )),
-            Container(
-              child: Row(
-                children: <Widget>[
-                  Icon(Icons.calendar_today),
-                  Padding(
-                    padding: EdgeInsets.only(left: 8, right: 8),
-                  ),
-                  Expanded(
-                    child: MaterialButton(
-                        child: Text(selectedDate == null
-                            ? "Select Date"
-                            : "${selectedDate.toLocal().day} - ${selectedDate.toLocal().month} - ${selectedDate.toLocal().year}"),
-                        onPressed: () => _selectDate(context)),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      );
-//  listviewscroll(BuildContext context) => Padding(
-//    padding: const EdgeInsets.only(top: 8),
-//    child: Column(
-//      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//      children: [
-//
-//        Container(
-//          child: Container(
-//              height: MediaQuery.of(context).size.height*0.3,
-//              child:  Consumer<VegetableModel>(
-//                builder: (context, todo, child){
-//                  print(todo.vegList.length);
-//                  return
-//                    ListView.builder(
-//                        itemCount: todo.vegList.length,
-//                        itemBuilder: (context, index){
-//                          return Container(
-//                            child: ListTile(
-//                              contentPadding: EdgeInsets.only(left: 32, right: 32, top: 8, bottom: 8),
-//                              title: Text(todo.vegList[index].vegetableId.toString(),
-//                                style : TextStyle(color: Colors.black87,
-//                                    fontWeight: FontWeight.bold),
-//                              ),
-////                            subtitle: Text(todo.vegList[index].grade.toString(), style: TextStyle(color: Colors.black45,
-////                                fontWeight: FontWeight.bold),),
-//
-//                              trailing: Icon(Icons.check_circle, color: Colors.greenAccent,),
-//                            ),
-//                            margin: EdgeInsets.only(bottom: 8, left: 16, right: 16),
-//                          );
-//                        }
-//                    );
-//                },
-//              )
-//          ),
-//        ),
-//      ],
-//    ),
-//  );
-
-  listViewNew(BuildContext context) =>
-      Container(
-        height: MediaQuery.of(context).size.height * 0.1,
-        child: Consumer<VegetableModel>(
-                builder: (context, todo, child){
-          Container(
-            height: 0,
-            width: 0,
-            child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: todo.vegList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: GestureDetector(
-//                    onTap: () =>
-//                        Navigatoar.of(context).pushNamed(todo.vegList[index]),
-                      child: Container(
-                        height: MediaQuery
-                            .of(context)
-                            .size
-                            .height * 0.07,
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width * 0.3,
-                        child: Center(
-                          child: Text(
-                            todo.vegList[index].description.toString(),
-                            style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.blue,
-                          shape: BoxShape.rectangle,
-                          borderRadius: new BorderRadius.circular(8.0),
-//                      image: DecorationImage(
-//                        fit: BoxFit.cover,
-//                        colorFilter: ColorFilter.mode(
-//                            Colors.black.withOpacity(0.4), BlendMode.dstATop),
-//                      image: AssetImage(MyGlobals.MENU_IMAGES[index]),
-//                      ),
-                          boxShadow: <BoxShadow>[
-                            BoxShadow(
-                              color: Colors.black12,
-                              blurRadius: 10.0,
-                              offset: Offset(0.0, 10.0),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                }),
-          );}
-        ),
-      );
-
-  listviewscroll(BuildContext context) => Padding(
-    padding: const EdgeInsets.only(top: 8),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-
-        Container(
-          child: Container(
-              height: MediaQuery.of(context).size.height*0.15,
-              child:  Consumer<VegetableModel>(
-                builder: (context, todo, child){
-                  print(todo.vegList.length);
-                  return
-                    ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: todo.vegList.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: GestureDetector(
-//                    onTap: () =>
-//                        Navigatoar.of(context).pushNamed(todo.vegList[index]),
-//                                Stack(
-//                                  children: <Widget>[
-//                                    Card(
-//                                      color: Colors.blueAccent,
-//                                      child: Container(
-//                                        height: 100,
-//                                        width: 350,
-//                                        child: Column(
-//                                          children: <Widget>[
-//                                            Text(
-//                                              'Day ${widget._dayNumber}',
-//                                              style: TextStyle(
-//                                                color: Colors.white,
-//                                              ),
-//                                            ),
-//                                          ],
-//                                        ),
-//                                      ),
-//                                    ),
-//                                    Positioned(
-//                                      top: 0,
-//                                      right: 0,
-//                                      child: IconButton(
-//                                        onPressed: () {},
-//                                        icon: Icon(Icons.more_vert),
-//                                      ),
-//                                    ),
-//                                  ],
-//                                );
-                              child: Stack(
-                                children: <Widget>[
-
-                                  Container(
-                                    height: MediaQuery
-                                        .of(context)
-                                        .size
-                                        .height * 0.15,
-                                    width: MediaQuery
-                                        .of(context)
-                                        .size
-                                        .width * 0.3,
-                                    child: Center(
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: <Widget>[
-                                          Text(
-                                            todo.vegList[index].description.toString(),
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-
-//                                      GestureDetector(
-//                                        onTap: () =>null,
-//                                        child: Icon(Icons.remove),
-//                                      ),
-                                        ],
-                                      ),
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: Colors.blue,
-                                      shape: BoxShape.rectangle,
-                                      borderRadius: new BorderRadius.circular(8.0),
-//                      image: DecorationImage(
-//                        fit: BoxFit.cover,
-//                        colorFilter: ColorFilter.mode(
-//                            Colors.black.withOpacity(0.4), BlendMode.dstATop),
-//                      image: AssetImage(MyGlobals.MENU_IMAGES[index]),
-//                      ),
-                                      boxShadow: <BoxShadow>[
-                                        BoxShadow(
-                                          color: Colors.black12,
-                                          blurRadius: 10.0,
-                                          offset: Offset(0.0, 10.0),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Positioned(
-                                    top: 0,
-                                    right: 0,
-                                    child: IconButton(
-                                      onPressed: () {
-                                        Provider.of<VegetableModel>(context).removeVegToList(todo.vegList[index]);
-                                      },
-                                      icon: Icon(Icons.clear,color: Colors.white70,),
-
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        }
-                    );
-                },
-              )
-          ),
-        ),
-      ],
-    ),
-  );
-
 
   saveLead(BuildContext context) => Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(0),
         child: Container(
           width: double.infinity,
           height: 50,
           child: RaisedButton(
-            color: Color.fromRGBO(2, 119, 189, 0.9),
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            color: Color.fromRGBO(0, 0, 0, 0.9),
             onPressed: () {
               _validateInputs();
+
+
+
+//              Navigator.of(context).pushNamed('/cart'); // to connect screen
             },
-            child: Text("Save Lead",
+            child: Text("ඉදිරියට",
                 style: TextStyle(color: Colors.white, fontSize: 20)),
           ),
         ),
       );
 
   _buildVerticalLayout(BuildContext context) {
-    return SingleChildScrollView(
+    return Container(
       child: Column(
-        children: [
-          customerName(context),
-          area(context),
-          contactnumber(context),
-          contactnumberWhatsApp(context),
-          coordinationOfficerNumber(context),
-//        listViewNew(context ),
-          listviewscroll(context),
-          saveLead(context),
+        children: <Widget>[
+          Expanded(
+            child: SingleChildScrollView(
+              child: Container(
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(height: 15),
+                    customerName(context),
+                    SizedBox(height: 20),
+                    address(context),
+                    SizedBox(height: 20),
+                    contactnumber(context),
+                    SizedBox(height: 20),
+                    contactnumberWhatsApp(context),
+                    SizedBox(height: 20),
+                    coordinationOfficerNumber(context),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Column(
+            children: [
+              saveLead(context),
+            ],
+          ),
         ],
       ),
     );
@@ -756,14 +366,11 @@ class LeadCaptureScreen extends StatelessWidget {
                 crossAxisCount: 2,
                 crossAxisSpacing: 8,
                 children: <Widget>[
-                  vegetable(context),
-                  area(context),
+                  address(context),
                   customerName(context),
                   contactnumber(context),
                   contactnumberWhatsApp(context),
-                  customerNIC(context),
-                  products(context),
-                  targetDate(context),
+
                 ]),
           ),
           saveLead(context),
@@ -791,14 +398,11 @@ class LeadCaptureScreen extends StatelessWidget {
                 crossAxisCount: 2,
                 crossAxisSpacing: 8,
                 children: <Widget>[
-                  vegetable(context),
-                  area(context),
+                  address(context),
                   customerName(context),
                   contactnumber(context),
 //                  natureOfBusiness(context),
-                  customerNIC(context),
-                  products(context),
-                  targetDate(context),
+
                 ]),
           ),
           saveLead(context),
@@ -809,7 +413,7 @@ class LeadCaptureScreen extends StatelessWidget {
 
   @override
   void dispose() {
-    areaController.dispose();
+    addressController.dispose();
     nameController.dispose();
     whatappContactNoController.dispose();
     weightController.dispose();
@@ -817,31 +421,8 @@ class LeadCaptureScreen extends StatelessWidget {
     nicController.dispose();
     noteController.dispose();
     coordinationOfficerTextController.dispose();
-//    super.dispose();
+    super.dispose();
   }
-//
-//  @override
-//  void initState() {
-//    super.initState();
-//    if (listDrop.isEmpty) loadData();
-//  }
-//
-//  void loadData() async {
-//    var list = await service.loadwifiscaninfo();
-//
-//    listDrop = [];
-//
-//    if (list != null) {
-//      list.forEach((n) {
-//        print(n.ssid);
-//        listDrop.add(new DropdownMenuItem(child: Text(n.ssid), value: n.ssid));
-//      });
-//      setState(() {
-//        //_obscureText = !_obscureText;
-//        _inprogress = false;
-//      });
-//    }
-//  }
 
   @override
   Widget build(BuildContext context) {
@@ -855,17 +436,18 @@ class LeadCaptureScreen extends StatelessWidget {
 //                      '/leadcapturesearch'); // to connect screen
 //                }),
         ],
+        backgroundColor: Color(0xFFFFFFFF),
         title: new Text(pageName,
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Add your onPressed code here!
-          Navigator.of(context).pushNamed('/vegadd'); // to connect screen
-        },
-        child: Icon(Icons.add_shopping_cart),
-        backgroundColor: Colors.redAccent,
-      ),
+//      floatingActionButton: FloatingActionButton(
+//        onPressed: () {
+//          // Add your onPressed code here!
+//          Navigator.of(context).pushNamed('/vegadd'); // to connect screen
+//        },
+//        child: Icon(Icons.add_shopping_cart),
+//        backgroundColor: Colors.redAccent,
+//      ),
       body: SafeArea(
         minimum: const EdgeInsets.all(8.0),
         child: Form(
@@ -877,15 +459,15 @@ class LeadCaptureScreen extends StatelessWidget {
                     if (constraints.maxWidth < 600) {
                       return _buildVerticalLayout(context);
                     } else {
-                      return _buildVerticallTabLayout(context);
+                      return _buildVerticalLayout(context);
                     }
                   })
                 : LayoutBuilder(builder: (context, constraints) {
                     if (constraints.maxWidth < 600) {
-                      return _buildHorizontalLayout(context);
+                      return _buildVerticalLayout(context);
                     } else {
                       //Todo Change this
-                      return _buildHorizontalLayout(context);
+                      return _buildVerticalLayout(context);
                     }
                   });
           }),
@@ -896,10 +478,18 @@ class LeadCaptureScreen extends StatelessWidget {
 
   void _validateInputs() {
     if (_formKey.currentState.validate()) {
-      print('Validated');
-//    If all data are correct then save data to out variables
+
+      //    If all data are correct then save data to out variables
+
       _formKey.currentState.save();
+
+      vs.saveRequestInfo( nameController.text, addressController.text, contactNoController.text,
+         whatappContactNoController.text,coordinationOfficerTextController.text);
+
       _formKey.currentState.reset();
+
+      Navigator.of(context).pushReplacementNamed('/cart'); // to connect screen
+
     } else {
       print('invalid');
 //    If all data are not valid then start auto validation.
@@ -907,22 +497,5 @@ class LeadCaptureScreen extends StatelessWidget {
 //        _autoValidate = true;
 //      });
     }
-  }
-
-  void _showMultiSelect(BuildContext context) async {
-    Set<int> selectedValuesLocal = await showDialog<Set<int>>(
-      context: context,
-      builder: (BuildContext context) {
-        return MultiSelectDialog(
-          items: items,
-          initialSelectedValues:
-              selectedValues.length == 0 ? [1].toSet() : selectedValues.toSet(),
-        );
-      },
-    );
-
-//    setState(() {
-//      selectedValues = selectedValuesLocal;
-//    });
   }
 }
