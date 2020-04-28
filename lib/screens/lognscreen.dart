@@ -120,7 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
         onPressed: () async {
           _validateInputs();
 
-
+          _register();
 
 //              Navigator.of(context).pushNamed('/cart'); // to connect screen
         },
@@ -300,12 +300,28 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _register() async {
 
+
+    final PhoneVerificationCompleted verified = (AuthCredential authResult){
+
+    };
+
+    final PhoneVerificationFailed verificationfailed = (AuthException authException){
+      print('${authException.message}');
+    };
+
+//    final PhoneCodeAutoRetrievalTimeout tomeout = (String verId){
+//      print('verid ${verId}' );
+//    };
+
+//    final PhoneCodeSent smsSent = (String verId,[int forceresend]){
+//      this
+//    };
+
     await _auth.verifyPhoneNumber(
-        phoneNumber: '+94${contactNoController.text}',
-        verificationCompleted: verifysuccessMessage(),
-        verificationFailed: verifyFailedMessage(),
-
-
+        phoneNumber: '+94772482443',
+        verificationCompleted: verified,
+        verificationFailed: verificationfailed,
+        timeout: Duration(seconds: 5),
     );
   }
   verifysuccessMessage() {
