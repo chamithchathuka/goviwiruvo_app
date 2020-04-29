@@ -19,7 +19,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return   MaterialApp(
-
       routes: <String, WidgetBuilder>{
         '/lead': (BuildContext context) => LeadCaptureScreen(),
         '/vegadd': (BuildContext context) => VegitableAddScreen(),
@@ -41,11 +40,6 @@ class MyApp extends StatelessWidget {
           photoSize: 100.0,
           loaderColor: Colors.red
       ),
-
-   
-
     );
-
-
   }
 }

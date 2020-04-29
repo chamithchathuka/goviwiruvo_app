@@ -19,7 +19,10 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   bool _autoValidate = false;
 
+  bool _isVerficationCode = false;
+
   final contactNoController = TextEditingController();
+  final verificationCodeController = TextEditingController();
   final nameController = TextEditingController();
 
   String selectedVegetable = null;
@@ -48,7 +51,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   fontWeight: FontWeight.bold),
               textAlign: TextAlign.left,
 
-            )),
+            ),
+        ),
         Container(
           child: Row(
             children: <Widget>[
@@ -69,6 +73,8 @@ class _LoginScreenState extends State<LoginScreen> {
       ],
     ),
   );
+
+
 
   contactnumber(BuildContext context) => Padding(
     padding: const EdgeInsets.only(top: 8),
@@ -110,6 +116,47 @@ class _LoginScreenState extends State<LoginScreen> {
     ),
   );
 
+  verificationCode(BuildContext context) => Padding(
+    padding: const EdgeInsets.only(top: 8),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Align(
+            alignment: Alignment.topLeft,
+            child: Text(
+              "Verification Code",
+              style: TextStyle(fontWeight: FontWeight.bold),
+              textAlign: TextAlign.left,
+            )),
+        Container(
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: TextFormField(
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return ('දුරකථන අංකය ඇතුලත්කරන්න');
+                    }
+                    if (value.length!=6) {
+                      return ('දුරකථන අංකය වැරදයි');
+                    }
+                  },inputFormatters: [
+                  WhitelistingTextInputFormatter.digitsOnly
+                ],
+                  keyboardType: TextInputType.number,
+                  controller: verificationCodeController,
+                  maxLength: 10,
+                  textAlign: TextAlign.left,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
+
+
   submitRequest(BuildContext context) => Padding(
     padding: const EdgeInsets.all(0),
     child: Container(
@@ -120,11 +167,31 @@ class _LoginScreenState extends State<LoginScreen> {
         onPressed: () async {
           _validateInputs();
 
+          setState(() {
+            _isVerficationCode = true;
+          });
+
           _register();
 
 //              Navigator.of(context).pushNamed('/cart'); // to connect screen
         },
         child: Text("ඉදිරියට",
+            style: TextStyle(color: Colors.white, fontSize: 20)),
+      ),
+    ),
+  );
+
+  submitVerificationCodeRequest(BuildContext context) => Padding(
+    padding: const EdgeInsets.all(0),
+    child: Container(
+      width: double.infinity,
+      height: 50,
+      child: RaisedButton(
+        color: Color.fromRGBO(0, 0, 0, 0.9),
+        onPressed: () async {
+          print('verificationCode continue pressed');
+        },
+        child: Text("Submit Verification Code",
             style: TextStyle(color: Colors.white, fontSize: 20)),
       ),
     ),
@@ -139,10 +206,10 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Container(
                 child: Column(
                   children: <Widget>[
-                    SizedBox(height: 15),
-                    password(context),
+//                    SizedBox(height: 15),
+//                    password(context),
                     SizedBox(height: 20),
-                    contactnumber(context),
+                    _isVerficationCode?verificationCode(context):contactnumber(context),
                   ],
                 ),
               ),
@@ -150,7 +217,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           Column(
             children: [
-              submitRequest(context),
+              _isVerficationCode?submitVerificationCodeRequest(context):submitRequest(context),
             ],
           ),
         ],
@@ -173,7 +240,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 crossAxisCount: 2,
                 crossAxisSpacing: 8,
                 children: <Widget>[
-                  password(context),
+//                  password(context),
                   contactnumber(context),
 
                 ]),
@@ -218,6 +285,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void dispose() {
     contactNoController.dispose();
+    verificationCodeController.dispose();
     nameController.dispose();
     super.dispose();
   }
