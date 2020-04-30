@@ -23,11 +23,16 @@ class AuthService{
 
   signIn(AuthCredential authCreds) async {
     AuthResult authResult = await FirebaseAuth.instance.signInWithCredential(authCreds);
-    print('${authResult.additionalUserInfo.username}');
+   // print('${authResult.additionalUserInfo.username}');
+    print('${authResult.user.uid}');
+
+    return authResult;
+
   }
 
-  signInWithOTP(smsCode,verId){
+  signInWithOTP(smsCode,verId) async{
     AuthCredential authCredential = PhoneAuthProvider.getCredential(verificationId: verId, smsCode: smsCode);
-    signIn(authCredential);
+    AuthResult authResult = await signIn(authCredential);
+    return authResult;
   }
 }

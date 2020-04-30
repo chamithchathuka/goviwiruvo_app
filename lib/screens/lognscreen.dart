@@ -109,7 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   keyboardType: TextInputType.number,
                   controller: contactNoController,
                   maxLength: 10,
-                  textAlign: TextAlign.left,
+                  textAlign: TextAlign.center,
                 ),
               ),
             ],
@@ -180,7 +180,7 @@ class _LoginScreenState extends State<LoginScreen> {
       child: RaisedButton(
         color: Color.fromRGBO(0, 0, 0, 0.9),
         onPressed: () async {
-          _validateInputs();
+          _validateInputs(context);
 
 
 
@@ -201,7 +201,13 @@ class _LoginScreenState extends State<LoginScreen> {
         color: Color.fromRGBO(0, 0, 0, 0.9),
         onPressed: () async {
           print('verificationCode continue pressed');
-            AuthService().signInWithOTP(verificationCodeController.text, verificationId);
+            AuthResult authResult = await  AuthService().signInWithOTP(verificationCodeController.text, verificationId);
+          if(authResult.user!=null){
+            Navigator.of(context).pushReplacementNamed('/lead'); // to connect screen
+          }else{
+            print('error occurred');
+          }
+
         },
         child: Text("Submit Verification Code",
             style: TextStyle(color: Colors.white, fontSize: 20)),
@@ -355,7 +361,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  void _validateInputs() {
+  void _validateInputs(BuildContext context) {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
       _formKey.currentState.reset();
@@ -364,7 +370,7 @@ class _LoginScreenState extends State<LoginScreen> {
         _isVerficationCode = true;
       });
 
-      _register();
+      _register(context);
 
 //      Navigator.of(context).pushReplacementNamed('/cart'); // to connect screen
 
@@ -376,10 +382,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
 
-  void _register() async {
+  void _register(BuildContext context) async {
 
-    final PhoneVerificationCompleted verified = (AuthCredential authResult){
-      AuthService().signIn(authResult);
+    final PhoneVerificationCompleted verified = (AuthCredential authCredential){
+      AuthResult authResult = AuthService().signIn(authCredential);
+      print('auth ID found ');
+
+      if(authResult.user!=null){
+        Navigator.of(context).pushNamed('/lead'); // to connect screen
+      }
+
     };
 
     final PhoneVerificationFailed verificationfailed = (AuthException authException){
@@ -410,15 +422,5 @@ class _LoginScreenState extends State<LoginScreen> {
         timeout: Duration(seconds: 5),
     );
   }
-  verifysuccessMessage() {
-
-    print('verification success');
-  }
-
-  verifyFailedMessage() {
-
-    print('verification failed');
-  }
-
 }
 
