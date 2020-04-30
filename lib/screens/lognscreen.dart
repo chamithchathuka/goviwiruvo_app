@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:goviwiruvo_app/customwidget/multiselectdialog.dart';
 import 'package:goviwiruvo_app/dto/vegetablerequestdto.dart';
 import 'package:goviwiruvo_app/model/VegetableModel.dart';
+import 'package:goviwiruvo_app/service/authservice.dart';
 import 'package:goviwiruvo_app/services/vegetableservice.dart';
 
 
@@ -28,7 +29,9 @@ class _LoginScreenState extends State<LoginScreen> {
   String selectedVegetable = null;
   String selectedProductListStrNames = null;
 
-  bool _success;
+  bool codeSent = false;
+
+  String verificationId;
 
   final pageName = "ගොවිමහතාගේ තොරතුරු";
 
@@ -86,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Text(
               "දුරකථන අංකය",
               style: TextStyle(fontWeight: FontWeight.bold),
-              textAlign: TextAlign.left,
+              textAlign: TextAlign.center,
             )),
         Container(
           child: Row(
@@ -97,7 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     if (value.isEmpty) {
                       return ('දුරකථන අංකය ඇතුලත්කරන්න');
                     }
-                    if (value.length<10) {
+                    if (value.length!=10) {
                       return ('දුරකථන අංකය වැරදයි');
                     }
                   },inputFormatters: [
@@ -111,6 +114,18 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ],
           ),
+        ),
+      ],
+    ),
+  );
+
+  circularprogressbar(BuildContext context) => Padding(
+    padding: const EdgeInsets.only(top: 8),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Container(
+          child: Center(child: CircularProgressIndicator()),
         ),
       ],
     ),
@@ -145,8 +160,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 ],
                   keyboardType: TextInputType.number,
                   controller: verificationCodeController,
-                  maxLength: 10,
-                  textAlign: TextAlign.left,
+                  maxLength: 6,
+                  textAlign: TextAlign.center,
                 ),
               ),
             ],
@@ -167,11 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
         onPressed: () async {
           _validateInputs();
 
-          setState(() {
-            _isVerficationCode = true;
-          });
 
-          _register();
 
 //              Navigator.of(context).pushNamed('/cart'); // to connect screen
         },
@@ -190,6 +201,7 @@ class _LoginScreenState extends State<LoginScreen> {
         color: Color.fromRGBO(0, 0, 0, 0.9),
         onPressed: () async {
           print('verificationCode continue pressed');
+            AuthService().signInWithOTP(verificationCodeController.text, verificationId);
         },
         child: Text("Submit Verification Code",
             style: TextStyle(color: Colors.white, fontSize: 20)),
@@ -206,10 +218,11 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Container(
                 child: Column(
                   children: <Widget>[
-//                    SizedBox(height: 15),
-//                    password(context),
+
                     SizedBox(height: 20),
                     _isVerficationCode?verificationCode(context):contactnumber(context),
+                    SizedBox(height: 20),
+                    _isVerficationCode?circularprogressbar(context):Container(),
                   ],
                 ),
               ),
@@ -344,17 +357,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _validateInputs() {
     if (_formKey.currentState.validate()) {
-
-      //    If all data are correct then save data to out variables
-
       _formKey.currentState.save();
-
-
-
-//      vs.saveRequestInfo( nameController.text, addressController.text, contactNoController.text,
-//          whatappContactNoController.text,coordinationOfficerTextController.text);
-
       _formKey.currentState.reset();
+
+      setState(() {
+        _isVerficationCode = true;
+      });
+
+      _register();
 
 //      Navigator.of(context).pushReplacementNamed('/cart'); // to connect screen
 
@@ -368,9 +378,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _register() async {
 
-
     final PhoneVerificationCompleted verified = (AuthCredential authResult){
-
+      AuthService().signIn(authResult);
     };
 
     final PhoneVerificationFailed verificationfailed = (AuthException authException){
@@ -381,14 +390,23 @@ class _LoginScreenState extends State<LoginScreen> {
 //      print('verid ${verId}' );
 //    };
 
-//    final PhoneCodeSent smsSent = (String verId,[int forceresend]){
-//      this
-//    };
+    final PhoneCodeSent smsSent =
+        (String verId,[int forceresend]){
+      this.verificationId = verId;
+      setState(() {
+        this.codeSent = true;
+      });
+    };
 
+    print('submit verification');
+    print(contactNoController.text.substring(1,contactNoController.text.length));
+//
     await _auth.verifyPhoneNumber(
-        phoneNumber: '+94772482443',
+
+        phoneNumber: '+94${contactNoController.text.substring(1,contactNoController.text.length)}',
         verificationCompleted: verified,
         verificationFailed: verificationfailed,
+        codeSent: smsSent,
         timeout: Duration(seconds: 5),
     );
   }
