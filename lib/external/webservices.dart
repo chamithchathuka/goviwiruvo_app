@@ -7,11 +7,24 @@ import 'package:http/http.dart' as http;
 class WebServiceCall {
 
 
-  static final String getURL = "http://sit.algattasweb.com:3000/vegetables";
-  static final String postURL = "http://sit.algattasweb.com:3000/createVegetableList";
+  static final String GET_URL = "http://sit.algattasweb.com:3000/vegetables";
+  static final String POST_URL = "http://sit.algattasweb.com:3000/createVegetableList";
+  static final String TOKEN_URL = "https://us-central1-goviwiru.cloudfunctions.net/getToken";
 
+//  Map<String, String> get headers => {
+//    "Content-Type": "application/json",
+//    "Accept": "application/json",
+//    "Authorization": "Bearer $_token",
+//  };
+//  var response = await http.get(url, headers: headers);
+//  if (response.statusCode != 200) {
+//  throw Exception(
+//  "Request to $url failed with status ${response.statusCode}: ${response.body}");
+//  }
   static Future<List<VegetableLoad>> getVegetables() async {
-    Response res = await get(getURL);
+
+    Response res = await get(GET_URL);
+
 
     if (res.statusCode == 200) {
       List<dynamic> body = jsonDecode(res.body);
@@ -31,6 +44,25 @@ class WebServiceCall {
     }
   }
 
+  static Future<String> getToken() async {
+    Response res = await get(TOKEN_URL);
+
+    String token = '';
+
+    if (res.statusCode == 200) {
+      List<dynamic> body = jsonDecode(res.body);
+
+
+
+      print('200');
+
+      return token;
+    } else {
+      print('else');
+      throw "Can't get veggies list.";
+    }
+  }
+
   static Future<http.Response> createVegRequestPOST(VegetableRequest vegetableRequest) async {
 
     Future<http.Response> response = null;
@@ -41,7 +73,7 @@ class WebServiceCall {
     print("json map :"+bodyd);
 
     try {
-      response = http.post(postURL,
+      response = http.post(POST_URL,
           headers: {"Content-Type": "application/json"}, body: bodyd);
     } on Exception catch (e) {
       print(e);
@@ -49,6 +81,29 @@ class WebServiceCall {
     }
     return response;
   }
+
+
+  static Future<http.Response> getUserRoleData() async {
+
+    Future<http.Response> response = null;
+
+    String bodyd = "";
+//    bodyd = json.encode(vegetableRequest.toJson());
+
+    print("json map :"+bodyd);
+
+    try {
+      response = http.post(POST_URL,
+          headers: {"Content-Type": "application/json"}, body: bodyd);
+    } on Exception catch (e) {
+      print(e);
+
+    }
+    return response;
+  }
+
+
+
 //
 //  static Future<http.Response> changeJobStatus(ResetPasswordDTO resetPasswordDTO) async {
 //    String _changeResponse = '${MyGlobals.hostURL}/login/reset';

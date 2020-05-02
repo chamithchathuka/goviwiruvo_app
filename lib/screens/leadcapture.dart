@@ -61,10 +61,8 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
 
       addressController.text = vegRequest.address;
       nameController.text = vegRequest.name;
-      contactNoController.text = vegRequest.phone;
       whatappContactNoController.text = vegRequest.whatsapp;
       coordinationOfficerTextController.text = vegRequest.connector.phone;
-
 
     }
 
@@ -161,49 +159,49 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
         ),
       );
 
-  contactnumber(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(top: 8),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  "දුරකථන අංකය",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.left,
-                )),
-            Container(
-              child: Row(
-                children: <Widget>[
-//                  Icon(Icons.phone),
-//                  Padding(
-//                    padding: EdgeInsets.only(left: 8, right: 8),
+//  contactnumber(BuildContext context) => Padding(
+//        padding: const EdgeInsets.only(top: 8),
+//        child: Column(
+//          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//          children: [
+//            Align(
+//                alignment: Alignment.topLeft,
+//                child: Text(
+//                  "දුරකථන අංකය",
+//                  style: TextStyle(fontWeight: FontWeight.bold),
+//                  textAlign: TextAlign.left,
+//                )),
+//            Container(
+//              child: Row(
+//                children: <Widget>[
+////                  Icon(Icons.phone),
+////                  Padding(
+////                    padding: EdgeInsets.only(left: 8, right: 8),
+////                  ),
+//                  Expanded(
+//                    child: TextFormField(
+//                      validator: (value) {
+//                        if (value.isEmpty) {
+//                          return ('දුරකථන අංකය ඇතුලත්කරන්න');
+//                        }
+//                        if (value.length<10) {
+//                          return ('දුරකථන අංකය වැරදයි');
+//                        }
+//                      },inputFormatters: [
+//                      WhitelistingTextInputFormatter.digitsOnly
+//                      ],
+//                      keyboardType: TextInputType.number,
+//                      controller: contactNoController,
+//                      maxLength: 10,
+//                      textAlign: TextAlign.left,
+//                    ),
 //                  ),
-                  Expanded(
-                    child: TextFormField(
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return ('දුරකථන අංකය ඇතුලත්කරන්න');
-                        }
-                        if (value.length<10) {
-                          return ('දුරකථන අංකය වැරදයි');
-                        }
-                      },inputFormatters: [
-                      WhitelistingTextInputFormatter.digitsOnly
-                      ],
-                      keyboardType: TextInputType.number,
-                      controller: contactNoController,
-                      maxLength: 10,
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      );
+//                ],
+//              ),
+//            ),
+//          ],
+//        ),
+//  );
 
   contactnumberWhatsApp(BuildContext context) => Padding(
         padding: const EdgeInsets.only(top: 8),
@@ -307,8 +305,6 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
             onPressed: () {
               _validateInputs();
 
-
-
 //              Navigator.of(context).pushNamed('/cart'); // to connect screen
             },
             child: Text("ඉදිරියට",
@@ -330,8 +326,8 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
                     customerName(context),
                     SizedBox(height: 20),
                     address(context),
-                    SizedBox(height: 20),
-                    contactnumber(context),
+//                    SizedBox(height: 20),
+//                    contactnumber(context),
                     SizedBox(height: 20),
                     contactnumberWhatsApp(context),
                     SizedBox(height: 20),
@@ -368,7 +364,7 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
                 children: <Widget>[
                   address(context),
                   customerName(context),
-                  contactnumber(context),
+//                  contactnumber(context),
                   contactnumberWhatsApp(context),
 
                 ]),
@@ -400,7 +396,7 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
                 children: <Widget>[
                   address(context),
                   customerName(context),
-                  contactnumber(context),
+//                  contactnumber(context),
 //                  natureOfBusiness(context),
 
                 ]),
@@ -417,7 +413,7 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
     nameController.dispose();
     whatappContactNoController.dispose();
     weightController.dispose();
-    contactNoController.dispose();
+//    contactNoController.dispose();
     nicController.dispose();
     noteController.dispose();
     coordinationOfficerTextController.dispose();
@@ -478,12 +474,9 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
 
   void _validateInputs() {
     if (_formKey.currentState.validate()) {
-
-      //    If all data are correct then save data to out variables
-
       _formKey.currentState.save();
 
-      vs.saveRequestInfo( nameController.text, addressController.text, contactNoController.text,
+      vs.saveRequestInfo( nameController.text, addressController.text,
          whatappContactNoController.text,coordinationOfficerTextController.text);
 
       _formKey.currentState.reset();

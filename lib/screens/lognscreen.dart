@@ -20,6 +20,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   bool _autoValidate = false;
 
+  VegetableService vs = VegetableService();
+
   bool _isVerficationCode = false;
 
   final contactNoController = TextEditingController();
@@ -203,7 +205,10 @@ class _LoginScreenState extends State<LoginScreen> {
           print('verificationCode continue pressed');
             AuthResult authResult = await  AuthService().signInWithOTP(verificationCodeController.text, verificationId);
           if(authResult.user!=null){
+
+            vs.saveContactNumber(contactNoController.text);
             Navigator.of(context).pushReplacementNamed('/lead'); // to connect screen
+
           }else{
             print('error occurred');
           }

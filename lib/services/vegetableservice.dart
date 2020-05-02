@@ -38,11 +38,10 @@ class VegetableService {
     vegitablesToBeSaved.clear();
   }
 
-  saveRequestInfo(String name, String address, String contactNo,
+  saveRequestInfo(String name, String address,
       String whatsappContact, String coodinationContact) {
     vegetableRequest.name = name;
     vegetableRequest.address = address;
-    vegetableRequest.phone = contactNo;
     vegetableRequest.whatsapp = whatsappContact;
 
     Connector connector = new Connector();
@@ -53,6 +52,11 @@ class VegetableService {
 
     saveinSharedPreferencesVegitablesToBeSaved();
   }
+
+  saveContactNumber( String contactNo) {
+    vegetableRequest.phone = contactNo;
+  }
+
 
   saveLatLon(double lat,double long) {
     vegetableRequest.lat = lat;
