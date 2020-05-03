@@ -48,8 +48,6 @@ class VegetableService {
     connector.phone = coodinationContact;
     vegetableRequest.connector = connector;
     print('name in service - ${vegetableRequest.name}');
-
-
     saveinSharedPreferencesVegitablesToBeSaved();
   }
 

@@ -224,16 +224,10 @@ class _CartScreenState extends State<CartScreen> {
       )
     ]));
 
-
-
-
-
     return Table(
         defaultVerticalAlignment: TableCellVerticalAlignment.middle,
         border: new TableBorder(
-//            horizontalInside:   new BorderSide(color: Colors.black),
-            //    horizontalInside: new BorderSide(color: Colors.black)
-            ),
+        ),
         children: rows);
   }
 
@@ -359,12 +353,6 @@ class _CartScreenState extends State<CartScreen> {
                 title: "තහවුරු කරන්න",
                 content: Column(
                   children: <Widget>[
-//                  Padding(
-//                    padding: const EdgeInsets.all(10.0),
-//                    child: Image.network(
-//                      'https://avatars2.githubusercontent.com/u/17052727?s=400&v=4',
-//                    ),
-//                  ),
                     Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Text(

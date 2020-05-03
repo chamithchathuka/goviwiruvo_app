@@ -152,10 +152,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: TextFormField(
                   validator: (value) {
                     if (value.isEmpty) {
-                      return ('දුරකථන අංකය ඇතුලත්කරන්න');
+                      return ('Enter OTP');
                     }
                     if (value.length!=6) {
-                      return ('දුරකථන අංකය වැරදයි');
+                      return ('OTP වැරදයි');
                     }
                   },inputFormatters: [
                   WhitelistingTextInputFormatter.digitsOnly
@@ -204,14 +204,20 @@ class _LoginScreenState extends State<LoginScreen> {
         onPressed: () async {
           print('verificationCode continue pressed');
             AuthResult authResult = await  AuthService().signInWithOTP(verificationCodeController.text, verificationId);
-          if(authResult.user!=null){
 
-            vs.saveContactNumber(contactNoController.text);
-            Navigator.of(context).pushReplacementNamed('/lead'); // to connect screen
+            if(authResult!=null){
+              if(authResult.user!=null){
 
-          }else{
-            print('error occurred');
-          }
+                vs.saveContactNumber(contactNoController.text);
+                Navigator.of(context).pushReplacementNamed('/roleselect'); // to connect screen
+
+              }else{
+                print('error occurred');
+              }
+            }else{
+
+
+            }
 
         },
         child: Text("Submit Verification Code",
@@ -390,11 +396,14 @@ class _LoginScreenState extends State<LoginScreen> {
   void _register(BuildContext context) async {
 
     final PhoneVerificationCompleted verified = (AuthCredential authCredential){
+      try{
       AuthResult authResult = AuthService().signIn(authCredential);
       print('auth ID found ');
-
       if(authResult.user!=null){
         Navigator.of(context).pushNamed('/lead'); // to connect screen
+      }
+      } on  PlatformException catch(e) {
+        print(e.message);
       }
 
     };

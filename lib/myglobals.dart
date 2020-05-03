@@ -18,10 +18,9 @@ class MyGlobals {
   static const SECURITY_SETTINGS_PAGE_NAME = "Security Settings";
   static const HOME_PAGE_NAME = "Security Settings";
 
-  static final List<String> MENU_ITEMS = <String>[
-    "Assigned Jobs",
-    "Apply Leave",
-    "Payments",
+  static final List<String> USER_ROLES = <String>[
+    "Farmer",
+    "Coodinator",
 //  "Trial Calculation",
 //  "Credit Approval",
   ];
@@ -33,9 +32,8 @@ class MyGlobals {
   ];
 
   static final List<String> MENU_PATHS = <String>[
-    "/myleads",
-    "/comingsoon",
-    "/comingsoon",
+    "/lead",
+    "/addfarmer",
   ];
 
 

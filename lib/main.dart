@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:goviwiruvo_app/screens/cartscreen.dart';
 import 'package:goviwiruvo_app/screens/leadcapture.dart';
+import 'package:goviwiruvo_app/screens/addfarmer.dart';
 import 'package:goviwiruvo_app/screens/lognscreen.dart';
+import 'package:goviwiruvo_app/screens/roleselectionscreen.dart';
 import 'package:goviwiruvo_app/screens/vegetablescreen.dart';
 import 'package:splashscreen/splashscreen.dart';
 
@@ -23,6 +25,8 @@ class MyApp extends StatelessWidget {
         '/lead': (BuildContext context) => LeadCaptureScreen(),
         '/vegadd': (BuildContext context) => VegitableAddScreen(),
         '/cart': (BuildContext context) => CartScreen(),
+        '/roleselect': (BuildContext context) => RoleSelectionScreen(),
+        '/addfarmer': (BuildContext context) => AddFarmer(),
       },
       title: MyGlobals.AppName,
       theme: ThemeData(

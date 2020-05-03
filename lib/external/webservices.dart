@@ -1,3 +1,4 @@
+import 'package:goviwiruvo_app/dto/usertokenid.dart';
 import 'package:goviwiruvo_app/dto/vegetableload.dart';
 import 'package:goviwiruvo_app/dto/vegetablerequestdto.dart';
 import 'package:http/http.dart';
@@ -44,23 +45,40 @@ class WebServiceCall {
     }
   }
 
-  static Future<String> getToken() async {
-    Response res = await get(TOKEN_URL);
+  static Future<http.Response> getToken(String uuid) async {
 
-    String token = '';
+//  Map<String, String> get headers => {
+//    "Content-Type": "application/json",
+//    "Accept": "application/json",
+//    "Authorization": "Bearer $_token",
+//  };
+//
+//
+////  var response = await http.get(url, headers: headers);
+////  if (response.statusCode != 200) {
+////  throw Exception(
+////  "Request to $url failed with status ${response.statusCode}: ${response.body}");
+////  }
+    Future<http.Response> response = null;
 
-    if (res.statusCode == 200) {
-      List<dynamic> body = jsonDecode(res.body);
+    UseridDTO userToken = UseridDTO();
+    userToken.uid = uuid;
+
+    String bodyd = "";
+    bodyd = json.encode(userToken.toJson());
+
+    print("json map :"+bodyd);
+
+    try {
+      response = http.post(POST_URL,
+          headers: {"Content-Type": "application/json"}, body: bodyd);
 
 
+    } on Exception catch (e) {
+      print(e);
 
-      print('200');
-
-      return token;
-    } else {
-      print('else');
-      throw "Can't get veggies list.";
     }
+    return response;
   }
 
   static Future<http.Response> createVegRequestPOST(VegetableRequest vegetableRequest) async {
@@ -87,18 +105,18 @@ class WebServiceCall {
 
     Future<http.Response> response = null;
 
-    String bodyd = "";
+//    String bodyd = "";
 //    bodyd = json.encode(vegetableRequest.toJson());
-
-    print("json map :"+bodyd);
-
-    try {
-      response = http.post(POST_URL,
-          headers: {"Content-Type": "application/json"}, body: bodyd);
-    } on Exception catch (e) {
-      print(e);
-
-    }
+//
+//    print("json map :"+bodyd);
+//
+//    try {
+//      response = http.post(POST_URL,
+//          headers: {"Content-Type": "application/json"}, body: bodyd);
+//    } on Exception catch (e) {
+//      print(e);
+//
+//    }
     return response;
   }
 
