@@ -1,15 +1,17 @@
+import 'package:goviwiruvo_app/dto/tokenDTO.dart';
 import 'package:goviwiruvo_app/dto/usertokenid.dart';
 import 'package:goviwiruvo_app/dto/vegetableload.dart';
 import 'package:goviwiruvo_app/dto/vegetablerequestdto.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class WebServiceCall {
 
 
-  static final String GET_URL = "http://sit.algattasweb.com:3000/vegetables";
-  static final String POST_URL = "http://sit.algattasweb.com:3000/createVegetableList";
+  static final String GET_URL = "http://goviwiru.xeniqhub.xyz:8080/vegetable";
+  static final String POST_URL = "http://goviwiru.xeniqhub.xyz:8080/createVegetableList";
   static final String TOKEN_URL = "https://us-central1-goviwiru.cloudfunctions.net/getToken";
 
 //  Map<String, String> get headers => {
@@ -24,8 +26,11 @@ class WebServiceCall {
 //  }
   static Future<List<VegetableLoad>> getVegetables() async {
 
-    Response res = await get(GET_URL);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String tokenStr  = prefs.get('token');
+    print('tokenStr = ${tokenStr}' );
 
+    Response res = await http.get(GET_URL, headers: {'Content-type': 'application/json','Authorization':'${tokenStr}'});
 
     if (res.statusCode == 200) {
       List<dynamic> body = jsonDecode(res.body);
@@ -47,19 +52,7 @@ class WebServiceCall {
 
   static Future<http.Response> getToken(String uuid) async {
 
-//  Map<String, String> get headers => {
-//    "Content-Type": "application/json",
-//    "Accept": "application/json",
-//    "Authorization": "Bearer $_token",
-//  };
-//
-//
-////  var response = await http.get(url, headers: headers);
-////  if (response.statusCode != 200) {
-////  throw Exception(
-////  "Request to $url failed with status ${response.statusCode}: ${response.body}");
-////  }
-    Future<http.Response> response = null;
+    http.Response response = null;
 
     UseridDTO userToken = UseridDTO();
     userToken.uid = uuid;
@@ -70,18 +63,33 @@ class WebServiceCall {
     print("json map :"+bodyd);
 
     try {
-      response = http.post(POST_URL,
+      response = await http.post(TOKEN_URL,
           headers: {"Content-Type": "application/json"}, body: bodyd);
+          print('gettoken response ${response.body}');
 
+      if(response !=null ){
+      if(response.statusCode == 200)
+        if(response.body.isNotEmpty){
+
+              TokenDTO tokenDTO = new TokenDTO.fromJson(json.decode(response.body));
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              prefs.setString('token',tokenDTO.token);
+        }else{
+          print('body  empty');
+        }
+      }
 
     } on Exception catch (e) {
       print(e);
-
     }
     return response;
   }
 
   static Future<http.Response> createVegRequestPOST(VegetableRequest vegetableRequest) async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String tokenStr  = prefs.get('token');
+    print('tokenStr = ${tokenStr}' );
 
     Future<http.Response> response = null;
 
@@ -91,8 +99,10 @@ class WebServiceCall {
     print("json map :"+bodyd);
 
     try {
+     
       response = http.post(POST_URL,
-          headers: {"Content-Type": "application/json"}, body: bodyd);
+          headers: {'Content-type': 'application/json','Authorization':'${tokenStr}'},
+          body: bodyd);
     } on Exception catch (e) {
       print(e);
 
@@ -102,6 +112,10 @@ class WebServiceCall {
 
 
   static Future<http.Response> getUserRoleData() async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String tokenStr  = prefs.get('token');
+    print('tokenStr = ${tokenStr}' );
 
     Future<http.Response> response = null;
 

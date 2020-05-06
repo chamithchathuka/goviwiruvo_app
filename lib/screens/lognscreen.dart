@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:goviwiruvo_app/customwidget/multiselectdialog.dart';
 import 'package:goviwiruvo_app/dto/vegetablerequestdto.dart';
+import 'package:goviwiruvo_app/external/webservices.dart';
 import 'package:goviwiruvo_app/model/VegetableModel.dart';
 import 'package:goviwiruvo_app/service/authservice.dart';
 import 'package:goviwiruvo_app/services/vegetableservice.dart';
@@ -202,22 +203,39 @@ class _LoginScreenState extends State<LoginScreen> {
       child: RaisedButton(
         color: Color.fromRGBO(0, 0, 0, 0.9),
         onPressed: () async {
-          print('verificationCode continue pressed');
-            AuthResult authResult = await  AuthService().signInWithOTP(verificationCodeController.text, verificationId);
+          print('verificationCode continue pressed ${verificationCodeController.text}  --- ${verificationId} ');
 
-            if(authResult!=null){
-              if(authResult.user!=null){
+            Future<AuthResult> authResult =   AuthService().signInWithOTP(verificationCodeController.text, verificationId);
 
-                vs.saveContactNumber(contactNoController.text);
-                Navigator.of(context).pushReplacementNamed('/roleselect'); // to connect screen
+          authResult.then((authResult){
+            if(authResult.user!=null){
 
-              }else{
-                print('error occurred');
-              }
+              vs.saveContactNumber(contactNoController.text);
+              WebServiceCall.getToken(authResult.user.uid);
+              Navigator.of(context).pushReplacementNamed('/roleselect'); // to connect screen
+
             }else{
-
-
+              print('error occurred block 1');
             }
+          }).catchError((error){
+            print('error occurred');
+          });
+
+//            if(authResult!=null){
+//              if(authResult.user!=null){
+//
+//                vs.saveContactNumber(contactNoController.text);
+//                WebServiceCall.getToken(authResult.user.uid);
+//                Navigator.of(context).pushReplacementNamed('/roleselect'); // to connect screen
+//
+//              }else{
+//                print('error occurred');
+//              }
+//            }else{
+//
+//
+//              print('error occurred');
+//            }
 
         },
         child: Text("Submit Verification Code",
@@ -396,19 +414,31 @@ class _LoginScreenState extends State<LoginScreen> {
   void _register(BuildContext context) async {
 
     final PhoneVerificationCompleted verified = (AuthCredential authCredential){
-      try{
-      AuthResult authResult = AuthService().signIn(authCredential);
-      print('auth ID found ');
-      if(authResult.user!=null){
+//      try{
+      Future<AuthResult> authResult = AuthService().signIn(authCredential);
+
+      authResult.then((authResult){
+        print('auth ID found ');
         Navigator.of(context).pushNamed('/lead'); // to connect screen
+      }).catchError((onError)
+      {
+        print(onError.message);
       }
-      } on  PlatformException catch(e) {
-        print(e.message);
-      }
+      );
+
+
+//
+//      if(authResult.user!=null){
+//        Navigator.of(context).pushNamed('/lead'); // to connect screen
+//      }
+//      } on  PlatformException catch(e) {
+//        print(e.message);
+//      }
 
     };
 
     final PhoneVerificationFailed verificationfailed = (AuthException authException){
+      print('verificationfailed');
       print('${authException.message}');
     };
 
@@ -418,8 +448,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
     final PhoneCodeSent smsSent =
         (String verId,[int forceresend]){
-      this.verificationId = verId;
+          print('sms sent called ');
       setState(() {
+        this.verificationId = verId;
         this.codeSent = true;
       });
     };

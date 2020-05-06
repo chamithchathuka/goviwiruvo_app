@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:goviwiruvo_app/external/webservices.dart';
 import 'package:goviwiruvo_app/screens/cartscreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:splashscreen/splashscreen.dart';
@@ -23,30 +24,17 @@ class AuthService{
     FirebaseAuth.instance.signOut();
   }
 
-  signIn(AuthCredential authCreds) async {
-    AuthResult authResult = null;
-    try{
-       authResult = await FirebaseAuth.instance.signInWithCredential(authCreds);
-       print('phonenumber ${authResult.user.phoneNumber}');
+  Future<AuthResult> signIn(AuthCredential authCreds)  {
 
-       SharedPreferences _prefs = await SharedPreferences.getInstance();
-       _prefs.setString('coodinatorcontactnumber', authResult.user.phoneNumber);
-
-      // print('${authResult.additionalUserInfo.username}');
-      print('${authResult.user.uid}');
-
-    } on  PlatformException catch(e) {
-      print(e.message);
-      throw e;
-    }
-
+    Future<AuthResult> authResult =  FirebaseAuth.instance.signInWithCredential(authCreds);
     return authResult;
 
   }
 
-  signInWithOTP(smsCode,verId) async{
+  Future<AuthResult> signInWithOTP(smsCode,verId) {
     AuthCredential authCredential = PhoneAuthProvider.getCredential(verificationId: verId, smsCode: smsCode);
-    AuthResult authResult = await signIn(authCredential);
+    Future<AuthResult> authResult = signIn(authCredential);
+
     return authResult;
   }
 }
