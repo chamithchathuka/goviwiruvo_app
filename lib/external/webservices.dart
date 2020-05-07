@@ -1,3 +1,4 @@
+import 'package:goviwiruvo_app/dto/farmer.dto.dart';
 import 'package:goviwiruvo_app/dto/tokenDTO.dart';
 import 'package:goviwiruvo_app/dto/usertokenid.dart';
 import 'package:goviwiruvo_app/dto/vegetableload.dart';
@@ -12,6 +13,7 @@ class WebServiceCall {
 
   static final String GET_URL = "http://goviwiru.xeniqhub.xyz:8080/vegetable";
   static final String POST_URL = "http://goviwiru.xeniqhub.xyz:8080/createVegetableList";
+  static final String POST_ADD_FARMER_URL = "http://goviwiru.xeniqhub.xyz:8080/registerFarmer";
   static final String TOKEN_URL = "https://us-central1-goviwiru.cloudfunctions.net/getToken";
 
 //  Map<String, String> get headers => {
@@ -85,6 +87,32 @@ class WebServiceCall {
     return response;
   }
 
+  static Future<http.Response> addFarmerRequest(FarmerDTO farmerDTO) async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String tokenStr  = prefs.get('token');
+    print('tokenStr = ${tokenStr}' );
+
+    Future<http.Response> response = null;
+
+    String bodyd = "";
+    bodyd = json.encode(farmerDTO.toJson());
+
+    print("json map :"+bodyd);
+
+    try {
+
+      response = http.post(POST_ADD_FARMER_URL,
+          headers: {'Content-type': 'application/json','Authorization':'${tokenStr}'},
+          body: bodyd);
+
+    } on Exception catch (e) {
+      print(e);
+
+    }
+    return response;
+  }
+
   static Future<http.Response> createVegRequestPOST(VegetableRequest vegetableRequest) async {
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -109,6 +137,8 @@ class WebServiceCall {
     }
     return response;
   }
+
+
 
 
   static Future<http.Response> getUserRoleData() async {

@@ -2,10 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:goviwiruvo_app/customwidget/multiselectdialog.dart';
+import 'package:goviwiruvo_app/dto/farmer.dto.dart';
 import 'package:goviwiruvo_app/dto/vegetablerequestdto.dart';
+import 'package:goviwiruvo_app/external/webservices.dart';
 import 'package:goviwiruvo_app/model/VegetableModel.dart';
 import 'package:goviwiruvo_app/services/vegetableservice.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class AddFarmer extends StatefulWidget {
 
@@ -26,53 +29,19 @@ class _AddFarmerState extends State<AddFarmer> {
 
   final weightController = TextEditingController();
 
-  final coordinationOfficerTextController = TextEditingController();
-
   final contactNoController = TextEditingController();
-
-  final nicController = TextEditingController();
-
-  final noteController = TextEditingController();
-
-  String selectedVegetable = null;
-
-  String selectedProductListStrNames = null;
-
-  String selectedNatureOfBusiness = null;
 
   String selectedArea = null;
 
   var username = "User Name";
-
-  
-
 
   final pageName = "ගොවිමහතාගේ තොරතුරු";
 
   @override
   void initState() {
     super.initState();
-    loadData();
   }
 
-  void loadData() async {
-//    List<VegetableLoad> vegetables = await WebServiceCall.getVegetables();
-    VegetableRequest vegRequest = await vs.loadVegRequestFromState();
-    SharedPreferences _prefs = await SharedPreferences.getInstance();
-
-    if(vegRequest!=null){
-
-      addressController.text = vegRequest.address;
-      nameController.text = vegRequest.name;
-      whatappContactNoController.text = vegRequest.whatsapp;
-      
-
-
-    }
-    String coordinatorContact =  _prefs.getString('coodinatorcontactnumber').replaceFirst('+94', '0');
-    coordinationOfficerTextController.text = coordinatorContact;
-
-  }
 
   address(BuildContext context) => Padding(
         padding: const EdgeInsets.only(top: 8.0),
@@ -165,49 +134,49 @@ class _AddFarmerState extends State<AddFarmer> {
         ),
       );
 
-//  contactnumber(BuildContext context) => Padding(
-//        padding: const EdgeInsets.only(top: 8),
-//        child: Column(
-//          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//          children: [
-//            Align(
-//                alignment: Alignment.topLeft,
-//                child: Text(
-//                  "දුරකථන අංකය",
-//                  style: TextStyle(fontWeight: FontWeight.bold),
-//                  textAlign: TextAlign.left,
-//                )),
-//            Container(
-//              child: Row(
-//                children: <Widget>[
-////                  Icon(Icons.phone),
-////                  Padding(
-////                    padding: EdgeInsets.only(left: 8, right: 8),
-////                  ),
-//                  Expanded(
-//                    child: TextFormField(
-//                      validator: (value) {
-//                        if (value.isEmpty) {
-//                          return ('දුරකථන අංකය ඇතුලත්කරන්න');
-//                        }
-//                        if (value.length<10) {
-//                          return ('දුරකථන අංකය වැරදයි');
-//                        }
-//                      },inputFormatters: [
-//                      WhitelistingTextInputFormatter.digitsOnly
-//                      ],
-//                      keyboardType: TextInputType.number,
-//                      controller: contactNoController,
-//                      maxLength: 10,
-//                      textAlign: TextAlign.left,
-//                    ),
+  contactnumber(BuildContext context) => Padding(
+        padding: const EdgeInsets.only(top: 8),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  "දුරකථන අංකය",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.left,
+                )),
+            Container(
+              child: Row(
+                children: <Widget>[
+//                  Icon(Icons.phone),
+//                  Padding(
+//                    padding: EdgeInsets.only(left: 8, right: 8),
 //                  ),
-//                ],
-//              ),
-//            ),
-//          ],
-//        ),
-//  );
+                  Expanded(
+                    child: TextFormField(
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return ('දුරකථන අංකය ඇතුලත්කරන්න');
+                        }
+                        if (value.length<10) {
+                          return ('දුරකථන අංකය වැරදයි');
+                        }
+                      },inputFormatters: [
+                      WhitelistingTextInputFormatter.digitsOnly
+                      ],
+                      keyboardType: TextInputType.number,
+                      controller: contactNoController,
+                      maxLength: 10,
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+  );
 
   contactnumberWhatsApp(BuildContext context) => Padding(
         padding: const EdgeInsets.only(top: 8),
@@ -254,54 +223,6 @@ class _AddFarmerState extends State<AddFarmer> {
         ),
       );
 
-  coordinationOfficerNumber(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(top: 8),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  "සම්බන්ධිකරණ නිලධාරී දුරකථන අංකය",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.left,
-                )),
-            Container(
-              child: Row(
-                children: <Widget>[
-//                  Icon(Icons.verified_user),
-//                  Padding(
-//                    padding: EdgeInsets.only(left: 8, right: 8),
-//                  ),
-                  Expanded(
-                    child: TextFormField(
-                      enabled: false,
-                      validator: (value) {
-                          if(value.isEmpty){
-                           // return ('Coordinator number Invalid.');
-                          }
-                          if (!value.isEmpty && value.length<10) {
-                            return ('දුරකථන අංකය වැරදයි');
-                          }
-
-                        },
-                        maxLength: 10,
-                        controller: coordinationOfficerTextController,
-                        textAlign: TextAlign.left,
-                      inputFormatters: [
-                        WhitelistingTextInputFormatter.digitsOnly
-                      ],
-                      keyboardType: TextInputType.number,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      );
-
-
   saveLead(BuildContext context) => Padding(
         padding: const EdgeInsets.all(0),
         child: Container(
@@ -310,7 +231,9 @@ class _AddFarmerState extends State<AddFarmer> {
           child: RaisedButton(
             color: Color.fromRGBO(0, 0, 0, 0.9),
             onPressed: () {
-              _validateInputs();
+              _validateInputs(context);
+
+
 
 //              Navigator.of(context).pushNamed('/cart'); // to connect screen
             },
@@ -333,12 +256,12 @@ class _AddFarmerState extends State<AddFarmer> {
                     customerName(context),
                     SizedBox(height: 20),
                     address(context),
+                    SizedBox(height: 20),
+                    contactnumber(context),
 //                    SizedBox(height: 20),
-//                    contactnumber(context),
-                    SizedBox(height: 20),
                     contactnumberWhatsApp(context),
-                    SizedBox(height: 20),
-                    coordinationOfficerNumber(context),
+//                    SizedBox(height: 20),
+//                    coordinationOfficerNumber(context),
                   ],
                 ),
               ),
@@ -371,7 +294,7 @@ class _AddFarmerState extends State<AddFarmer> {
                 children: <Widget>[
                   address(context),
                   customerName(context),
-//                  contactnumber(context),
+                  contactnumber(context),
                   contactnumberWhatsApp(context),
 
                 ]),
@@ -421,9 +344,8 @@ class _AddFarmerState extends State<AddFarmer> {
     whatappContactNoController.dispose();
     weightController.dispose();
 //    contactNoController.dispose();
-    nicController.dispose();
-    noteController.dispose();
-    coordinationOfficerTextController.dispose();
+//    nicController.dispose();
+//    noteController.dispose();
     super.dispose();
   }
 
@@ -479,23 +401,36 @@ class _AddFarmerState extends State<AddFarmer> {
     );
   }
 
-  void _validateInputs() {
+  void _validateInputs(BuildContext context) {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
 
-      vs.saveRequestInfo( nameController.text, addressController.text,
-         whatappContactNoController.text,coordinationOfficerTextController.text);
+      FarmerDTO farmerDTO = new FarmerDTO();
+      farmerDTO.address = addressController.text;
+      farmerDTO.name = nameController.text;
+      farmerDTO.phoneNo = contactNoController.text;
+      farmerDTO.whatsappNo = whatappContactNoController.text;
+
+      Future<http.Response> response = WebServiceCall.addFarmerRequest(farmerDTO);
+
+      response.then((response){
+        if(response.statusCode==200){
+          print('response success - ${response.statusCode}');
+
+        }else{
+          print('response error - ${response.statusCode}');
+        }
+      }).catchError((error){
+        print('${error}');
+
+      });
 
       _formKey.currentState.reset();
 
-      Navigator.of(context).pushReplacementNamed('/cart'); // to connect screen
+     // Navigator.of(context).pushReplacementNamed('/cart'); // to connect screen
 
     } else {
       print('invalid');
-//    If all data are not valid then start auto validation.
-//      setState(() {
-//        _autoValidate = true;
-//      });
     }
   }
 }

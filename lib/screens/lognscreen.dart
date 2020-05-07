@@ -218,7 +218,26 @@ class _LoginScreenState extends State<LoginScreen> {
               print('error occurred block 1');
             }
           }).catchError((error){
-            print('error occurred');
+            showDialogAlert(BuildContext context) {
+              // flutter defined function
+
+              // return object of type Dialog
+              return AlertDialog(
+                title: new Text("Error"),
+                content: new Text("${error}"),
+                actions: <Widget>[
+                  // usually buttons at the bottom of the dialog
+                  new FlatButton(
+                    child: new Text("Close"),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+
+            }
+            print('error occurred ${error}');
           });
 
 //            if(authResult!=null){
@@ -265,7 +284,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           Column(
             children: [
-              _isVerficationCode?submitVerificationCodeRequest(context):submitRequest(context),
+              _isVerficationCode?(codeSent?submitVerificationCodeRequest(context):Text("Sending Verification Code..")):submitRequest(context),
             ],
           ),
         ],
@@ -422,6 +441,25 @@ class _LoginScreenState extends State<LoginScreen> {
         Navigator.of(context).pushNamed('/lead'); // to connect screen
       }).catchError((onError)
       {
+        showDialogAlert(BuildContext context) {
+          // flutter defined function
+
+          // return object of type Dialog
+          return AlertDialog(
+            title: new Text("Error"),
+            content: new Text("Error"),
+            actions: <Widget>[
+              // usually buttons at the bottom of the dialog
+              new FlatButton(
+                child: new Text("Close"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+
+        }
         print(onError.message);
       }
       );
@@ -440,6 +478,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final PhoneVerificationFailed verificationfailed = (AuthException authException){
       print('verificationfailed');
       print('${authException.message}');
+
     };
 
 //    final PhoneCodeAutoRetrievalTimeout tomeout = (String verId){
