@@ -2,9 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:goviwiruvo_app/customwidget/multiselectdialog.dart';
+import 'package:goviwiruvo_app/dto/farmer.dto.dart';
 import 'package:goviwiruvo_app/dto/vegetablerequestdto.dart';
 import 'package:goviwiruvo_app/model/VegetableModel.dart';
 import 'package:goviwiruvo_app/services/vegetableservice.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'dart:io';
+import 'dart:convert';
+
 
 class LeadCaptureScreen extends StatefulWidget {
   @override
@@ -44,6 +50,8 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
 
   var username = "User Name";
 
+  String contactNumber = '';
+
 
   final pageName = "ගොවිමහතාගේ තොරතුරු";
 
@@ -56,7 +64,8 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
   void loadData() async {
 //    List<VegetableLoad> vegetables = await WebServiceCall.getVegetables();
     VegetableRequest vegRequest = await vs.loadVegRequestFromState();
-
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+     contactNumber =_prefs.getString("user_contactnumber");
     if(vegRequest!=null){
 
       addressController.text = vegRequest.address;
@@ -248,51 +257,51 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
         ),
       );
 
-  coordinationOfficerNumber(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(top: 8),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  "සම්බන්ධිකරණ නිලධාරී දුරකථන අංකය",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.left,
-                )),
-            Container(
-              child: Row(
-                children: <Widget>[
-//                  Icon(Icons.verified_user),
-//                  Padding(
-//                    padding: EdgeInsets.only(left: 8, right: 8),
+//  coordinationOfficerNumber(BuildContext context) => Padding(
+//        padding: const EdgeInsets.only(top: 8),
+//        child: Column(
+//          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//          children: [
+//            Align(
+//                alignment: Alignment.topLeft,
+//                child: Text(
+//                  "සම්බන්ධිකරණ නිලධාරී දුරකථන අංකය",
+//                  style: TextStyle(fontWeight: FontWeight.bold),
+//                  textAlign: TextAlign.left,
+//                )),
+//            Container(
+//              child: Row(
+//                children: <Widget>[
+////                  Icon(Icons.verified_user),
+////                  Padding(
+////                    padding: EdgeInsets.only(left: 8, right: 8),
+////                  ),
+//                  Expanded(
+//                    child: TextFormField(
+//                        validator: (value) {
+//                          if(value.isEmpty){
+//                           // return ('Coordinator number Invalid.');
+//                          }
+//                          if (!value.isEmpty && value.length<10) {
+//                            return ('දුරකථන අංකය වැරදයි');
+//                          }
+//
+//                        },
+//                        maxLength: 10,
+//                        controller: coordinationOfficerTextController,
+//                        textAlign: TextAlign.left,
+//                      inputFormatters: [
+//                        WhitelistingTextInputFormatter.digitsOnly
+//                      ],
+//                      keyboardType: TextInputType.number,
+//                    ),
 //                  ),
-                  Expanded(
-                    child: TextFormField(
-                        validator: (value) {
-                          if(value.isEmpty){
-                           // return ('Coordinator number Invalid.');
-                          }
-                          if (!value.isEmpty && value.length<10) {
-                            return ('දුරකථන අංකය වැරදයි');
-                          }
-
-                        },
-                        maxLength: 10,
-                        controller: coordinationOfficerTextController,
-                        textAlign: TextAlign.left,
-                      inputFormatters: [
-                        WhitelistingTextInputFormatter.digitsOnly
-                      ],
-                      keyboardType: TextInputType.number,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      );
+//                ],
+//              ),
+//            ),
+//          ],
+//        ),
+//      );
 
 
   saveLead(BuildContext context) => Padding(
@@ -331,8 +340,8 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
 //                    contactnumber(context),
                     SizedBox(height: 20),
                     contactnumberWhatsApp(context),
-                    SizedBox(height: 20),
-                    coordinationOfficerNumber(context),
+//                    SizedBox(height: 20),
+//                    coordinationOfficerNumber(context),
                   ],
                 ),
               ),
@@ -488,12 +497,22 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
     );
   }
 
+
   void _validateInputs() {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
 
       vs.saveRequestInfo( nameController.text, addressController.text,
          whatappContactNoController.text,coordinationOfficerTextController.text);
+
+      FarmerDTO farmer = new FarmerDTO();
+      farmer.name =nameController.text;
+      farmer.address =addressController.text;
+      farmer.whatsappNo =nameController.text;
+      farmer.name =nameController.text;
+
+      addFarmerRequest(farmer);
+
 
       _formKey.currentState.reset();
 
@@ -506,5 +525,36 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
 //        _autoValidate = true;
 //      });
     }
+
+
+
+  }
+
+  Future<http.Response> addFarmerRequest(FarmerDTO farmerDTO) async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String tokenStr  = prefs.get('token');
+    print('tokenStr = ${tokenStr}' );
+
+    farmerDTO.phoneNo = prefs.get('user_contactnumber');
+
+    Future<http.Response> response = null;
+
+    String bodyd = "";
+    bodyd = json.encode(farmerDTO.toJson());
+
+    print("json map :"+bodyd);
+
+    try {
+
+      response = http.post('http://goviwiru.xeniqhub.xyz:8080/register',
+          headers: {'Content-type': 'application/json','Authorization':'${tokenStr}'},
+          body: bodyd);
+
+    } on Exception catch (e) {
+      print(e);
+
+    }
+    return response;
   }
 }

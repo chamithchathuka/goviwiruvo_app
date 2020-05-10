@@ -53,8 +53,10 @@ class VegetableService {
     saveinSharedPreferencesVegitablesToBeSaved();
   }
 
-  saveContactNumber( String contactNo) {
+  saveContactNumber( String contactNo) async{
     vegetableRequest.phone = contactNo;
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    _prefs.setString("user_contactnumber", contactNo);
   }
 
 
