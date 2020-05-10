@@ -52,7 +52,9 @@ class _AddFarmerState extends State<AddFarmer> {
                 alignment: Alignment.topLeft,
                 child: Text(
                   "ලිපිනය",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      color:Color.fromRGBO(0, 102, 34,0.8)
+                  ),
                   textAlign: TextAlign.left,
                 )),
             Container(
@@ -64,6 +66,17 @@ class _AddFarmerState extends State<AddFarmer> {
 //                  ),
                   Expanded(
                     child: TextFormField(
+                      decoration:  new InputDecoration(
+                      enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))),
+                      focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))) ,
+                      ),
+                      style: new TextStyle(
+                      color: Color.fromRGBO(0, 102, 34,0.8),
+                      decorationColor: Color.fromRGBO(0, 102, 34,0.8),//Font color change
+                      ),
+
                       validator: (value) {
                         if (value.isEmpty) {
                           return ('ලිපිනය ඇතුලත්කරන්න');
@@ -106,7 +119,9 @@ class _AddFarmerState extends State<AddFarmer> {
                 alignment: Alignment.topLeft,
                 child: Text(
                   "නම",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    color:Color.fromRGBO(0, 102, 34,0.8)
+                ),
                   textAlign: TextAlign.left,
                 )),
             Container(
@@ -118,6 +133,16 @@ class _AddFarmerState extends State<AddFarmer> {
 //                  ),
                   Expanded(
                     child: TextFormField(
+                      decoration:  new InputDecoration(
+                        enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))),
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))) ,
+                      ),
+                      style: new TextStyle(
+                        color: Color.fromRGBO(0, 102, 34,0.8),
+                        decorationColor: Color.fromRGBO(0, 102, 34,0.8),//Font color change
+                      ),
                       validator: (value) {
                         if (value.isEmpty) {
                           return ('නම ඇතුලත්කරන්න');
@@ -143,7 +168,9 @@ class _AddFarmerState extends State<AddFarmer> {
                 alignment: Alignment.topLeft,
                 child: Text(
                   "දුරකථන අංකය",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    color:Color.fromRGBO(0, 102, 34,0.8)
+                ),
                   textAlign: TextAlign.left,
                 )),
             Container(
@@ -155,6 +182,16 @@ class _AddFarmerState extends State<AddFarmer> {
 //                  ),
                   Expanded(
                     child: TextFormField(
+                      decoration:  new InputDecoration(
+                        enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))),
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))) ,
+                      ),
+                      style: new TextStyle(
+                        color: Color.fromRGBO(0, 102, 34,0.8),
+                        decorationColor: Color.fromRGBO(0, 102, 34,0.8),//Font color change
+                      ),
                       validator: (value) {
                         if (value.isEmpty) {
                           return ('දුරකථන අංකය ඇතුලත්කරන්න');
@@ -187,7 +224,9 @@ class _AddFarmerState extends State<AddFarmer> {
                 alignment: Alignment.topLeft,
                 child: Text(
                   "වට්ස්ඇප් දුරකථන අංකය",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      color:Color.fromRGBO(0, 102, 34,0.8)
+                  ),
                   textAlign: TextAlign.left,
                 )),
             Container(
@@ -199,6 +238,19 @@ class _AddFarmerState extends State<AddFarmer> {
 //                  ),
                   Expanded(
                     child: TextFormField(
+                      decoration:  new InputDecoration(
+                        enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))),
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))) ,
+//                        contentPadding:
+//                        EdgeInsets.only(left: 15, bottom: 10, top: 20, right: 15),
+                      ),
+                      style: new TextStyle(
+                        color: Color.fromRGBO(0, 102, 34,0.8),
+                        decorationColor: Color.fromRGBO(0, 102, 34,0.8),//Font color change
+                      ),
+
                       validator: (value) {
 //                        if(value.isEmpty){
 //                          return ('දුරකථන අංකය වැරදයි');
@@ -229,7 +281,8 @@ class _AddFarmerState extends State<AddFarmer> {
           width: double.infinity,
           height: 50,
           child: RaisedButton(
-            color: Color.fromRGBO(0, 0, 0, 0.9),
+            shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+            color: Color.fromRGBO(0, 102, 34,0.8),
             onPressed: () {
               _validateInputs(context);
 
@@ -361,9 +414,9 @@ class _AddFarmerState extends State<AddFarmer> {
 //                      '/leadcapturesearch'); // to connect screen
 //                }),
         ],
-        backgroundColor: Color(0xFFFFFFFF),
+        backgroundColor: Color.fromRGBO(0, 102, 34,0.8),
         title: new Text(pageName,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            style: TextStyle(color:Colors.white,fontSize: 20, fontWeight: FontWeight.bold)),
       ),
 //      floatingActionButton: FloatingActionButton(
 //        onPressed: () {
@@ -373,7 +426,21 @@ class _AddFarmerState extends State<AddFarmer> {
 //        child: Icon(Icons.add_shopping_cart),
 //        backgroundColor: Colors.redAccent,
 //      ),
-      body: SafeArea(
+      body:
+
+    Container(
+    decoration: BoxDecoration(
+    color: Colors.white,
+    image: DecorationImage(
+    colorFilter:
+    ColorFilter.mode(Colors.lightGreenAccent.withOpacity(0.20),
+    BlendMode.dstATop),
+    image:  new AssetImage('assets/background_a.jpg'),
+    fit: BoxFit.cover,
+    ),
+    ),
+    child:
+      SafeArea(
         minimum: const EdgeInsets.all(8.0),
         child: Form(
           key: _formKey,
@@ -398,6 +465,7 @@ class _AddFarmerState extends State<AddFarmer> {
           }),
         ),
       ),
+    )
     );
   }
 
