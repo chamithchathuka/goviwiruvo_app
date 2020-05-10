@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:goviwiruvo_app/screens/cartscreen.dart';
 import 'package:goviwiruvo_app/screens/leadcapture.dart';
 import 'package:goviwiruvo_app/screens/addfarmer.dart';
+import 'package:goviwiruvo_app/screens/loadfarmersreen.dart';
 import 'package:goviwiruvo_app/screens/lognscreen.dart';
 import 'package:goviwiruvo_app/screens/roleselectionscreen.dart';
 import 'package:goviwiruvo_app/screens/vegetablescreen.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
         '/cart': (BuildContext context) => CartScreen(),
         '/roleselect': (BuildContext context) => RoleSelectionScreen(),
         '/addfarmer': (BuildContext context) => AddFarmer(),
+        '/loadfarmers': (BuildContext context) => LoadFarmerScreen(),
       },
       title: MyGlobals.AppName,
       theme: ThemeData(
