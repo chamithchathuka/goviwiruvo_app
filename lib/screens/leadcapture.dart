@@ -301,7 +301,8 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
           width: double.infinity,
           height: 50,
           child: RaisedButton(
-            color: Color.fromRGBO(0, 0, 0, 0.9),
+            shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+            color: Color.fromRGBO(0, 102, 34,0.8),
             onPressed: () {
               _validateInputs();
 
@@ -432,9 +433,9 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
 //                      '/leadcapturesearch'); // to connect screen
 //                }),
         ],
-        backgroundColor: Color(0xFFFFFFFF),
+        backgroundColor: Color.fromRGBO(0, 102, 34,0.8),
         title: new Text(pageName,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            style: TextStyle(color:Colors.white,fontSize: 20, fontWeight: FontWeight.bold)),
       ),
 //      floatingActionButton: FloatingActionButton(
 //        onPressed: () {
@@ -444,31 +445,46 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
 //        child: Icon(Icons.add_shopping_cart),
 //        backgroundColor: Colors.redAccent,
 //      ),
-      body: SafeArea(
-        minimum: const EdgeInsets.all(8.0),
-        child: Form(
-          key: _formKey,
-          autovalidate: _autoValidate,
-          child: OrientationBuilder(builder: (context, orientation) {
-            return orientation == Orientation.portrait
-                ? LayoutBuilder(builder: (context, constraints) {
-                    if (constraints.maxWidth < 600) {
-                      return _buildVerticalLayout(context);
-                    } else {
-                      return _buildVerticalLayout(context);
-                    }
-                  })
-                : LayoutBuilder(builder: (context, constraints) {
-                    if (constraints.maxWidth < 600) {
-                      return _buildVerticalLayout(context);
-                    } else {
-                      //Todo Change this
-                      return _buildVerticalLayout(context);
-                    }
-                  });
-          }),
-        ),
-      ),
+      body:
+          Container(
+                    decoration: BoxDecoration(
+                    color: Colors.white,
+                    image: DecorationImage(
+                    colorFilter:
+                    ColorFilter.mode(Colors.lightGreenAccent.withOpacity(0.20),
+                    BlendMode.dstATop),
+                    image: new AssetImage('assets/background_a.jpg'),
+                    fit: BoxFit.cover,
+                    ),
+                    ),
+
+                    child:
+                          SafeArea(
+                            minimum: const EdgeInsets.all(8.0),
+                            child: Form(
+                              key: _formKey,
+                              autovalidate: _autoValidate,
+                              child: OrientationBuilder(builder: (context, orientation) {
+                                return orientation == Orientation.portrait
+                                    ? LayoutBuilder(builder: (context, constraints) {
+                                        if (constraints.maxWidth < 600) {
+                                          return _buildVerticalLayout(context);
+                                        } else {
+                                          return _buildVerticalLayout(context);
+                                        }
+                                      })
+                                    : LayoutBuilder(builder: (context, constraints) {
+                                        if (constraints.maxWidth < 600) {
+                                          return _buildVerticalLayout(context);
+                                        } else {
+                                          //Todo Change this
+                                          return _buildVerticalLayout(context);
+                                        }
+                                      });
+                              }),
+                            ),
+                          ),
+          )
     );
   }
 

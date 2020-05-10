@@ -17,13 +17,12 @@ class RoleSelectionScreen extends StatefulWidget {
 class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
 
 
-  final pageName = "User Role Select";
+  final pageName = "ඔබේ වුර්තිය තෝරන්න";
 
   @override
   void initState() {
     super.initState();
   }
-
 
 
   Container _buildVerticalLayout(BuildContext context) {
@@ -33,6 +32,7 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
       child:
       Center(
         child: ListView.builder(
+
             itemCount: MyGlobals.USER_ROLES.length,
             itemBuilder: (BuildContext context, int index) {
               return Padding(
@@ -52,7 +52,7 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                       ),
                     ),
                     decoration: BoxDecoration(
-                      color: Colors.blue,
+                      color: Color.fromRGBO(0, 102, 34,0.8),
                       shape: BoxShape.rectangle,
                       borderRadius: new BorderRadius.circular(8.0),
 //                      image: DecorationImage(
@@ -96,11 +96,25 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
 //                      '/leadcapturesearch'); // to connect screen
 //                }),
         ],
-        backgroundColor: Color(0xFFFFFFFF),
+          backgroundColor: Color.fromRGBO(0, 102, 34,0.8),
         title: new Text(pageName,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            style: TextStyle(color:Colors.white,fontSize: 20, fontWeight: FontWeight.bold)),
       ),
-      body: SafeArea(
+      body:
+
+    Container(
+    decoration: BoxDecoration(
+    color: Colors.white,
+    image: DecorationImage(
+    colorFilter:
+    ColorFilter.mode(Colors.lightGreenAccent.withOpacity(0.20),
+    BlendMode.dstATop),
+    image:  new AssetImage('assets/background_a.jpg'),
+    fit: BoxFit.cover,
+    ),
+    ),
+     child:
+      SafeArea(
         minimum: const EdgeInsets.all(8.0),
         child: Form(
           child: OrientationBuilder(builder: (context, orientation) {
@@ -123,6 +137,7 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
           }),
         ),
       ),
+    )
     );
   }
 

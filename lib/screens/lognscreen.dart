@@ -83,15 +83,18 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
   contactnumber(BuildContext context) => Padding(
-    padding: const EdgeInsets.only(top: 8),
+    padding: const EdgeInsets.only(top: 150,left: 60,right: 60),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Align(
-            alignment: Alignment.topLeft,
+            alignment: Alignment.center,
             child: Text(
               "දුරකථන අංකය",
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontSize: 22,
+                  color:Color.fromRGBO(0, 102, 34,0.8)
+              ),
               textAlign: TextAlign.center,
             )),
         Container(
@@ -99,6 +102,25 @@ class _LoginScreenState extends State<LoginScreen> {
             children: <Widget>[
               Expanded(
                 child: TextFormField(
+                  decoration:  new InputDecoration(
+//                    border: OutlineInputBorder(
+//
+//                        borderSide: BorderSide(color: Colors.white)
+//
+//                    )
+//                    ,
+                    enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))),
+                    focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))) ,
+              contentPadding:
+              EdgeInsets.only(left: 15, bottom: 10, top: 20, right: 15),
+              ),
+
+                  style: new TextStyle(
+                      color: Color.fromRGBO(0, 102, 34,0.8),
+                      decorationColor: Color.fromRGBO(0, 102, 34,0.8),//Font color change
+                   ),
                   validator: (value) {
                     if (value.isEmpty) {
                       return ('දුරකථන අංකය ඇතුලත්කරන්න');
@@ -135,15 +157,15 @@ class _LoginScreenState extends State<LoginScreen> {
   );
 
   verificationCode(BuildContext context) => Padding(
-    padding: const EdgeInsets.only(top: 8),
+    padding: EdgeInsets.only(top: 150,left: 60,right: 60),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Align(
-            alignment: Alignment.topLeft,
+            alignment: Alignment.center,
             child: Text(
-              "Verification Code",
-              style: TextStyle(fontWeight: FontWeight.bold),
+              "තහවුරු කිරීමේ කේතය",
+              style: TextStyle(color:Color.fromRGBO(0, 102, 34,0.8),fontSize: 18),
               textAlign: TextAlign.left,
             )),
         Container(
@@ -151,12 +173,24 @@ class _LoginScreenState extends State<LoginScreen> {
             children: <Widget>[
               Expanded(
                 child: TextFormField(
+              decoration:  new InputDecoration(
+                              enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))),
+                              focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))) ,
+                              contentPadding:
+                              EdgeInsets.only(left: 15, bottom: 10, top: 20, right: 15),
+                      ),
+                  style: new TextStyle(
+                    color: Color.fromRGBO(0, 102, 34,0.8),
+                    decorationColor: Color.fromRGBO(0, 102, 34,0.8),//Font color change
+                  ),
                   validator: (value) {
                     if (value.isEmpty) {
-                      return ('Enter OTP');
+                      return ('කේතය  ඇතුලත් කරන්න');
                     }
                     if (value.length!=6) {
-                      return ('OTP වැරදයි');
+                      return ('කේතය වැරදයි');
                     }
                   },inputFormatters: [
                   WhitelistingTextInputFormatter.digitsOnly
@@ -176,12 +210,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
   submitRequest(BuildContext context) => Padding(
-    padding: const EdgeInsets.all(0),
+    padding: EdgeInsets.only(right: 60,left: 60,bottom: 120),
     child: Container(
       width: double.infinity,
-      height: 50,
+      height: 60,
       child: RaisedButton(
-        color: Color.fromRGBO(0, 0, 0, 0.9),
+        shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+
+        color: Color.fromRGBO(0, 102, 34,0.8),
         onPressed: () async {
           _validateInputs(context);
 
@@ -190,55 +226,57 @@ class _LoginScreenState extends State<LoginScreen> {
 //              Navigator.of(context).pushNamed('/cart'); // to connect screen
         },
         child: Text("ඉදිරියට",
-            style: TextStyle(color: Colors.white, fontSize: 20)),
+            style: TextStyle(color: Colors.white, fontSize: 20,fontWeight: FontWeight.bold)),
       ),
     ),
   );
 
   submitVerificationCodeRequest(BuildContext context) => Padding(
-    padding: const EdgeInsets.all(0),
+    padding: EdgeInsets.only(right: 60,left: 60,bottom: 120),
     child: Container(
       width: double.infinity,
       height: 50,
-      child: RaisedButton(
-        color: Color.fromRGBO(0, 0, 0, 0.9),
-        onPressed: () async {
-          print('verificationCode continue pressed ${verificationCodeController.text}  --- ${verificationId} ');
+      child:
+             RaisedButton(
+                    shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+                    color: Color.fromRGBO(0, 102, 34,0.8),
+                    onPressed: () async {
+                      print('verificationCode continue pressed ${verificationCodeController.text}  --- ${verificationId} ');
 
-            Future<AuthResult> authResult =   AuthService().signInWithOTP(verificationCodeController.text, verificationId);
+                        Future<AuthResult> authResult =   AuthService().signInWithOTP(verificationCodeController.text, verificationId);
 
-          authResult.then((authResult){
-            if(authResult.user!=null){
+                      authResult.then((authResult){
+                        if(authResult.user!=null){
 
-              vs.saveContactNumber(contactNoController.text);
-              WebServiceCall.getToken(authResult.user.uid);
-              Navigator.of(context).pushReplacementNamed('/roleselect'); // to connect screen
+                          vs.saveContactNumber(contactNoController.text);
+                          WebServiceCall.getToken(authResult.user.uid);
+                          Navigator.of(context).pushReplacementNamed('/roleselect'); // to connect screen
 
-            }else{
-              print('error occurred block 1');
-            }
-          }).catchError((error){
-            showDialogAlert(BuildContext context) {
-              // flutter defined function
+                        }else{
+                          print('error occurred block 1');
+                        }
+                      }).catchError((error){
+                        showDialogAlert(BuildContext context) {
+                          // flutter defined function
 
-              // return object of type Dialog
-              return AlertDialog(
-                title: new Text("Error"),
-                content: new Text("${error}"),
-                actions: <Widget>[
-                  // usually buttons at the bottom of the dialog
-                  new FlatButton(
-                    child: new Text("Close"),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
-              );
+                          // return object of type Dialog
+                          return AlertDialog(
+                            title: new Text("Error"),
+                            content: new Text("${error}"),
+                            actions: <Widget>[
+                              // usually buttons at the bottom of the dialog
+                              new FlatButton(
+                                child: new Text("Close"),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
 
-            }
-            print('error occurred ${error}');
-          });
+                        }
+                        print('error occurred ${error}');
+                      });
 
 //            if(authResult!=null){
 //              if(authResult.user!=null){
@@ -257,8 +295,8 @@ class _LoginScreenState extends State<LoginScreen> {
 //            }
 
         },
-        child: Text("Submit Verification Code",
-            style: TextStyle(color: Colors.white, fontSize: 20)),
+        child: Text("පුරවන්න",
+            style: TextStyle(color: Colors.white, fontSize: 20,fontWeight: FontWeight.bold)),
       ),
     ),
   );
@@ -272,7 +310,6 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Container(
                 child: Column(
                   children: <Widget>[
-
                     SizedBox(height: 20),
                     _isVerficationCode?verificationCode(context):contactnumber(context),
                     SizedBox(height: 20),
@@ -360,19 +397,18 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: new AppBar(
-        actions: <Widget>[
-//            IconButton(
-//                icon: Icon(Icons.search),
-//                onPressed: () {
-//                  Navigator.of(context).pushReplacementNamed(
-//                      '/leadcapturesearch'); // to connect screen
-//                }),
-        ],
-        backgroundColor: Color(0xFFFFFFFF),
-        title: new Text(pageName,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-      ),
+//      appBar: new AppBar(
+//        actions: <Widget>[
+////            IconButton(
+////                icon: Icon(Icons.search),
+////                onPressed: () {
+////                  Navigator.of(context).pushReplacementNamed(
+////                      '/leadcapturesearch'); // to connect screen
+////                }),
+//        ],
+//        backgroundColor: Color.fromRGBO(0, 102, 34,0.8),
+//
+//      ),
 //      floatingActionButton: FloatingActionButton(
 //        onPressed: () {
 //          // Add your onPressed code here!
@@ -381,31 +417,48 @@ class _LoginScreenState extends State<LoginScreen> {
 //        child: Icon(Icons.add_shopping_cart),
 //        backgroundColor: Colors.redAccent,
 //      ),
-      body: SafeArea(
-        minimum: const EdgeInsets.all(8.0),
-        child: Form(
-          key: _formKey,
-          autovalidate: _autoValidate,
-          child: OrientationBuilder(builder: (context, orientation) {
-            return orientation == Orientation.portrait
-                ? LayoutBuilder(builder: (context, constraints) {
-              if (constraints.maxWidth < 600) {
-                return _buildVerticalLayout(context);
-              } else {
-                return _buildVerticalLayout(context);
-              }
-            })
-                : LayoutBuilder(builder: (context, constraints) {
-              if (constraints.maxWidth < 600) {
-                return _buildVerticalLayout(context);
-              } else {
-                //Todo Change this
-                return _buildVerticalLayout(context);
-              }
-            });
-          }),
+      body:
+      Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          image: DecorationImage(
+            colorFilter:
+            ColorFilter.mode(Colors.lightGreenAccent.withOpacity(0.20),
+                BlendMode.dstATop),
+            image: new AssetImage('assets/background_a.jpg'),
+            fit: BoxFit.cover,
+          ),
         ),
-      ),
+
+        child:
+
+        SafeArea(
+          minimum: const EdgeInsets.all(8.0),
+          child: Form(
+            key: _formKey,
+            autovalidate: _autoValidate,
+            child: OrientationBuilder(builder: (context, orientation) {
+              return orientation == Orientation.portrait
+                  ? LayoutBuilder(builder: (context, constraints) {
+                if (constraints.maxWidth < 600) {
+                  return _buildVerticalLayout(context);
+                } else {
+                  return _buildVerticalLayout(context);
+                }
+              })
+                  : LayoutBuilder(builder: (context, constraints) {
+                if (constraints.maxWidth < 600) {
+                  return _buildVerticalLayout(context);
+                } else {
+                  //Todo Change this
+                  return _buildVerticalLayout(context);
+                }
+              });
+            }),
+          ),
+        ),
+
+    )
     );
   }
 

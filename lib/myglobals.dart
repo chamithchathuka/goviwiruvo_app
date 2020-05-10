@@ -19,8 +19,8 @@ class MyGlobals {
   static const HOME_PAGE_NAME = "Security Settings";
 
   static final List<String> USER_ROLES = <String>[
-    "Farmer",
-    "Coodinator",
+    "ගොවිමහතා",
+    "සම්බන්දිකරණ නිළදාරී",
 //  "Trial Calculation",
 //  "Credit Approval",
   ];
