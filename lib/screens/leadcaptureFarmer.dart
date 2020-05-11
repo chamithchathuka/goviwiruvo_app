@@ -12,12 +12,12 @@ import 'dart:io';
 import 'dart:convert';
 
 
-class LeadCaptureScreen extends StatefulWidget {
+class LeadFarmerCaptureScreen extends StatefulWidget {
   @override
-  _LeadCaptureScreenState createState() => _LeadCaptureScreenState();
+  _LeadFarmerCaptureScreenState createState() => _LeadFarmerCaptureScreenState();
 }
 
-class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
+class _LeadFarmerCaptureScreenState extends State<LeadFarmerCaptureScreen> {
   final _formKey = GlobalKey<FormState>();
   VegetableService vs = VegetableService();
   bool _autoValidate = false;
@@ -53,7 +53,7 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
   String contactNumber = '';
 
 
-  final pageName = "සම්බන්දිකරණ නිළදාරීමහතාගේ තොරතුරු";
+  final pageName = "ගොවිමහතාගේ තොරතුරු";
 
   @override
   void initState() {
@@ -86,7 +86,7 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
                 alignment: Alignment.topLeft,
                 child: Text(
                   "ලිපිනය",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(fontWeight: FontWeight.bold,color:Color.fromRGBO(0, 102, 34,0.8)),
                   textAlign: TextAlign.left,
                 )),
             Container(
@@ -98,6 +98,20 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
 //                  ),
                   Expanded(
                     child: TextFormField(
+
+                      decoration:  new InputDecoration(
+                        enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))),
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))) ,
+                        contentPadding:
+                        EdgeInsets.only(left: 15, bottom: 10, top: 20, right: 15),
+                      ),
+                      style: new TextStyle(
+                        color: Color.fromRGBO(0, 102, 34,0.8),
+                        decorationColor: Color.fromRGBO(0, 102, 34,0.8),//Font color change
+                      ),
+
                       validator: (value) {
                         if (value.isEmpty) {
                           return ('ලිපිනය ඇතුලත්කරන්න');
@@ -140,7 +154,7 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
                 alignment: Alignment.topLeft,
                 child: Text(
                   "නම",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(fontWeight: FontWeight.bold,color:Color.fromRGBO(0, 102, 34,0.8)),
                   textAlign: TextAlign.left,
                 )),
             Container(
@@ -152,6 +166,19 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
 //                  ),
                   Expanded(
                     child: TextFormField(
+
+                      decoration:  new InputDecoration(
+                        enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))),
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))) ,
+                        contentPadding:
+                        EdgeInsets.only(left: 15, bottom: 10, top: 20, right: 15),
+                      ),
+                      style: new TextStyle(
+                        color: Color.fromRGBO(0, 102, 34,0.8),
+                        decorationColor: Color.fromRGBO(0, 102, 34,0.8),//Font color change
+                      ),
                       validator: (value) {
                         if (value.isEmpty) {
                           return ('නම ඇතුලත්කරන්න');
@@ -221,7 +248,7 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
                 alignment: Alignment.topLeft,
                 child: Text(
                   "වට්ස්ඇප් දුරකථන අංකය",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(fontWeight: FontWeight.bold,color:Color.fromRGBO(0, 102, 34,0.8)),
                   textAlign: TextAlign.left,
                 )),
             Container(
@@ -233,6 +260,18 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
 //                  ),
                   Expanded(
                     child: TextFormField(
+                      decoration:  new InputDecoration(
+                        enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))),
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))) ,
+                        contentPadding:
+                        EdgeInsets.only(left: 15, bottom: 10, top: 20, right: 15),
+                      ),
+                      style: new TextStyle(
+                        color: Color.fromRGBO(0, 102, 34,0.8),
+                        decorationColor: Color.fromRGBO(0, 102, 34,0.8),//Font color change
+                      ),
                       validator: (value) {
 //                        if(value.isEmpty){
 //                          return ('දුරකථන අංකය වැරදයි');
@@ -442,6 +481,10 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
 //                      '/leadcapturesearch'); // to connect screen
 //                }),
         ],
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
         backgroundColor: Color.fromRGBO(0, 102, 34,0.8),
         title: new Text(pageName,
             style: TextStyle(color:Colors.white,fontSize: 20, fontWeight: FontWeight.bold)),
@@ -510,14 +553,14 @@ class _LeadCaptureScreenState extends State<LeadCaptureScreen> {
       farmer.address =addressController.text;
       farmer.whatsappNo =nameController.text;
       farmer.name =nameController.text;
-      farmer.role = 2;
+      farmer.role = 1;
 
       addFarmerRequest(farmer);
 
 
       _formKey.currentState.reset();
 
-      Navigator.of(context).pushReplacementNamed('/loadfarmers'); // to connect screen
+      Navigator.of(context).pushReplacementNamed('/cart'); // to connect screen
 
     } else {
       print('invalid');

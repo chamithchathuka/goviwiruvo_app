@@ -90,7 +90,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                 alignment: Alignment.topLeft,
                 child: Text(
                   "බෝග වර්ගය",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(fontWeight: FontWeight.bold,color:Color.fromRGBO(0, 102, 34,0.8)),
                   textAlign: TextAlign.left,
                 )),
             Container(
@@ -100,6 +100,17 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                       ? CircularProgressIndicator()
                       : Expanded(
                           child: DropdownButtonFormField(
+                            decoration:  new InputDecoration(
+                              enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))),
+                              focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))) ,
+                            ),
+                            style: new TextStyle(
+                              color: Color.fromRGBO(0, 102, 34,0.8),
+                              decorationColor: Color.fromRGBO(0, 102, 34,0.8),//Font color change
+                            ),
+
                             value: _selectedVegetable,
                             items: _vegLoadItems,
                             onChanged: onChangeDropDownItem,
@@ -166,7 +177,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
             alignment: Alignment.topLeft,
             child: Text(
               "ඒකකයක මිල (කිලෝ 1ක් සදහා)",
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(fontWeight: FontWeight.bold,color:Color.fromRGBO(0, 102, 34,0.8)),
               textAlign: TextAlign.left,
             )),
         Container(
@@ -179,6 +190,19 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
               Expanded(
                 child: TextFormField(
 
+                  decoration:  new InputDecoration(
+                    enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))),
+                    focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))) ,
+                    contentPadding:
+                    EdgeInsets.only(left: 15, bottom: 10, top: 20, right: 15),
+                  ),
+                  style: new TextStyle(
+                    color: Color.fromRGBO(0, 102, 34,0.8),
+                    decorationColor: Color.fromRGBO(0, 102, 34,0.8),//Font color change
+                  ),
+                  
                   inputFormatters: [
                     WhitelistingTextInputFormatter.digitsOnly
                   ],
@@ -215,7 +239,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
             alignment: Alignment.topLeft,
             child: Text(
               "බර කිලෝග්‍රෑම්",
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(fontWeight: FontWeight.bold,color:Color.fromRGBO(0, 102, 34,0.8)),
               textAlign: TextAlign.left,
             )),
         Container(
@@ -227,6 +251,16 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
 //              ),
               Expanded(
                 child: TextFormField(
+                  decoration:  new InputDecoration(
+                    enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))),
+                    focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))) ,
+                  ),
+                  style: new TextStyle(
+                    color: Color.fromRGBO(0, 102, 34,0.8),
+                    decorationColor: Color.fromRGBO(0, 102, 34,0.8),//Font color change
+                  ),
                   onSaved: (val) =>
                       setState(() => veggi.quantity = int.parse(val)),
                   inputFormatters: [
@@ -263,7 +297,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
             alignment: Alignment.topLeft,
             child: Text(
               "අස්වනු නෙලාගත් දිනය",
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(fontWeight: FontWeight.bold,color:Color.fromRGBO(0, 102, 34,0.8)),
               textAlign: TextAlign.left,
             )),
         Container(
@@ -343,7 +377,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                 alignment: Alignment.topLeft,
                 child: Text(
                   "තත්වය",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(fontWeight: FontWeight.bold,color:Color.fromRGBO(0, 102, 34,0.8)),
                   textAlign: TextAlign.left,
                 )),
             Container(
@@ -355,6 +389,18 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
 //                  ),
                   Expanded(
                     child: DropdownButtonFormField(
+
+                      decoration:  new InputDecoration(
+                        enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))),
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))) ,
+                      ),
+                      style: new TextStyle(
+                        color: Color.fromRGBO(0, 102, 34,0.8),
+                        decorationColor: Color.fromRGBO(0, 102, 34,0.8),//Font color change
+                      ),
+
                       validator: (value) {
                         if (selectedQualityValue == null) {
                           return 'තත්වය ඇතුලත් කරන්න';
@@ -399,7 +445,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
             alignment: Alignment.topLeft,
             child: Text(
               "නොමිලේ දෙන ප්‍රමානය (කිලෝ)",
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(fontWeight: FontWeight.bold,color:Color.fromRGBO(0, 102, 34,0.8)),
               textAlign: TextAlign.left,
             )),
         Container(
@@ -411,6 +457,16 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
 //              ),
               Expanded(
                 child: TextFormField(
+                  decoration:  new InputDecoration(
+                    enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))),
+                    focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))) ,
+                  ),
+                  style: new TextStyle(
+                    color: Color.fromRGBO(0, 102, 34,0.8),
+                    decorationColor: Color.fromRGBO(0, 102, 34,0.8),//Font color change
+                  ),
                   inputFormatters: [
                     WhitelistingTextInputFormatter.digitsOnly
                   ],
@@ -556,7 +612,8 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
           width: double.infinity,
           height: 50,
           child: RaisedButton(
-            color: Color.fromRGBO(0, 0, 0, 0.9),
+            shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+            color: Color.fromRGBO(0, 102, 34,0.8),
 //            shape:
 //                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             onPressed: () {
@@ -694,35 +751,52 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
 //                    '/leadcapturesearch'); // to connect screen
 //              }),
 //        ],
-        backgroundColor: Color(0xFFFFFFFF),
-        title: new Text(pageName,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-      ),
-      body: SafeArea(
-        minimum: const EdgeInsets.all(8.0),
-        child: Form(
-          key: _formKey,
-          autovalidate: _autoValidate,
-          child: OrientationBuilder(builder: (context, orientation) {
-            return orientation == Orientation.portrait
-                ? LayoutBuilder(builder: (context, constraints) {
-                    if (constraints.maxWidth < 600) {
-                      return _buildVerticalLayout(context);
-                    } else {
-                      return _buildVerticalLayout(context);
-                    }
-                  })
-                : LayoutBuilder(builder: (context, constraints) {
-                    if (constraints.maxWidth < 600) {
-                      return _buildVerticalLayout(context);
-                    } else {
-                      //Todo Change this
-                      return _buildVerticalLayout(context);
-                    }
-                  });
-          }),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.of(context).pop(),
         ),
+        backgroundColor: Color.fromRGBO(0, 102, 34,0.8),
+        title: new Text(pageName, style: TextStyle(color:Colors.white,fontSize: 20, fontWeight: FontWeight.bold)),
+
       ),
+      body:
+      Container(
+              decoration: BoxDecoration(
+              color: Colors.white,
+              image: DecorationImage(
+              colorFilter:
+              ColorFilter.mode(Colors.lightGreenAccent.withOpacity(0.20),
+              BlendMode.dstATop),
+              image: new AssetImage('assets/background_a.jpg'),
+              fit: BoxFit.cover,
+              ),
+              ),
+         child: SafeArea(
+            minimum: const EdgeInsets.all(8.0),
+            child: Form(
+              key: _formKey,
+              autovalidate: _autoValidate,
+              child: OrientationBuilder(builder: (context, orientation) {
+                return orientation == Orientation.portrait
+                    ? LayoutBuilder(builder: (context, constraints) {
+                  if (constraints.maxWidth < 600) {
+                    return _buildVerticalLayout(context);
+                  } else {
+                    return _buildVerticalLayout(context);
+                  }
+                })
+                    : LayoutBuilder(builder: (context, constraints) {
+                  if (constraints.maxWidth < 600) {
+                    return _buildVerticalLayout(context);
+                  } else {
+                    //Todo Change this
+                    return _buildVerticalLayout(context);
+                  }
+                });
+              }),
+            ),
+          ),
+        )
     );
   }
 
@@ -744,7 +818,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
 
       _formKey.currentState.reset();
       Navigator.of(context)
-          .pushReplacementNamed(
+          .pushNamed(
           '/cart'); // to connect screen
 
 

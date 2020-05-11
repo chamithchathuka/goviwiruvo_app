@@ -97,37 +97,37 @@ class _CartScreenState extends State<CartScreen> {
       AutoSizeText(
         'බෝග වර්ගය',
         textAlign: TextAlign.center,
-        style: TextStyle(fontWeight: FontWeight.bold),
+        style: TextStyle(fontWeight: FontWeight.bold,color:Color.fromRGBO(0, 102, 34,0.8)),
         maxLines: 2,
       ),
       AutoSizeText(
         'බර kg',
         textAlign: TextAlign.center,
-        style: TextStyle(fontWeight: FontWeight.bold),
+        style: TextStyle(fontWeight: FontWeight.bold,color:Color.fromRGBO(0, 102, 34,0.8)),
         maxLines: 2,
       ),
       AutoSizeText(
         'නොමිලේ ප්‍රමානය kg',
         textAlign: TextAlign.center,
-        style: TextStyle(fontWeight: FontWeight.bold),
+        style: TextStyle(fontWeight: FontWeight.bold,color:Color.fromRGBO(0, 102, 34,0.8)),
         maxLines: 2,
       ),
       AutoSizeText(
         'ඒකක මිල',
         textAlign: TextAlign.center,
-        style: TextStyle(fontWeight: FontWeight.bold),
+        style: TextStyle(fontWeight: FontWeight.bold,color:Color.fromRGBO(0, 102, 34,0.8)),
         maxLines: 2,
       ),
       AutoSizeText(
           'මුලු මුදල',
         textAlign: TextAlign.center,
-        style: TextStyle(fontWeight: FontWeight.bold),
+        style: TextStyle(fontWeight: FontWeight.bold,color:Color.fromRGBO(0, 102, 34,0.8)),
         maxLines: 2,
       ),
       AutoSizeText(
         'දිනය',
         textAlign: TextAlign.center,
-        style: TextStyle(fontWeight: FontWeight.bold),
+        style: TextStyle(fontWeight: FontWeight.bold,color:Color.fromRGBO(0, 102, 34,0.8)),
         maxLines: 2,
       ),
       AutoSizeText(
@@ -217,7 +217,7 @@ class _CartScreenState extends State<CartScreen> {
         onTap: () {
           setState(() {
             Navigator.of(context)
-                .pushReplacementNamed('/vegadd');
+                .pushNamed('/vegadd');
 //              vegitablesToBeSaved.removeAt(i);
           });
         },
@@ -342,7 +342,8 @@ class _CartScreenState extends State<CartScreen> {
       width: double.infinity,
       height: 50,
       child: RaisedButton(
-        color: Color.fromRGBO(0, 0, 0, 0.9),
+        shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+        color: Color.fromRGBO(0, 102, 34,0.8),
         onPressed: () async {
           if(vegservice.getVegstobeSaved().length>0){
 
@@ -720,9 +721,13 @@ class _CartScreenState extends State<CartScreen> {
 //                    '/leadcapturesearch'); // to connect screen
 //              }),
 //        ],
-        backgroundColor: Color(0xFFFFFFFF),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        backgroundColor: Color.fromRGBO(0, 102, 34,0.8),
         title: new Text(pageName,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            style: TextStyle(color:Colors.white,fontSize: 20, fontWeight: FontWeight.bold)),
       ),
 //      floatingActionButton: FloatingActionButton(
 //        onPressed: () {

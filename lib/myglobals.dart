@@ -32,7 +32,7 @@ class MyGlobals {
   ];
 
   static final List<String> MENU_PATHS = <String>[
-    "/addfarmer",
+    "/leadFarmer",
     "/lead"
   ];
 

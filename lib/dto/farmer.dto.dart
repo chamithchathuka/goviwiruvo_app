@@ -5,6 +5,7 @@ class FarmerDTO {
   String name;
   String phoneNo;
   String whatsappNo;
+  int role;
 
   FarmerDTO(
       {this.address,
@@ -12,7 +13,8 @@ class FarmerDTO {
         this.lon,
         this.name,
         this.phoneNo,
-        this.whatsappNo});
+        this.whatsappNo,
+        this.role});
 
   FarmerDTO.fromJson(Map<String, dynamic> json) {
     address = json['address'];
@@ -21,6 +23,7 @@ class FarmerDTO {
     name = json['name'];
     phoneNo = json['phoneNo'];
     whatsappNo = json['whatsappNo'];
+    role = json['role'];
   }
 
   Map<String, dynamic> toJson() {
@@ -31,6 +34,7 @@ class FarmerDTO {
     data['name'] = this.name;
     data['phoneNo'] = this.phoneNo;
     data['whatsappNo'] = this.whatsappNo;
+    data['role'] = this.role;
     return data;
   }
 }
