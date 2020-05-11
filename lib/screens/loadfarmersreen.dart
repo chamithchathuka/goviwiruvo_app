@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
 import '../myglobals.dart';
-import 'farmerlistdto.dart';
+import '../dto/farmerlistdto.dart';
 import 'package:http/http.dart' as http;
 
 
