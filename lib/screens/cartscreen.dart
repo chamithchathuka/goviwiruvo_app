@@ -107,19 +107,19 @@ class _CartScreenState extends State<CartScreen> {
         maxLines: 2,
       ),
       AutoSizeText(
-        'නොමිලේ ප්‍රමානය kg',
+        'නොමිලේ ප්‍රමාණය kg',
         textAlign: TextAlign.center,
         style: TextStyle(fontWeight: FontWeight.bold,color:Color.fromRGBO(0, 102, 34,0.8)),
         maxLines: 2,
       ),
       AutoSizeText(
-        'ඒකක මිල',
+        'ඒ්කකයක මිල',
         textAlign: TextAlign.center,
         style: TextStyle(fontWeight: FontWeight.bold,color:Color.fromRGBO(0, 102, 34,0.8)),
         maxLines: 2,
       ),
       AutoSizeText(
-          'මුලු මුදල',
+          'මුළු මුදල',
         textAlign: TextAlign.center,
         style: TextStyle(fontWeight: FontWeight.bold,color:Color.fromRGBO(0, 102, 34,0.8)),
         maxLines: 2,

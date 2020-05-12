@@ -37,7 +37,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
   bool isDataLoaded = false;
   bool isErrorOccurred = false;
 
-  List<String> qualitygrades = ['තරමක් හොදයි', 'හොදයි', 'ඉතා හොදයි'];
+  List<String> qualitygrades = ['තරමක් හොඳයි', 'හොඳයි', 'ඉතා හොඳයි'];
 
   List<VegetableLoad> _vegetableList = [];
 
@@ -444,7 +444,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
         Align(
             alignment: Alignment.topLeft,
             child: Text(
-              "නොමිලේ දෙන ප්‍රමානය (කිලෝ)",
+              "නොමිලේ දෙන ප්‍රමාණය (කිලෝ)",
               style: TextStyle(fontWeight: FontWeight.bold,color:Color.fromRGBO(0, 102, 34,0.8)),
               textAlign: TextAlign.left,
             )),
@@ -479,7 +479,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                       return ('ප්‍රමානය ඇතුලත් කරන්න');
                     }
                     if (int.parse(weightController.text)< int.parse(value)) {
-                      return ('invalid වැරදයි');
+                      return ('වැරදයි');
                     }
                   },
                   onSaved: (val) =>
