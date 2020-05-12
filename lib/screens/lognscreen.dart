@@ -86,17 +86,28 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
   contactnumber(BuildContext context) => Padding(
-    padding: const EdgeInsets.only(top: 150,left: 60,right: 60),
+    padding: const EdgeInsets.only(top: 20,left: 60,right: 60),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Align(
             alignment: Alignment.center,
             child: Text(
+              "ඔබගේ දුරකථන අංකය ඇතුලත් කර පිවිසෙන්න",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                  color:Color.fromRGBO(0, 52, 34,0.8)
+              ),
+              textAlign: TextAlign.center,
+            )),
+        SizedBox(height: 150),
+        Align(
+            alignment: Alignment.center,
+            child: Text(
               "දුරකථන අංකය",
               style: TextStyle(
                   fontSize: 22,
-                  color:Color.fromRGBO(0, 102, 34,0.8)
+                  color:Color.fromRGBO(0, 52, 34,0.8)
               ),
               textAlign: TextAlign.center,
             )),
@@ -300,7 +311,7 @@ class _LoginScreenState extends State<LoginScreen> {
 //            }
 
         },
-        child: Text("පුරවන්න",
+        child: Text("පිවිසෙන්න",
             style: TextStyle(color: Colors.white, fontSize: 20,fontWeight: FontWeight.bold)),
       ),
     ),
