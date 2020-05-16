@@ -518,25 +518,12 @@ class _LeadCoordinatorState extends State<LeadCoordinator> {
     return Scaffold(
       appBar: new AppBar(
         actions: <Widget>[
-//            IconButton(
-//                icon: Icon(Icons.search),
-//                onPressed: () {
-//                  Navigator.of(context).pushReplacementNamed(
-//                      '/leadcapturesearch'); // to connect screen
-//                }),
+
         ],
         backgroundColor: Color.fromRGBO(0, 102, 34,0.8),
         title: new Text(pageName,
             style: TextStyle(color:Colors.white,fontSize: 20, fontWeight: FontWeight.bold)),
       ),
-//      floatingActionButton: FloatingActionButton(
-//        onPressed: () {
-//          // Add your onPressed code here!
-//          Navigator.of(context).pushNamed('/vegadd'); // to connect screen
-//        },
-//        child: Icon(Icons.add_shopping_cart),
-//        backgroundColor: Colors.redAccent,
-//      ),
       body:
           Container(
                     decoration: BoxDecoration(
@@ -587,94 +574,6 @@ class _LeadCoordinatorState extends State<LeadCoordinator> {
     }else{
       return false;
     }
-
-    if (_formKey.currentState.validate()) {
-      _formKey.currentState.save();
-
-//      vs.saveRequestInfo( nameController.text, addressController.text,
-//         whatappContactNoController.text,coordinationOfficerTextController.text);
-
-      UserDTO farmer = new UserDTO();
-      farmer.name =nameController.text;
-      farmer.address =addressController.text;
-      farmer.whatsappNo =nameController.text;
-      farmer.name =nameController.text;
-      farmer.role = 2;
-
-      Future<http.Response> response = addCoordinatorRequest(farmer);
-
-      response.then((response){
-        print('${response.statusCode}');
-
-//        response.statusCode == 200?
-//        Alert(
-//          context: context,
-//          type: AlertType.success,
-//          title: "Success",
-//          desc: "User add Success",
-//          buttons: [
-//            DialogButton(
-//              child: Text(
-//                "close",
-//                style: TextStyle(color: Colors.white, fontSize: 20),
-//              ),
-//              onPressed: () => Navigator.pop(context),
-//              width: 120,
-//            )
-//          ],
-//        ).show(): Alert(
-//          context: context,
-//          type: AlertType.error,
-//          title: "Error",
-//          desc: "Failed to add user",
-//          buttons: [
-//            DialogButton(
-//              child: Text(
-//                "close",
-//                style: TextStyle(color: Colors.white, fontSize: 20),
-//              ),
-//              onPressed: () => Navigator.pop(context),
-//              width: 120,
-//            )
-//          ],
-//        ).show();
-
-      }).catchError((onError){
-        print('${onError}');
-//        Alert(
-//          context: context,
-//          type: AlertType.error,
-//          title: "Error",
-//          desc: "Fail to add User.",
-//          buttons: [
-//            DialogButton(
-//              child: Text(
-//                "close",
-//                style: TextStyle(color: Colors.white, fontSize: 20),
-//              ),
-//              onPressed: () => Navigator.pop(context),
-//              width: 120,
-//            )
-//          ],
-//        ).show();
-      });
-
-
-
-      _formKey.currentState.reset();
-
-      Navigator.of(context).pushReplacementNamed('/loadfarmers'); // to connect screen
-
-    } else {
-      print('invalid');
-//    If all data are not valid then start auto validation.
-//      setState(() {
-//        _autoValidate = true;
-//      });
-    }
-
-
-
   }
 
   Future<http.Response> addCoordinatorRequest(UserDTO userDTO) async {
