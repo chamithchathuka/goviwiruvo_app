@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:goviwiruvo_app/screens/cartscreen.dart';
-import 'package:goviwiruvo_app/screens/leadcapture.dart';
+import 'package:goviwiruvo_app/screens/leadcoordinator.dart';
 import 'package:goviwiruvo_app/screens/addfarmer.dart';
 import 'package:goviwiruvo_app/screens/leadcaptureFarmer.dart';
 import 'package:goviwiruvo_app/screens/loadfarmersreen.dart';
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return   MaterialApp(
       routes: <String, WidgetBuilder>{
-        '/lead': (BuildContext context) => LeadCaptureScreen(),
+        '/leadCoordinator': (BuildContext context) => LeadCoordinator(),
         '/vegadd': (BuildContext context) => VegitableAddScreen(),
         '/cart': (BuildContext context) => CartScreen(),
         '/roleselect': (BuildContext context) => RoleSelectionScreen(),

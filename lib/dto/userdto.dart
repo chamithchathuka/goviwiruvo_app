@@ -1,13 +1,13 @@
-class FarmerDTO {
+class UserDTO {
   String address;
-  int lat;
-  int lon;
+  double lat;
+  double lon;
   String name;
   String phoneNo;
   String whatsappNo;
   int role;
 
-  FarmerDTO(
+  UserDTO(
       {this.address,
         this.lat,
         this.lon,
@@ -16,7 +16,7 @@ class FarmerDTO {
         this.whatsappNo,
         this.role});
 
-  FarmerDTO.fromJson(Map<String, dynamic> json) {
+  UserDTO.fromJson(Map<String, dynamic> json) {
     address = json['address'];
     lat = json['lat'];
     lon = json['lon'];

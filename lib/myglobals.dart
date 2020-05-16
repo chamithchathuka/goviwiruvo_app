@@ -32,8 +32,8 @@ class MyGlobals {
   ];
 
   static final List<String> MENU_PATHS = <String>[
-    "/leadFarmer",
-    "/lead"
+    "/leadFarmer", // role id 1
+    "/leadCoordinator" // role id 2
   ];
 
 

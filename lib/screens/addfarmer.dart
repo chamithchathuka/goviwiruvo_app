@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:goviwiruvo_app/customwidget/multiselectdialog.dart';
-import 'package:goviwiruvo_app/dto/farmer.dto.dart';
+import 'package:goviwiruvo_app/dto/userdto.dart';
 import 'package:goviwiruvo_app/dto/vegetablerequestdto.dart';
 import 'package:goviwiruvo_app/external/webservices.dart';
 import 'package:goviwiruvo_app/model/VegetableModel.dart';
@@ -473,7 +473,7 @@ class _AddFarmerState extends State<AddFarmer> {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
 
-      FarmerDTO farmerDTO = new FarmerDTO();
+      UserDTO farmerDTO = new UserDTO();
       farmerDTO.address = addressController.text;
       farmerDTO.name = nameController.text;
       farmerDTO.phoneNo = contactNoController.text;

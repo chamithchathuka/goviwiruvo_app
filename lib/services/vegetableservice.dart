@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:goviwiruvo_app/dto/farmer.dto.dart';
+import 'package:goviwiruvo_app/dto/userdto.dart';
 import 'package:goviwiruvo_app/dto/vegetableload.dart';
 import 'package:goviwiruvo_app/dto/vegetablerequestdto.dart';
 import 'package:goviwiruvo_app/external/webservices.dart';

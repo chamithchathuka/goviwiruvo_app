@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:goviwiruvo_app/customwidget/multiselectdialog.dart';
-import 'package:goviwiruvo_app/dto/farmer.dto.dart';
+import 'package:goviwiruvo_app/dto/userdto.dart';
 import 'package:goviwiruvo_app/dto/vegetablerequestdto.dart';
 import 'package:goviwiruvo_app/model/VegetableModel.dart';
 import 'package:goviwiruvo_app/services/vegetableservice.dart';
@@ -51,7 +51,6 @@ class _LeadFarmerCaptureScreenState extends State<LeadFarmerCaptureScreen> {
   var username = "User Name";
 
   String contactNumber = '';
-
 
   final pageName = "ගොවිමහතාගේ තොරතුරු";
 
@@ -548,15 +547,12 @@ class _LeadFarmerCaptureScreenState extends State<LeadFarmerCaptureScreen> {
       vs.saveRequestInfo( nameController.text, addressController.text,
          whatappContactNoController.text,coordinationOfficerTextController.text);
 
-      FarmerDTO farmer = new FarmerDTO();
+      UserDTO farmer = new UserDTO();
       farmer.name =nameController.text;
       farmer.address =addressController.text;
       farmer.whatsappNo =nameController.text;
-      farmer.name =nameController.text;
       farmer.role = 1;
-
       addFarmerRequest(farmer);
-
 
       _formKey.currentState.reset();
 
@@ -574,7 +570,7 @@ class _LeadFarmerCaptureScreenState extends State<LeadFarmerCaptureScreen> {
 
   }
 
-  Future<http.Response> addFarmerRequest(FarmerDTO farmerDTO) async {
+  Future<http.Response> addFarmerRequest(UserDTO farmerDTO) async {
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String tokenStr  = prefs.get('token');

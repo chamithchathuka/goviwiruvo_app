@@ -1,4 +1,4 @@
-import 'package:goviwiruvo_app/dto/farmer.dto.dart';
+import 'package:goviwiruvo_app/dto/userdto.dart';
 import 'package:goviwiruvo_app/dto/tokenDTO.dart';
 import 'package:goviwiruvo_app/dto/usertokenid.dart';
 import 'package:goviwiruvo_app/dto/vegetableload.dart';
@@ -87,7 +87,7 @@ class WebServiceCall {
     return response;
   }
 
-  static Future<http.Response> addFarmerRequest(FarmerDTO farmerDTO) async {
+  static Future<http.Response> addFarmerRequest(UserDTO farmerDTO) async {
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String tokenStr  = prefs.get('token');
