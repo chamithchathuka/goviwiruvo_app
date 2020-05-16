@@ -26,16 +26,17 @@ class _LoadFarmerScreenState extends State<LoadFarmerScreen> {
     print('tokenStr = ${tokenStr}' );
 
     http.Response response = await http.get(GET_URL, headers: {'Content-type': 'application/json','Authorization':'${tokenStr}'});
-
-
+    print('Response from server ${response.statusCode} - ${response.body} ');
     if (response.statusCode == 200) {
-      // If the server did return a 200 OK response,
-      // then parse the JSON.
-      return FarmerListDTO.fromJson(json.decode(response.body));
+      if(response.body != null){
+          return FarmerListDTO.fromJson(json.decode(response.body));
+      }else{
+        throw Exception('Failed to load Farmers');
+      }
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
-      throw Exception('Failed to load album');
+      throw Exception('Failed to load Farmers');
     }
   }
 
@@ -74,10 +75,10 @@ class _LoadFarmerScreenState extends State<LoadFarmerScreen> {
                     ),
                   );
                 } else {
-                  return Text('Not avaiable registered List');
+                  return Text('No registered farmars found. Consider registering farmers.');
                 }
               } else if (snapshot.hasError) {
-                return Text("${snapshot.error}");
+                    return Text("Error Occurred Unable to load farmers");
               }
               return CircularProgressIndicator();
             },
@@ -87,45 +88,7 @@ class _LoadFarmerScreenState extends State<LoadFarmerScreen> {
     );
   }
 
-//    ListView.builder(
-//
-//            itemCount: MyGlobals.USER_ROLES.length,
-//            itemBuilder: (BuildContext context, int index) {
-//              return Padding(
-//                padding: const EdgeInsets.all(8.0),
-//                child: GestureDetector(
-//                  onTap: () =>
-//                      Navigator.of(context).pushNamed(MyGlobals.MENU_PATHS[index]),
-//                  child: Container(
-//                    height: vheight,
-//                    child: Center(
-//                      child: Text(
-//                        MyGlobals.USER_ROLES[index],
-//                        style: TextStyle(
-//                            fontSize: 20,
-//                            color: Colors.white,
-//                            fontWeight: FontWeight.bold),
-//                      ),
-//                    ),
-//                    decoration: BoxDecoration(
-//                      color: Color.fromRGBO(0, 102, 34,0.8),
-//                      shape: BoxShape.rectangle,
-//                      borderRadius: new BorderRadius.circular(8.0),
-//                      boxShadow: <BoxShadow>[
-//                        BoxShadow(
-//                          color: Colors.black12,
-//                          blurRadius: 10.0,
-//                          offset: Offset(0.0, 10.0),
-//                        ),
-//                      ],
-//                    ),
-//                  ),
-//                ),
-//              );
-          //  }),
-//      ),
-//    );
-//  }
+
 
   @override
   void dispose() {

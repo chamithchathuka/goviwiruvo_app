@@ -7,8 +7,11 @@ import 'package:goviwiruvo_app/dto/vegetablerequestdto.dart';
 import 'package:goviwiruvo_app/external/webservices.dart';
 import 'package:goviwiruvo_app/model/VegetableModel.dart';
 import 'package:goviwiruvo_app/services/vegetableservice.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:location/location.dart' as mylocation;
 
 class AddFarmer extends StatefulWidget {
 
@@ -20,22 +23,21 @@ class _AddFarmerState extends State<AddFarmer> {
   final _formKey = GlobalKey<FormState>();
   VegetableService vs = VegetableService();
   bool _autoValidate = false;
-
   final addressController = TextEditingController();
-
   final nameController = TextEditingController();
-
   final whatappContactNoController = TextEditingController();
-
   final weightController = TextEditingController();
-
   final contactNoController = TextEditingController();
-
   String selectedArea = null;
-
   var username = "User Name";
 
   final pageName = "ගොවිමහතාගේ තොරතුරු";
+
+  mylocation.Location _locationService = new mylocation.Location();
+  mylocation.PermissionStatus _permission ;
+  mylocation.LocationData location;
+  double lat = 0.0;
+  double lon = 0.0;
 
   @override
   void initState() {
@@ -284,11 +286,12 @@ class _AddFarmerState extends State<AddFarmer> {
             shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
             color: Color.fromRGBO(0, 102, 34,0.8),
             onPressed: () {
-              _validateInputs(context);
+              bool isValid = _validateInputs(context);
 
+              if(isValid){
+                getLocationAccess(context);
+              }
 
-
-//              Navigator.of(context).pushNamed('/cart'); // to connect screen
             },
             child: Text("ඉදිරියට",
                 style: TextStyle(color: Colors.white, fontSize: 20)),
@@ -469,36 +472,216 @@ class _AddFarmerState extends State<AddFarmer> {
     );
   }
 
-  void _validateInputs(BuildContext context) {
-    if (_formKey.currentState.validate()) {
-      _formKey.currentState.save();
-
-      UserDTO farmerDTO = new UserDTO();
-      farmerDTO.address = addressController.text;
-      farmerDTO.name = nameController.text;
-      farmerDTO.phoneNo = contactNoController.text;
-      farmerDTO.whatsappNo = whatappContactNoController.text;
-
-      Future<http.Response> response = WebServiceCall.addFarmerRequest(farmerDTO);
-
-      response.then((response){
-        if(response.statusCode==200){
-          print('response success - ${response.statusCode}');
-
-        }else{
-          print('response error - ${response.statusCode}');
-        }
-      }).catchError((error){
-        print('${error}');
-
-      });
-
-      _formKey.currentState.reset();
-
-     // Navigator.of(context).pushReplacementNamed('/cart'); // to connect screen
-
-    } else {
-      print('invalid');
+  bool _validateInputs(BuildContext context) {
+    if(_formKey.currentState.validate()){
+      return true;
+    }else{
+      return false;
     }
+  }
+
+
+  getLocationAccess(BuildContext context) async{
+    try {
+      bool serviceStatus = await _locationService.serviceEnabled();
+      print("Service status: $serviceStatus");
+      if (serviceStatus) {
+        _permission = await _locationService.requestPermission();
+        print("Permission: $_permission");
+        if (_permission==mylocation.PermissionStatus.granted) {
+          location = await _locationService.getLocation();
+          print('start lat ${location.latitude.toString()} ?');
+          print('start lng  ${location.longitude.toString()} ?');
+
+          print('lat long');
+          print(location.latitude.toString());
+          print(location.longitude.toString());
+
+
+          UserDTO farmer = new UserDTO();
+          farmer.name =nameController.text;
+          farmer.address =addressController.text;
+          farmer.whatsappNo =nameController.text;
+          farmer.name =nameController.text;
+          farmer.role = 1;
+          farmer.lat = location.latitude;
+          farmer.lon = location.longitude;
+
+
+          Future<http.Response> response = addCoordinatorRequest(farmer);
+
+          response.then((response) => response.statusCode == 200?Alert(
+            context: context,
+            type: AlertType.success,
+            title: "Success",
+            desc: "User add Success",
+            buttons: [
+              DialogButton(
+                child: Text(
+                  "close",
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+                onPressed: ()  {
+                  Navigator.pop(context);
+                  Navigator.of(context).pushReplacementNamed('/cart');
+
+                },
+                width: 120,
+              )
+            ],
+          ).show(): Alert(
+            context: context,
+            type: AlertType.error,
+            title: "Error",
+            desc: "Failed to add user",
+            buttons: [
+              DialogButton(
+                child: Text(
+                  "close",
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+                onPressed: () => Navigator.pop(context),
+                width: 120,
+              )
+            ],
+          ).show()).catchError((onError){
+
+            print('${onError}');
+            Alert(
+              context: context,
+              type: AlertType.error,
+              title: "Error",
+              desc: "Fail to add User.",
+              buttons: [
+                DialogButton(
+                  child: Text(
+                    "close",
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                  onPressed: () => Navigator.pop(context),
+                  width: 120,
+                )
+              ],
+            ).show();
+          });
+
+          // await _goToMyLocation(location.latitude, location.longitude);
+        } else {
+          print('permission not available');
+          Alert(
+            context: context,
+            type: AlertType.error,
+            title: "Allow GPS Location Access",
+            desc: "Please allow location access and try again.",
+            buttons: [
+              DialogButton(
+                child: Text(
+                  "Close",
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+                onPressed: () => Navigator.pop(context),
+                width: 120,
+              )
+            ],
+          ).show();
+          //_showDialog();
+        }
+      }else{
+        Alert(
+          context: context,
+          type: AlertType.error,
+          title: "Turn on  GPS ",
+          desc: "Please turn on location and try again",
+          buttons: [
+            DialogButton(
+              child: Text(
+                "Close",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () => Navigator.pop(context),
+              width: 120,
+            )
+          ],
+        ).show();
+
+
+      }
+    } on PlatformException catch (e) {
+
+      if (e.code == 'PERMISSION_DENIED') {
+
+        Alert(
+          context: context,
+          type: AlertType.error,
+          title: "Allow GPS Location Access",
+          desc: "Please allow location access and try again.",
+          buttons: [
+            DialogButton(
+              child: Text(
+                "Close",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () => Navigator.pop(context),
+              width: 120,
+            )
+          ],
+        ).show();
+      } else if (e.code == 'SERVICE_STATUS_ERROR') {
+
+      }
+
+    } on Exception catch (ex) {
+      print(ex);
+
+
+      Alert(
+        context: context,
+        type: AlertType.error,
+        title: "Allow GPS Location Access",
+        desc: "Please allow location access and try again.",
+        buttons: [
+          DialogButton(
+            child: Text(
+              "Close",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+            onPressed: () => Navigator.pop(context),
+            width: 120,
+          )
+        ],
+      ).show();
+
+    }
+
+  }
+
+  Future<http.Response> addCoordinatorRequest(UserDTO userDTO) async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String tokenStr  = prefs.get('token');
+    print('tokenStr = ${tokenStr}' );
+
+    userDTO.phoneNo = prefs.get('user_contactnumber');
+
+    Future<http.Response> response = null;
+
+    String bodyd = "";
+    bodyd = json.encode(userDTO.toJson());
+
+    print("json map :"+bodyd);
+
+    try {
+
+      response = http.post('http://goviwiru.xeniqhub.xyz:8080/registerFarmer',
+          headers: {'Content-type': 'application/json','Authorization':'${tokenStr}'},
+          body: bodyd);
+
+
+
+    } on Exception catch (e) {
+      print(e);
+
+    }
+    return response;
   }
 }

@@ -561,52 +561,58 @@ class _LeadFarmerCaptureScreenState extends State<LeadFarmerCaptureScreen> {
           print(location.longitude.toString());
 
 
-          UserDTO farmer = new UserDTO();
-          farmer.name =nameController.text;
-          farmer.address =addressController.text;
-          farmer.whatsappNo =nameController.text;
-          farmer.name =nameController.text;
-          farmer.role = 1;
-          farmer.lat = location.latitude;
-          farmer.lon = location.longitude;
+          UserDTO user = new UserDTO();
+          user.name =nameController.text;
+          user.address =addressController.text;
+          user.whatsappNo =nameController.text;
+          user.name =nameController.text;
+          user.role = 1;
+          user.lat = location.latitude;
+          user.lon = location.longitude;
 
-          Future<http.Response> response = addCoordinatorRequest(farmer);
+          Future<http.Response> response = addCoordinatorRequest(user);
+          SharedPreferences prefs = await SharedPreferences.getInstance();
 
-          response.then((response) => response.statusCode == 200?Alert(
-            context: context,
-            type: AlertType.success,
-            title: "Success",
-            desc: "User add Success",
-            buttons: [
-              DialogButton(
-                child: Text(
-                  "close",
-                  style: TextStyle(color: Colors.white, fontSize: 20),
-                ),
-                onPressed: ()  {
-                  Navigator.pop(context);
-                  Navigator.of(context).pushReplacementNamed('/cart');
+          response.then((response) {
+            if(response.statusCode == 200){
+              prefs.setInt('userRole', user.role);
+            }
+            response.statusCode == 200?Alert(
+              context: context,
+              type: AlertType.success,
+              title: "Success",
+              desc: "User add Success",
+              buttons: [
+                DialogButton(
+                  child: Text(
+                    "close",
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                  onPressed: ()  {
+                    Navigator.pop(context);
+                    Navigator.of(context).pushReplacementNamed('/cart');
 
-                },
-                width: 120,
-              )
-            ],
-          ).show(): Alert(
-            context: context,
-            type: AlertType.error,
-            title: "Error",
-            desc: "Failed to add user",
-            buttons: [
-              DialogButton(
-                child: Text(
-                  "close",
-                  style: TextStyle(color: Colors.white, fontSize: 20),
-                ),
-                onPressed: () => Navigator.pop(context),
-                width: 120,
-              )
-            ],
-          ).show()).catchError((onError){
+                  },
+                  width: 120,
+                )
+              ],
+            ).show(): Alert(
+              context: context,
+              type: AlertType.error,
+              title: "Error",
+              desc: "Failed to add user",
+              buttons: [
+                DialogButton(
+                  child: Text(
+                    "close",
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                  onPressed: () => Navigator.pop(context),
+                  width: 120,
+                )
+              ],
+            ).show();
+          }).catchError((onError){
 
             print('${onError}');
             Alert(

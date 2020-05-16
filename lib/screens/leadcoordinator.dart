@@ -52,6 +52,7 @@ class _LeadCoordinatorState extends State<LeadCoordinator> {
 
   var username = "User Name";
 
+
   mylocation.Location _locationService = new mylocation.Location();
   mylocation.PermissionStatus _permission ;
   mylocation.LocationData location;
@@ -103,18 +104,25 @@ class _LeadCoordinatorState extends State<LeadCoordinator> {
           print(location.longitude.toString());
 
 
-          UserDTO farmer = new UserDTO();
-          farmer.name =nameController.text;
-          farmer.address =addressController.text;
-          farmer.whatsappNo =nameController.text;
-          farmer.name =nameController.text;
-          farmer.role = 2;
-          farmer.lat = location.latitude;
-          farmer.lon = location.longitude;
+          UserDTO user = new UserDTO();
+          user.name =nameController.text;
+          user.address =addressController.text;
+          user.whatsappNo =nameController.text;
+          user.name =nameController.text;
+          user.role = 2;
+          user.lat = location.latitude;
+          user.lon = location.longitude;
 
-          Future<http.Response> response = addCoordinatorRequest(farmer);
+          SharedPreferences prefs = await SharedPreferences.getInstance();
 
-          response.then((response) => response.statusCode == 200?Alert(
+          Future<http.Response> response = addCoordinatorRequest(user);
+
+          response.then((response) {
+            if(response.statusCode == 200){
+              prefs.setInt('userRole', user.role);
+            }
+
+            response.statusCode == 200?Alert(
             context: context,
             type: AlertType.success,
             title: "Success",
@@ -127,7 +135,7 @@ class _LeadCoordinatorState extends State<LeadCoordinator> {
                 ),
                 onPressed: ()  {
                   Navigator.pop(context);
-                  Navigator.of(context).pushReplacementNamed('/loadfarmers');
+                  Navigator.of(context).pushReplacementNamed('/addfarmer');
 
                 },
                 width: 120,
@@ -148,7 +156,7 @@ class _LeadCoordinatorState extends State<LeadCoordinator> {
                 width: 120,
               )
             ],
-          ).show()).catchError((onError){
+          ).show();} ).catchError((onError){
 
             print('${onError}');
             Alert(
