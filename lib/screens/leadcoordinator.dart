@@ -590,7 +590,15 @@ class _LeadCoordinatorState extends State<LeadCoordinator> {
     String tokenStr  = prefs.get('token');
     print('tokenStr = ${tokenStr}' );
 
-    userDTO.phoneNo = prefs.get('user_contactnumber');
+
+    userDTO.phoneNo = prefs.get('user_contactnumber') ;
+
+    if(userDTO.phoneNo.length == 10 ) {
+
+      userDTO.phoneNo = '+94${userDTO.phoneNo.substring(1, userDTO.phoneNo.length)}';
+
+    }
+
 
     Future<http.Response> response = null;
 

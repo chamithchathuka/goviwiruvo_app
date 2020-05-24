@@ -502,7 +502,7 @@ class _AddFarmerState extends State<AddFarmer> {
           farmer.name =nameController.text;
           farmer.address =addressController.text;
           farmer.whatsappNo =nameController.text;
-          farmer.name =nameController.text;
+          farmer.phoneNo =contactNoController.text;
           farmer.role = 1;
           farmer.lat = location.latitude;
           farmer.lon = location.longitude;
@@ -660,8 +660,6 @@ class _AddFarmerState extends State<AddFarmer> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String tokenStr  = prefs.get('token');
     print('tokenStr = ${tokenStr}' );
-
-    userDTO.phoneNo = prefs.get('user_contactnumber');
 
     Future<http.Response> response = null;
 
