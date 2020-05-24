@@ -61,40 +61,38 @@ class _LoadFarmerScreenState extends State<LoadFarmerScreen> {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 if (snapshot.data.farmers.length > 0) {
-                  return Expanded(
-                    child:  ListView.builder(
-                        itemCount: snapshot.data.farmers.length,
-                        itemBuilder: (BuildContext ctxt, int Index) {
-                          return Row(
+                  return ListView.builder(
+                      itemCount: snapshot.data.farmers.length,
+                      itemBuilder: (BuildContext ctxt, int Index) {
+                        return Row(
 
-                            children: <Widget>[
-                              Container(
-                                  height: MediaQuery.of(context).size.height / 8,
-                                width: MediaQuery.of(context).size.width -20,
+                          children: <Widget>[
+                            Container(
+                                height: MediaQuery.of(context).size.height / 8,
+                              width: MediaQuery.of(context).size.width -20,
 
-                                  color: Colors.white70,
-                                  child:  Container(
-                                      decoration:  BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:  BorderRadius.only(
-                                            topLeft: const Radius.circular(10.0),
-                                            topRight: const Radius.circular(10.0),
-                                            bottomLeft: const Radius.circular(10.0),
-                                            bottomRight: const Radius.circular(10.0),
-                                          )),
-                                      child:  Center(
-                                        child:  Text(
-                                            snapshot.data.farmers[Index].name),
-                                      ),),),
-                              Container(
-                                color: Colors.red,
-                                height: 20,
-                              )
+                                color: Colors.white70,
+                                child:  Container(
+                                    decoration:  BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius:  BorderRadius.only(
+                                          topLeft: const Radius.circular(10.0),
+                                          topRight: const Radius.circular(10.0),
+                                          bottomLeft: const Radius.circular(10.0),
+                                          bottomRight: const Radius.circular(10.0),
+                                        )),
+                                    child:  Center(
+                                      child:  Text(
+                                          snapshot.data.farmers[Index].name),
+                                    ),),),
+                            Container(
+                              color: Colors.red,
+                              height: 20,
+                            )
 
-                            ],
-                          );
-                        }),
-                  );
+                          ],
+                        );
+                      });
                 } else {
                   return Text(
                       'No registered farmars found. Consider registering farmers.');
