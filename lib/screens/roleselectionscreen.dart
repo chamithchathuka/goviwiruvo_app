@@ -56,8 +56,12 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                       onTap: () => Navigator.of(context)
                           .pushNamed(MyGlobals.MENU_PATHS[0]),
                       child: Container(
+//    decoration: BoxDecoration(
+//    shape: BoxShape.circle,
+//    color: Color(0xFFe0f2f1),),
                         height: vheight,
-                        child: Row(
+
+                        child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
                             Container(
@@ -70,21 +74,22 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                               maxLines: 2,
                               style: TextStyle(
                                   fontSize: 20,
-                                  color: Colors.white,
+//                                  color: Colors.white,
                                   fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),
                         decoration: BoxDecoration(
-                          color: Color.fromRGBO(0, 102, 34, 0.8),
+//                          color: Color.fromRGBO(0, 102, 34, 0.8),
                           shape: BoxShape.rectangle,
-                          borderRadius: new BorderRadius.circular(8.0),
+                          borderRadius: BorderRadius.circular(90.0),
 //                      image: DecorationImage(
 //                        fit: BoxFit.cover,
 //                        colorFilter: ColorFilter.mode(
 //                            Colors.black.withOpacity(0.4), BlendMode.dstATop),
 //                        image: AssetImage('assets/coordination.png'),
 //                      ),
+                          //Todo Comment below to remove shadow
                           boxShadow: <BoxShadow>[
                             BoxShadow(
                               color: Colors.black12,
@@ -103,7 +108,7 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                           .pushNamed(MyGlobals.MENU_PATHS[0]),
                       child: Container(
                         height: vheight,
-                        child: Row(
+                        child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
                             Container(
@@ -116,21 +121,23 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                               maxLines: 2,
                               style: TextStyle(
                                   fontSize: 20,
-                                  color: Colors.white,
+//                                  color: Colors.white,
                                   fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),
                         decoration: BoxDecoration(
-                          color: Color.fromRGBO(0, 102, 34, 0.8),
+//                          color: Color.fromRGBO(0, 102, 34, 0.8),
                           shape: BoxShape.rectangle,
-                          borderRadius: new BorderRadius.circular(8.0),
+                         // shape: BoxShape.rectangle,
+                          borderRadius: new BorderRadius.circular(90.0),
 //                      image: DecorationImage(
 //                        fit: BoxFit.cover,
 //                        colorFilter: ColorFilter.mode(
 //                            Colors.black.withOpacity(0.4), BlendMode.dstATop),
 //                        image: AssetImage('assets/coordination.png'),
 //                      ),
+                        //Todo Comment below to remove shadow
                           boxShadow: <BoxShadow>[
                             BoxShadow(
                               color: Colors.black12,
