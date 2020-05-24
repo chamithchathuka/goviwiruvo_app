@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
@@ -8,29 +9,30 @@ import '../myglobals.dart';
 import '../dto/farmerlistdto.dart';
 import 'package:http/http.dart' as http;
 
-
 class LoadFarmerScreen extends StatefulWidget {
   @override
   _LoadFarmerScreenState createState() => _LoadFarmerScreenState();
 }
 
- final String GET_URL = "http://goviwiru.xeniqhub.xyz:8080/getFarmersList";
+final String GET_URL = "http://goviwiru.xeniqhub.xyz:8080/getFarmersList";
 
 class _LoadFarmerScreenState extends State<LoadFarmerScreen> {
   Future<FarmerListDTO> futureFarmers;
 
   Future<FarmerListDTO> fetchFarmers() async {
-
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String tokenStr  = prefs.get('token');
-    print('tokenStr = ${tokenStr}' );
+    String tokenStr = prefs.get('token');
+    print('tokenStr = ${tokenStr}');
 
-    http.Response response = await http.get(GET_URL, headers: {'Content-type': 'application/json','Authorization':'${tokenStr}'});
+    http.Response response = await http.get(GET_URL, headers: {
+      'Content-type': 'application/json',
+      'Authorization': '${tokenStr}'
+    });
     print('Response from server ${response.statusCode} - ${response.body} ');
     if (response.statusCode == 200) {
-      if(response.body != null){
-          return FarmerListDTO.fromJson(json.decode(response.body));
-      }else{
+      if (response.body != null) {
+        return FarmerListDTO.fromJson(json.decode(response.body));
+      } else {
         throw Exception('Failed to load Farmers');
       }
     } else {
@@ -48,37 +50,57 @@ class _LoadFarmerScreenState extends State<LoadFarmerScreen> {
     futureFarmers = fetchFarmers();
   }
 
-
   Container _buildVerticalLayout(BuildContext context) {
-    double vheight = MediaQuery
-        .of(context)
-        .size
-        .height * 0.2;
+    double vheight = MediaQuery.of(context).size.height * 0.2;
 
     return Container(
-      child:
-      Center(
-        child:
-        Center(
+      child: Center(
+        child: Center(
           child: FutureBuilder<FarmerListDTO>(
             future: futureFarmers,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 if (snapshot.data.farmers.length > 0) {
                   return Expanded(
-                    child: new ListView.builder
-                      (
+                    child:  ListView.builder(
                         itemCount: snapshot.data.farmers.length,
                         itemBuilder: (BuildContext ctxt, int Index) {
-                          return Text(snapshot.data.farmers[Index].name);
-                        }
-                    ),
+                          return Row(
+
+                            children: <Widget>[
+                              Container(
+                                  height: MediaQuery.of(context).size.height / 8,
+                                width: MediaQuery.of(context).size.width -20,
+
+                                  color: Colors.white70,
+                                  child:  Container(
+                                      decoration:  BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:  BorderRadius.only(
+                                            topLeft: const Radius.circular(10.0),
+                                            topRight: const Radius.circular(10.0),
+                                            bottomLeft: const Radius.circular(10.0),
+                                            bottomRight: const Radius.circular(10.0),
+                                          )),
+                                      child:  Center(
+                                        child:  Text(
+                                            snapshot.data.farmers[Index].name),
+                                      ),),),
+                              Container(
+                                color: Colors.red,
+                                height: 20,
+                              )
+
+                            ],
+                          );
+                        }),
                   );
                 } else {
-                  return Text('No registered farmars found. Consider registering farmers.');
+                  return Text(
+                      'No registered farmars found. Consider registering farmers.');
                 }
               } else if (snapshot.hasError) {
-                    return Text("Error Occurred Unable to load farmers");
+                return Text("Error Occurred Unable to load farmers");
               }
               return CircularProgressIndicator();
             },
@@ -88,8 +110,6 @@ class _LoadFarmerScreenState extends State<LoadFarmerScreen> {
     );
   }
 
-
-
   @override
   void dispose() {
     super.dispose();
@@ -98,69 +118,112 @@ class _LoadFarmerScreenState extends State<LoadFarmerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: new AppBar(
-        actions: <Widget>[
-//            IconButton(
-//                icon: Icon(Icons.search),
-//                onPressed: () {
-//                  Navigator.of(context).pushReplacementNamed(
-//                      '/leadcapturesearch'); // to connect screen
-//                }),
-        ],
-          backgroundColor: Color.fromRGBO(0, 102, 34,0.8),
-        title: new Text(pageName,
-            style: TextStyle(color:Colors.white,fontSize: 20, fontWeight: FontWeight.bold)),
-      ),
+        appBar: AppBar(
+          backgroundColor: Color.fromRGBO(0, 102, 34, 0.8),
+          actions: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: InkWell(
+                onTap: () {
+                  Alert(
+                      context: context,
+                      title: "Logout",
+                      content: Column(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Image.network(
+                              '${MyGlobals.userproFileURL}',
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Text(
+                              'Username',
+                            ),
+                          )
+                        ],
+                      ),
+                      buttons: [
+                        DialogButton(
+                          color: Colors.teal,
+                          onPressed: () => Navigator.pop(context),
+                          child: Text(
+                            "Cancel",
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                          ),
+                        ),
+                        DialogButton(
+                          onPressed: () async {
+                            SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                            prefs.clear();
+                            Navigator.of(context).pushNamedAndRemoveUntil(
+                                '/login', (Route<dynamic> route) => false);
+                          },
+                          child: Text(
+                            "Logout",
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                          ),
+                        ),
+                      ]).show();
+                },
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(50),
+                  child: Image.network(
+                    '${MyGlobals.userproFileURL}',
+                  ),
+                ),
+              ),
+            ),
+          ],
+          title: new Text(pageName,
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold)),
+        ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             // Add your onPressed code here!
             Navigator.of(context).pushNamed('/addfarmer');
-
           },
           child: Icon(Icons.person_add),
           backgroundColor: Colors.green,
         ),
-      body:
-
-    Container(
-    decoration: BoxDecoration(
-    color: Colors.white,
-    image: DecorationImage(
-    colorFilter:
-    ColorFilter.mode(Colors.lightGreenAccent.withOpacity(0.20),
-    BlendMode.dstATop),
-    image:  new AssetImage('assets/background_a.jpg'),
-    fit: BoxFit.cover,
-    ),
-    ),
-     child:
-      SafeArea(
-        minimum: const EdgeInsets.all(8.0),
-        child: Form(
-          child: OrientationBuilder(builder: (context, orientation) {
-            return orientation == Orientation.portrait
-                ? LayoutBuilder(builder: (context, constraints) {
-              if (constraints.maxWidth < 600) {
-                return _buildVerticalLayout(context);
-              } else {
-                return _buildVerticalLayout(context);
-              }
-            })
-                : LayoutBuilder(builder: (context, constraints) {
-              if (constraints.maxWidth < 600) {
-                return _buildVerticalLayout(context);
-              } else {
-                //Todo Change this
-                return _buildVerticalLayout(context);
-              }
-            });
-          }),
-        ),
-      ),
-    )
-    );
+        body: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            image: DecorationImage(
+              colorFilter: ColorFilter.mode(
+                  Colors.lightGreenAccent.withOpacity(0.20), BlendMode.dstATop),
+              image: new AssetImage('assets/background_a.jpg'),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: SafeArea(
+            minimum: const EdgeInsets.all(8.0),
+            child: Form(
+              child: OrientationBuilder(builder: (context, orientation) {
+                return orientation == Orientation.portrait
+                    ? LayoutBuilder(builder: (context, constraints) {
+                        if (constraints.maxWidth < 600) {
+                          return _buildVerticalLayout(context);
+                        } else {
+                          return _buildVerticalLayout(context);
+                        }
+                      })
+                    : LayoutBuilder(builder: (context, constraints) {
+                        if (constraints.maxWidth < 600) {
+                          return _buildVerticalLayout(context);
+                        } else {
+                          //Todo Change this
+                          return _buildVerticalLayout(context);
+                        }
+                      });
+              }),
+            ),
+          ),
+        ));
   }
-
-
 }
-

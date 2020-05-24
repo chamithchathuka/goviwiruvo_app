@@ -39,6 +39,7 @@ void main() async{
  await runApp(MaterialApp(
     routes: <String, WidgetBuilder>{
       '/leadCoordinator': (BuildContext context) => LeadCoordinator(),
+      '/login': (BuildContext context) => LoginScreen(),
       '/vegadd': (BuildContext context) => VegitableAddScreen(),
       '/cart': (BuildContext context) => CartScreen(),
       '/roleselect': (BuildContext context) => RoleSelectionScreen(),
