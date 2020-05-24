@@ -11,7 +11,7 @@ class FarmerListDTO {
         farmers.add(new Farmers.fromJson(v));
       });
     }
-    coordinatorId = json['coordinatorId'];
+    coordinatorId = json['cooridinatorId'];
   }
 
   Map<String, dynamic> toJson() {
@@ -29,8 +29,8 @@ class Farmers {
   String address;
   bool delete;
   int id;
-  int lat;
-  int lon;
+  double lat;
+  double lon;
   String name;
   String phoneNo;
   int role;

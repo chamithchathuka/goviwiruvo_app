@@ -590,7 +590,7 @@ class _LeadFarmerCaptureScreenState extends State<LeadFarmerCaptureScreen> {
                   ),
                   onPressed: ()  {
                     Navigator.pop(context);
-                    Navigator.of(context).pushReplacementNamed('/cart');
+                    Navigator.of(context).pushNamed('/loadfarmers');
 
                   },
                   width: 120,

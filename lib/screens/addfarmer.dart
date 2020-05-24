@@ -523,7 +523,7 @@ class _AddFarmerState extends State<AddFarmer> {
                 ),
                 onPressed: ()  {
                   Navigator.pop(context);
-                  Navigator.of(context).pushReplacementNamed('/cart');
+                  Navigator.of(context).pushReplacementNamed('/loadfarmers');
 
                 },
                 width: 120,

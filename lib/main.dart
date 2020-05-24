@@ -43,7 +43,7 @@ void main() async{
       '/cart': (BuildContext context) => CartScreen(),
       '/roleselect': (BuildContext context) => RoleSelectionScreen(),
       '/addfarmer': (BuildContext context) => AddFarmer(),
-      '/leadFarmer': (BuildContext context) => LeadFarmerCaptureScreen(),
+      '/leadFarmer': (BuildContext context) => LeadFarmerCaptureScreen(), // register farmer to coordinator
       '/loadfarmers':(BuildContext context) => LoadFarmerScreen()
     },
     title: MyGlobals.AppName,

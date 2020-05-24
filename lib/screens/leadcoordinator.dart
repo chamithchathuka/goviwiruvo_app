@@ -135,7 +135,7 @@ class _LeadCoordinatorState extends State<LeadCoordinator> {
                 ),
                 onPressed: ()  {
                   Navigator.pop(context);
-                  Navigator.of(context).pushReplacementNamed('/addfarmer');
+                  Navigator.of(context).pushNamed('/addfarmer');
 
                 },
                 width: 120,

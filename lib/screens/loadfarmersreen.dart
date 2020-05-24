@@ -111,6 +111,15 @@ class _LoadFarmerScreenState extends State<LoadFarmerScreen> {
         title: new Text(pageName,
             style: TextStyle(color:Colors.white,fontSize: 20, fontWeight: FontWeight.bold)),
       ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            // Add your onPressed code here!
+            Navigator.of(context).pushNamed('/addfarmer');
+
+          },
+          child: Icon(Icons.person_add),
+          backgroundColor: Colors.green,
+        ),
       body:
 
     Container(
