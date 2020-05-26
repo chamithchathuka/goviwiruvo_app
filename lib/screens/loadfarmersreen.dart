@@ -42,7 +42,7 @@ class _LoadFarmerScreenState extends State<LoadFarmerScreen> {
     }
   }
 
-  final pageName = "Farmers";
+  final pageName = "ගොවි මහතුන්";
 
   @override
   void initState() {
@@ -64,34 +64,62 @@ class _LoadFarmerScreenState extends State<LoadFarmerScreen> {
                   return ListView.builder(
                       itemCount: snapshot.data.farmers.length,
                       itemBuilder: (BuildContext ctxt, int Index) {
-                        return Row(
+                        return
+                          Column(
+                              children: <Widget>[
+                              SizedBox(height: MediaQuery.of(context).size.height/80),
+                              Row(
+                                children: <Widget>[
+                                  Container(
+                                      height: MediaQuery.of(context).size.height / 20,
+                                    width: MediaQuery.of(context).size.width -20,
+                                      color: MyGlobals.backgroundColor2,
+                                      child:  Container(
+                                          decoration:  BoxDecoration(
+                                              color: Colors.white54,
+                                              borderRadius:  BorderRadius.only(
+                                                topLeft: const Radius.circular(10.0),
+                                                topRight: const Radius.circular(10.0),
+                                                bottomLeft: const Radius.circular(10.0),
+                                                bottomRight: const Radius.circular(10.0),
+                                              )),
+                                          child:  Align(
+                                            alignment: Alignment.centerLeft,
+                                            child:
+                                            new RichText(
+                                              text: new TextSpan(
+                                                // Note: Styles for TextSpans must be explicitly defined.
+                                                // Child text spans will inherit styles from parent
+                                                style: new TextStyle(
+                                                  fontSize: 18,
+                                                  color: Colors.black87,
+                                                ),
+                                                children: <TextSpan>[
+                                                  new TextSpan(text: '        '),
+                                                  new TextSpan(text: (Index+1).toString()),
+                                                  new TextSpan(text: '.', style: new TextStyle(fontWeight: FontWeight.bold)),
+                                                  new TextSpan(text: '  '),
+                                                  new TextSpan(text:snapshot.data.farmers[Index].name, style: new TextStyle(fontWeight: FontWeight.bold)),
+                                                  new TextSpan(text: '  - '),
+                                                  new TextSpan(text:snapshot.data.farmers[Index].phoneNo, style: new TextStyle(fontWeight: FontWeight.bold)),
+                                                ],
+                                              ),
+                                            ),
+      //                                      Text(
+      //                                          "     "+(Index+1).toString() + ".     " +  snapshot.data.farmers[Index].name,
+      //                                          style: TextStyle(
+      //                                          color: Colors.black87,
+      //                                          fontSize: 18,
+      //                                          fontWeight: FontWeight.bold)
+      //                                      ),
+                                          ),
+                                      ),
+                                  )
 
-                          children: <Widget>[
-                            Container(
-                                height: MediaQuery.of(context).size.height / 8,
-                              width: MediaQuery.of(context).size.width -20,
-
-                                color: Colors.white70,
-                                child:  Container(
-                                    decoration:  BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius:  BorderRadius.only(
-                                          topLeft: const Radius.circular(10.0),
-                                          topRight: const Radius.circular(10.0),
-                                          bottomLeft: const Radius.circular(10.0),
-                                          bottomRight: const Radius.circular(10.0),
-                                        )),
-                                    child:  Center(
-                                      child:  Text(
-                                          snapshot.data.farmers[Index].name),
-                                    ),),),
-                            Container(
-                              color: Colors.red,
-                              height: 20,
-                            )
-
-                          ],
-                        );
+                                ],
+                              )
+                            ]
+                          ) ;
                       });
                 } else {
                   return Text(
@@ -117,7 +145,7 @@ class _LoadFarmerScreenState extends State<LoadFarmerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Color.fromRGBO(0, 102, 34, 0.8),
+          backgroundColor: MyGlobals.backgroundColor,
           actions: <Widget>[
             Padding(
               padding: const EdgeInsets.all(5.0),
@@ -177,27 +205,28 @@ class _LoadFarmerScreenState extends State<LoadFarmerScreen> {
           ],
           title: new Text(pageName,
               style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
+                  color: Colors.black87,
+                  fontSize: 18,
                   fontWeight: FontWeight.bold)),
         ),
         floatingActionButton: FloatingActionButton(
+          foregroundColor: Colors.black87,
           onPressed: () {
             // Add your onPressed code here!
             Navigator.of(context).pushNamed('/addfarmer');
           },
           child: Icon(Icons.person_add),
-          backgroundColor: Colors.green,
+          backgroundColor: MyGlobals.backgroundColor,
         ),
         body: Container(
           decoration: BoxDecoration(
-            color: Colors.white,
-            image: DecorationImage(
-              colorFilter: ColorFilter.mode(
-                  Colors.lightGreenAccent.withOpacity(0.20), BlendMode.dstATop),
-              image: new AssetImage('assets/background_a.jpg'),
-              fit: BoxFit.cover,
-            ),
+            color: MyGlobals.backgroundColor2,
+//            image: DecorationImage(
+//              colorFilter: ColorFilter.mode(
+//                  Colors.lightGreenAccent.withOpacity(0.20), BlendMode.dstATop),
+//              image: new AssetImage('assets/background_a.jpg'),
+//              fit: BoxFit.cover,
+//            ),
           ),
           child: SafeArea(
             minimum: const EdgeInsets.all(8.0),

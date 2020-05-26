@@ -1,6 +1,12 @@
+import 'dart:ui';
+
 class MyGlobals {
   static final AppName = "ගොවි විරුවෝ";
   static final AppVersion = "1";
+
+  static Color backgroundColor = const Color(0xFFFFAA00);
+  static Color backgroundColor2 = const Color(0xFFFFDD3C);
+
 
   static const userproFileURL = 'https://www.clipartmax.com/png/small/444-4440198_user-account-profile-avatar-person-student-male-comments-circle.png';
 
@@ -11,8 +17,8 @@ class MyGlobals {
   static const HOME_PAGE_NAME = "Security Settings";
 
   static final List<String> USER_ROLES = <String>[
-    "ගොවිමහතා",
-    "සම්බන්දිකරණ නිළදාරී",
+    "ගොවි තැන",
+    "සම්බන්දිකරණය",
 //  "Trial Calculation",
 //  "Credit Approval",
   ];

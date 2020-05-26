@@ -6,6 +6,7 @@ import 'package:goviwiruvo_app/dto/userdto.dart';
 import 'package:goviwiruvo_app/dto/vegetablerequestdto.dart';
 import 'package:goviwiruvo_app/external/webservices.dart';
 import 'package:goviwiruvo_app/model/VegetableModel.dart';
+import 'package:goviwiruvo_app/myglobals.dart';
 import 'package:goviwiruvo_app/services/vegetableservice.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -46,7 +47,7 @@ class _AddFarmerState extends State<AddFarmer> {
 
 
   address(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(top: 8.0),
+        padding: const EdgeInsets.only(top: 20,left: 50,right: 50),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -54,9 +55,7 @@ class _AddFarmerState extends State<AddFarmer> {
                 alignment: Alignment.topLeft,
                 child: Text(
                   "ලිපිනය",
-                  style: TextStyle(
-                      color:Color.fromRGBO(0, 102, 34,0.8)
-                  ),
+                  style: TextStyle(fontWeight: FontWeight.bold,color:Colors.black87),
                   textAlign: TextAlign.left,
                 )),
             Container(
@@ -69,14 +68,14 @@ class _AddFarmerState extends State<AddFarmer> {
                   Expanded(
                     child: TextFormField(
                       decoration:  new InputDecoration(
-                      enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))),
-                      focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))) ,
+                        enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black87)),
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black87)) ,
                       ),
                       style: new TextStyle(
-                      color: Color.fromRGBO(0, 102, 34,0.8),
-                      decorationColor: Color.fromRGBO(0, 102, 34,0.8),//Font color change
+                        color: Colors.black87,
+                        decorationColor: Colors.black87,//Font color change
                       ),
 
                       validator: (value) {
@@ -113,7 +112,7 @@ class _AddFarmerState extends State<AddFarmer> {
       );
 
   customerName(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(top: 8),
+        padding: const EdgeInsets.only(top: 20,left: 50,right: 50),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -121,9 +120,7 @@ class _AddFarmerState extends State<AddFarmer> {
                 alignment: Alignment.topLeft,
                 child: Text(
                   "නම",
-                  style: TextStyle(
-                    color:Color.fromRGBO(0, 102, 34,0.8)
-                ),
+                  style: TextStyle(fontWeight: FontWeight.bold,color:Colors.black87),
                   textAlign: TextAlign.left,
                 )),
             Container(
@@ -137,13 +134,13 @@ class _AddFarmerState extends State<AddFarmer> {
                     child: TextFormField(
                       decoration:  new InputDecoration(
                         enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))),
+                            borderSide: BorderSide(color: Colors.black87)),
                         focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))) ,
+                            borderSide: BorderSide(color: Colors.black87)) ,
                       ),
                       style: new TextStyle(
-                        color: Color.fromRGBO(0, 102, 34,0.8),
-                        decorationColor: Color.fromRGBO(0, 102, 34,0.8),//Font color change
+                        color: Colors.black87,
+                        decorationColor: Colors.black87,//Font color change
                       ),
                       validator: (value) {
                         if (value.isEmpty) {
@@ -162,7 +159,7 @@ class _AddFarmerState extends State<AddFarmer> {
       );
 
   contactnumber(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(top: 8),
+        padding: const EdgeInsets.only(top: 20,left: 50,right: 50),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -170,9 +167,7 @@ class _AddFarmerState extends State<AddFarmer> {
                 alignment: Alignment.topLeft,
                 child: Text(
                   "දුරකථන අංකය",
-                  style: TextStyle(
-                    color:Color.fromRGBO(0, 102, 34,0.8)
-                ),
+                  style: TextStyle(fontWeight: FontWeight.bold,color:Colors.black87),
                   textAlign: TextAlign.left,
                 )),
             Container(
@@ -186,13 +181,13 @@ class _AddFarmerState extends State<AddFarmer> {
                     child: TextFormField(
                       decoration:  new InputDecoration(
                         enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))),
+                            borderSide: BorderSide(color: Colors.black87)),
                         focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))) ,
+                            borderSide: BorderSide(color: Colors.black87)) ,
                       ),
                       style: new TextStyle(
-                        color: Color.fromRGBO(0, 102, 34,0.8),
-                        decorationColor: Color.fromRGBO(0, 102, 34,0.8),//Font color change
+                        color: Colors.black87,
+                        decorationColor: Colors.black87,//Font color change
                       ),
                       validator: (value) {
                         if (value.isEmpty) {
@@ -218,7 +213,7 @@ class _AddFarmerState extends State<AddFarmer> {
   );
 
   contactnumberWhatsApp(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(top: 8),
+        padding: const EdgeInsets.only(top: 20,left: 50,right: 50),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -226,9 +221,7 @@ class _AddFarmerState extends State<AddFarmer> {
                 alignment: Alignment.topLeft,
                 child: Text(
                   "වට්ස්ඇප් දුරකථන අංකය",
-                  style: TextStyle(
-                      color:Color.fromRGBO(0, 102, 34,0.8)
-                  ),
+                  style: TextStyle(fontWeight: FontWeight.bold,color:Colors.black87),
                   textAlign: TextAlign.left,
                 )),
             Container(
@@ -242,15 +235,16 @@ class _AddFarmerState extends State<AddFarmer> {
                     child: TextFormField(
                       decoration:  new InputDecoration(
                         enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))),
+                            borderSide: BorderSide(color: Colors.black87)),
                         focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))) ,
+                            borderSide: BorderSide(color: Colors.black87)) ,
 //                        contentPadding:
 //                        EdgeInsets.only(left: 15, bottom: 10, top: 20, right: 15),
                       ),
+
                       style: new TextStyle(
-                        color: Color.fromRGBO(0, 102, 34,0.8),
-                        decorationColor: Color.fromRGBO(0, 102, 34,0.8),//Font color change
+                        color: Colors.black87,
+                        decorationColor: Colors.black87,//Font color change
                       ),
 
                       validator: (value) {
@@ -308,26 +302,27 @@ class _AddFarmerState extends State<AddFarmer> {
               child: Container(
                 child: Column(
                   children: <Widget>[
-                    SizedBox(height: 15),
+                    SizedBox(height: MediaQuery.of(context).size.height/20),
                     customerName(context),
                     SizedBox(height: 20),
                     address(context),
                     SizedBox(height: 20),
                     contactnumber(context),
-//                    SizedBox(height: 20),
+                    SizedBox(height: 20),
                     contactnumberWhatsApp(context),
-//                    SizedBox(height: 20),
-//                    coordinationOfficerNumber(context),
+
+                    SizedBox(height: MediaQuery.of(context).size.height/10),
+                    saveLead(context)
                   ],
                 ),
               ),
             ),
           ),
-          Column(
-            children: [
-              saveLead(context),
-            ],
-          ),
+//          Column(
+//            children: [
+//              saveLead(context),
+//            ],
+//          ),
         ],
       ),
     );
@@ -417,9 +412,9 @@ class _AddFarmerState extends State<AddFarmer> {
 //                      '/leadcapturesearch'); // to connect screen
 //                }),
         ],
-        backgroundColor: Color.fromRGBO(0, 102, 34,0.8),
+        backgroundColor: MyGlobals.backgroundColor,
         title: new Text(pageName,
-            style: TextStyle(color:Colors.white,fontSize: 20, fontWeight: FontWeight.bold)),
+            style: TextStyle(color:Colors.black87,fontSize: 18, fontWeight: FontWeight.bold)),
       ),
 //      floatingActionButton: FloatingActionButton(
 //        onPressed: () {
@@ -433,14 +428,14 @@ class _AddFarmerState extends State<AddFarmer> {
 
     Container(
     decoration: BoxDecoration(
-    color: Colors.white,
-    image: DecorationImage(
-    colorFilter:
-    ColorFilter.mode(Colors.lightGreenAccent.withOpacity(0.20),
-    BlendMode.dstATop),
-    image:  new AssetImage('assets/background_a.jpg'),
-    fit: BoxFit.cover,
-    ),
+    color: MyGlobals.backgroundColor2,
+//    image: DecorationImage(
+//    colorFilter:
+//    ColorFilter.mode(Colors.lightGreenAccent.withOpacity(0.20),
+//    BlendMode.dstATop),
+//    image:  new AssetImage('assets/background_a.jpg'),
+//    fit: BoxFit.cover,
+//    ),
     ),
     child:
       SafeArea(

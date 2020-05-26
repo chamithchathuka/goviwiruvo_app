@@ -14,7 +14,7 @@ class RoleSelectionScreen extends StatefulWidget {
 }
 
 class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
-  final pageName = "ඔබේ වුර්තිය තෝරන්න";
+  final pageName = "ගොවි විරු";
 
   @override
   void initState() {
@@ -33,7 +33,7 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(
-                    'assets/background.jpg'),
+                    'assets/image_bg.png'),
                 fit: BoxFit.fill,
               ),
               shape: BoxShape.rectangle,
@@ -41,8 +41,10 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
           ),
           Container(
             width: MediaQuery.of(context).size.width ,
-            color: Colors.lightGreen,
-            child: Center(child: Text('Select Role')),
+            color: MyGlobals.backgroundColor,
+            child: Center(child: Text('ඔබේ වුර්තිය තෝරන්න',
+                style: TextStyle(color:Colors.black87,fontSize: 18, fontWeight: FontWeight.bold)
+            )),
             height: MediaQuery.of(context).size.height / 10,
           ),
           Expanded(
@@ -50,105 +52,206 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
               child: ListView(
 
                 children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: GestureDetector(
-                      onTap: () => Navigator.of(context)
-                          .pushNamed(MyGlobals.MENU_PATHS[0]),
-                      child: Container(
-//    decoration: BoxDecoration(
-//    shape: BoxShape.circle,
-//    color: Color(0xFFe0f2f1),),
-                        height: vheight,
 
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Container(
-                              child: Image.asset('assets/icon1.png'),
-                              width: MediaQuery.of(context).size.width / 10,
-                            ),
-                            AutoSizeText(
-                              MyGlobals.USER_ROLES[0],
-                              maxFontSize: 32,
-                              maxLines: 2,
-                              style: TextStyle(
-                                  fontSize: 20,
-//                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                        decoration: BoxDecoration(
-//                          color: Color.fromRGBO(0, 102, 34, 0.8),
-                          shape: BoxShape.rectangle,
-                          borderRadius: BorderRadius.circular(90.0),
-//                      image: DecorationImage(
-//                        fit: BoxFit.cover,
-//                        colorFilter: ColorFilter.mode(
-//                            Colors.black.withOpacity(0.4), BlendMode.dstATop),
-//                        image: AssetImage('assets/coordination.png'),
+                  SizedBox(height: MediaQuery.of(context).size.height/20),
+
+//                  Padding(
+//                    padding: const EdgeInsets.all(8.0),
+//                    child: GestureDetector(
+//                      onTap: () => Navigator.of(context)
+//                          .pushNamed(MyGlobals.MENU_PATHS[0]),
+//                      child: Container(
+////    decoration: BoxDecoration(
+////    shape: BoxShape.circle,
+////    color: Color(0xFFe0f2f1),),
+//                        height: vheight,
+//
+//                        child: Column(
+//                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                          children: <Widget>[
+//                            Container(
+//                              child: Image.asset('assets/icon1.png'),
+//                              width: MediaQuery.of(context).size.width / 10,
+//                            ),
+//                            AutoSizeText(
+//                              MyGlobals.USER_ROLES[0],
+//                              maxFontSize: 32,
+//                              maxLines: 2,
+//                              style: TextStyle(
+//                                  fontSize: 20,
+////                                  color: Colors.white,
+//                                  fontWeight: FontWeight.bold),
+//                            ),
+//                          ],
+//                        ),
+//                        decoration: BoxDecoration(
+////                          color: Color.fromRGBO(0, 102, 34, 0.8),
+//                          shape: BoxShape.rectangle,
+//                          borderRadius: BorderRadius.circular(90.0),
+////                      image: DecorationImage(
+////                        fit: BoxFit.cover,
+////                        colorFilter: ColorFilter.mode(
+////                            Colors.black.withOpacity(0.4), BlendMode.dstATop),
+////                        image: AssetImage('assets/coordination.png'),
+////                      ),
+//                          //Todo Comment below to remove shadow
+//                          boxShadow: <BoxShadow>[
+//                            BoxShadow(
+//                              color: Colors.black12,
+//                              blurRadius: 10.0,
+//                              offset: Offset(0.0, 10.0),
+//                            ),
+//                          ],
+//                        ),
 //                      ),
-                          //Todo Comment below to remove shadow
-                          boxShadow: <BoxShadow>[
-                            BoxShadow(
-                              color: Colors.black12,
-                              blurRadius: 10.0,
-                              offset: Offset(0.0, 10.0),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+//                    ),
+//                  ),
+
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: GestureDetector(
-                      onTap: () => Navigator.of(context)
-                          .pushNamed(MyGlobals.MENU_PATHS[0]),
-                      child: Container(
-                        height: vheight,
-                        child: Column(
+                    child:
+
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        RawMaterialButton(
+                          onPressed: () {
+                            Navigator.of(context)
+                                      .pushNamed(MyGlobals.MENU_PATHS[0]);
+                          },
+                          elevation: 2.0,
+                          fillColor: MyGlobals.backgroundColor,
+                          child: Container(
+                            child: Image.asset('assets/icon1.png'),
+                            width: MediaQuery.of(context).size.width / 10,
+                          ),
+                          padding: EdgeInsets.all(15.0),
+                          shape: CircleBorder(),
+                        )
+                        ,
+                        SizedBox(height: MediaQuery.of(context).size.height/80),
+                        AutoSizeText(
+                          MyGlobals.USER_ROLES[0],
+                          maxFontSize: 32,
+                          maxLines: 2,
+                          style: TextStyle(
+                            fontSize: 16,
+//                                  color: Colors.white,
+                                fontWeight: FontWeight.bold
+                          ),
+                        ),
+                      ],
+                    ),
+
+                  ),
+
+                  SizedBox(height: MediaQuery.of(context).size.height/20),
+
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child:
+
+                     Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
-                            Container(
-                              child: Image.asset('assets/icon2.png'),
-                              width: MediaQuery.of(context).size.width / 10,
-                            ),
+                            RawMaterialButton(
+                              onPressed: () {
+
+                                Navigator.of(context)
+                                    .pushNamed(MyGlobals.MENU_PATHS[1]);
+
+                              },
+                              elevation: 2.0,
+                              fillColor: MyGlobals.backgroundColor,
+                              child: Container(
+                                child: Image.asset('assets/icon2.png'),
+                                width: MediaQuery.of(context).size.width / 10,
+                              ),
+                              padding: EdgeInsets.all(15.0),
+                              shape: CircleBorder(),
+                            )
+                            ,
+
+                            SizedBox(height: MediaQuery.of(context).size.height/80),
+
                             AutoSizeText(
                               MyGlobals.USER_ROLES[1],
                               maxFontSize: 32,
                               maxLines: 2,
                               style: TextStyle(
-                                  fontSize: 20,
+                                  fontSize: 16,
 //                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
+                                 fontWeight: FontWeight.bold
+                              ),
                             ),
+
+//                            SizedBox(height: MediaQuery.of(context).size.height/20),
+//                            AutoSizeText(
+//                              "Powered by Shraddha Media Network",
+//                              maxFontSize: 14,
+//                              maxLines: 2,
+//                              style: TextStyle(
+//                                  fontSize: 16,
+////                                  color: Colors.white,
+//                                  fontWeight: FontWeight.bold
+//                              ),
+//                            ),
+
                           ],
                         ),
-                        decoration: BoxDecoration(
-//                          color: Color.fromRGBO(0, 102, 34, 0.8),
-                          shape: BoxShape.rectangle,
-                         // shape: BoxShape.rectangle,
-                          borderRadius: new BorderRadius.circular(90.0),
-//                      image: DecorationImage(
-//                        fit: BoxFit.cover,
-//                        colorFilter: ColorFilter.mode(
-//                            Colors.black.withOpacity(0.4), BlendMode.dstATop),
-//                        image: AssetImage('assets/coordination.png'),
-//                      ),
-                        //Todo Comment below to remove shadow
-                          boxShadow: <BoxShadow>[
-                            BoxShadow(
-                              color: Colors.black12,
-                              blurRadius: 10.0,
-                              offset: Offset(0.0, 10.0),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+
                   ),
+
+//                    GestureDetector(
+//                      onTap: () => Navigator.of(context)
+//                          .pushNamed(MyGlobals.MENU_PATHS[0]),
+//                      child: Container(
+//                        height: vheight,
+//                        child: Column(
+//                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                          children: <Widget>[
+//                            Container(
+//                              child: Image.asset('assets/icon2.png'),
+//                              width: MediaQuery.of(context).size.width / 10,
+//                            ),
+//                            AutoSizeText(
+//                              MyGlobals.USER_ROLES[1],
+//                              maxFontSize: 32,
+//                              maxLines: 2,
+//                              style: TextStyle(
+//                                  fontSize: 20,
+////                                  color: Colors.white,
+//                                  fontWeight: FontWeight.bold),
+//                            ),
+//                          ],
+//                        ),
+//                        decoration: BoxDecoration(
+////                          color: Color.fromRGBO(0, 102, 34, 0.8),
+//                          shape: BoxShape.rectangle,
+//                         // shape: BoxShape.rectangle,
+//                          borderRadius: new BorderRadius.circular(90.0),
+////                      image: DecorationImage(
+////                        fit: BoxFit.cover,
+////                        colorFilter: ColorFilter.mode(
+////                            Colors.black.withOpacity(0.4), BlendMode.dstATop),
+////                        image: AssetImage('assets/coordination.png'),
+////                      ),
+//                        //Todo Comment below to remove shadow
+//                          boxShadow: <BoxShadow>[
+//                            BoxShadow(
+//                              color: Colors.black12,
+//                              blurRadius: 10.0,
+//                              offset: Offset(0.0, 10.0),
+//                            ),
+//                          ],
+//                        ),
+//                      ),
+//                    ),
+                //  ),
+
+
+
+
                 ],
               ),
             ),
@@ -175,22 +278,22 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
 //                      '/leadcapturesearch'); // to connect screen
 //                }),
           ],
-          backgroundColor: Color.fromRGBO(0, 102, 34, 0.8),
+          backgroundColor: MyGlobals.backgroundColor,
           title: new Text(pageName,
               style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
+                  color: Colors.black87,
+                  fontSize: 18,
                   fontWeight: FontWeight.bold)),
         ),
         body: Container(
           decoration: BoxDecoration(
-            color: Colors.white,
-            image: DecorationImage(
-              colorFilter: ColorFilter.mode(
-                  Colors.lightGreenAccent.withOpacity(0.20), BlendMode.dstATop),
-              image: new AssetImage('assets/background_a.jpg'),
-              fit: BoxFit.cover,
-            ),
+            color: MyGlobals.backgroundColor2
+//            image: DecorationImage(
+//              colorFilter: ColorFilter.mode(
+//                  Colors.lightGreenAccent.withOpacity(0.20), BlendMode.dstATop),
+//              image: new AssetImage('assets/background_a.jpg'),
+//              fit: BoxFit.cover,
+//            ),
           ),
           child: SafeArea(
 //            minimum: const EdgeInsets.all(8.0),

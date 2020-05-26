@@ -5,6 +5,7 @@ import 'package:goviwiruvo_app/customwidget/multiselectdialog.dart';
 import 'package:goviwiruvo_app/dto/userdto.dart';
 import 'package:goviwiruvo_app/dto/vegetablerequestdto.dart';
 import 'package:goviwiruvo_app/model/VegetableModel.dart';
+import 'package:goviwiruvo_app/myglobals.dart';
 import 'package:goviwiruvo_app/services/vegetableservice.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -70,7 +71,7 @@ class _LeadFarmerCaptureScreenState extends State<LeadFarmerCaptureScreen> {
   }
 
   address(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(top: 8.0),
+        padding: const EdgeInsets.only(top: 8,left: 50,right: 50),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -78,30 +79,28 @@ class _LeadFarmerCaptureScreenState extends State<LeadFarmerCaptureScreen> {
                 alignment: Alignment.topLeft,
                 child: Text(
                   "ලිපිනය",
-                  style: TextStyle(fontWeight: FontWeight.bold,color:Color.fromRGBO(0, 102, 34,0.8)),
+                  style: TextStyle(fontWeight: FontWeight.bold,color:Colors.black87),
                   textAlign: TextAlign.left,
                 )),
             Container(
               child: Row(
                 children: <Widget>[
-//                  Icon(Icons.chat_bubble),
-//                  Padding(
-//                    padding: EdgeInsets.only(left: 8, right: 8),
-//                  ),
+                  Icon(Icons.home),
+
                   Expanded(
                     child: TextFormField(
 
                       decoration:  new InputDecoration(
                         enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))),
+                            borderSide: BorderSide(color: Colors.black87)),
                         focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))) ,
-                        contentPadding:
-                        EdgeInsets.only(left: 15, bottom: 10, top: 20, right: 15),
+                            borderSide: BorderSide(color: Colors.black87)) ,
+//                        contentPadding:
+//                        EdgeInsets.only(left: 15, bottom: 10,  right: 15),
                       ),
                       style: new TextStyle(
-                        color: Color.fromRGBO(0, 102, 34,0.8),
-                        decorationColor: Color.fromRGBO(0, 102, 34,0.8),//Font color change
+                        color: Colors.black87,
+                        decorationColor: Colors.black87,//Font color change
                       ),
 
                       validator: (value) {
@@ -138,7 +137,7 @@ class _LeadFarmerCaptureScreenState extends State<LeadFarmerCaptureScreen> {
       );
 
   customerName(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(top: 8),
+        padding: const EdgeInsets.only(top: 8,left: 50,right: 50),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -146,30 +145,27 @@ class _LeadFarmerCaptureScreenState extends State<LeadFarmerCaptureScreen> {
                 alignment: Alignment.topLeft,
                 child: Text(
                   "නම",
-                  style: TextStyle(fontWeight: FontWeight.bold,color:Color.fromRGBO(0, 102, 34,0.8)),
+                  style: TextStyle(fontWeight: FontWeight.bold,color:Colors.black87),
                   textAlign: TextAlign.left,
                 )),
             Container(
               child: Row(
                 children: <Widget>[
-//                  Icon(Icons.person),
-//                  Padding(
-//                    padding: EdgeInsets.only(left: 8, right: 8),
-//                  ),
+                  Icon(Icons.person),
                   Expanded(
                     child: TextFormField(
 
                       decoration:  new InputDecoration(
                         enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))),
+                            borderSide: BorderSide(color: Colors.black87)),
                         focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))) ,
-                        contentPadding:
-                        EdgeInsets.only(left: 15, bottom: 10, top: 20, right: 15),
+                            borderSide: BorderSide(color: Colors.black87)) ,
+//                        contentPadding:
+//                        EdgeInsets.only(left: 15, bottom: 10,  right: 15),
                       ),
                       style: new TextStyle(
-                        color: Color.fromRGBO(0, 102, 34,0.8),
-                        decorationColor: Color.fromRGBO(0, 102, 34,0.8),//Font color change
+                        color: Colors.black87,
+                        decorationColor: Colors.black87,//Font color change
                       ),
                       validator: (value) {
                         if (value.isEmpty) {
@@ -232,7 +228,7 @@ class _LeadFarmerCaptureScreenState extends State<LeadFarmerCaptureScreen> {
 //  );
 
   contactnumberWhatsApp(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(top: 8),
+        padding: const EdgeInsets.only(top: 20,left: 50,right: 50),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -240,29 +236,26 @@ class _LeadFarmerCaptureScreenState extends State<LeadFarmerCaptureScreen> {
                 alignment: Alignment.topLeft,
                 child: Text(
                   "වට්ස්ඇප් දුරකථන අංකය",
-                  style: TextStyle(fontWeight: FontWeight.bold,color:Color.fromRGBO(0, 102, 34,0.8)),
+                  style: TextStyle(fontWeight: FontWeight.bold,color:Colors.black87),
                   textAlign: TextAlign.left,
                 )),
             Container(
               child: Row(
                 children: <Widget>[
-//                  Icon(Icons.verified_user),
-//                  Padding(
-//                    padding: EdgeInsets.only(left: 8, right: 8),
-//                  ),
+                  Icon(Icons.phone),
                   Expanded(
                     child: TextFormField(
                       decoration:  new InputDecoration(
                         enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))),
+                            borderSide: BorderSide(color: Colors.black87)),
                         focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))) ,
-                        contentPadding:
-                        EdgeInsets.only(left: 15, bottom: 10, top: 20, right: 15),
+                            borderSide: BorderSide(color: Colors.black87)) ,
+//                        contentPadding:
+//                        EdgeInsets.only(left: 15, bottom: 10,  right: 15),
                       ),
                       style: new TextStyle(
-                        color: Color.fromRGBO(0, 102, 34,0.8),
-                        decorationColor: Color.fromRGBO(0, 102, 34,0.8),//Font color change
+                        color: Colors.black87,
+                        decorationColor: Colors.black87,//Font color change
                       ),
                       validator: (value) {
 //                        if(value.isEmpty){
@@ -336,13 +329,13 @@ class _LeadFarmerCaptureScreenState extends State<LeadFarmerCaptureScreen> {
 
 
   saveLead(BuildContext context) => Padding(
-        padding: const EdgeInsets.all(0),
+        padding: const EdgeInsets.only(right: 60,left: 60),
         child: Container(
           width: double.infinity,
           height: 50,
           child: RaisedButton(
             shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
-            color: Color.fromRGBO(0, 102, 34,0.8),
+            color: Colors.white,
             onPressed: () {
                bool isValid = _validateInputs(context);
 
@@ -352,7 +345,7 @@ class _LeadFarmerCaptureScreenState extends State<LeadFarmerCaptureScreen> {
 
             },
             child: Text("ඉදිරියට",
-                style: TextStyle(color: Colors.white, fontSize: 20)),
+                style: TextStyle(color: Colors.black87, fontSize: 18,fontWeight: FontWeight.bold)),
           ),
         ),
       );
@@ -366,7 +359,8 @@ class _LeadFarmerCaptureScreenState extends State<LeadFarmerCaptureScreen> {
               child: Container(
                 child: Column(
                   children: <Widget>[
-                    SizedBox(height: 15),
+                    SizedBox(height: MediaQuery.of(context).size.height/20),
+
                     customerName(context),
                     SizedBox(height: 20),
                     address(context),
@@ -374,6 +368,9 @@ class _LeadFarmerCaptureScreenState extends State<LeadFarmerCaptureScreen> {
 //                    contactnumber(context),
                     SizedBox(height: 20),
                     contactnumberWhatsApp(context),
+
+                    SizedBox(height: MediaQuery.of(context).size.height/5),
+                    saveLead(context)
 //                    SizedBox(height: 20),
 //                    coordinationOfficerNumber(context),
                   ],
@@ -381,11 +378,11 @@ class _LeadFarmerCaptureScreenState extends State<LeadFarmerCaptureScreen> {
               ),
             ),
           ),
-          Column(
-            children: [
-              saveLead(context),
-            ],
-          ),
+//          Column(
+//            children: [
+//             // saveLead(context),
+//            ],
+//          ),
         ],
       ),
     );
@@ -477,12 +474,12 @@ class _LeadFarmerCaptureScreenState extends State<LeadFarmerCaptureScreen> {
 //                }),
         ],
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white),
+          icon: Icon(Icons.arrow_back),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        backgroundColor: Color.fromRGBO(0, 102, 34,0.8),
+        backgroundColor: MyGlobals.backgroundColor,
         title: new Text(pageName,
-            style: TextStyle(color:Colors.white,fontSize: 20, fontWeight: FontWeight.bold)),
+            style: TextStyle(color:Colors.black87,fontSize: 18, fontWeight: FontWeight.bold)),
       ),
 //      floatingActionButton: FloatingActionButton(
 //        onPressed: () {
@@ -495,14 +492,14 @@ class _LeadFarmerCaptureScreenState extends State<LeadFarmerCaptureScreen> {
       body:
           Container(
                     decoration: BoxDecoration(
-                    color: Colors.white,
-                    image: DecorationImage(
-                    colorFilter:
-                    ColorFilter.mode(Colors.lightGreenAccent.withOpacity(0.20),
-                    BlendMode.dstATop),
-                    image: new AssetImage('assets/background_a.jpg'),
-                    fit: BoxFit.cover,
-                    ),
+                    color: MyGlobals.backgroundColor2,
+//                    image: DecorationImage(
+//                    colorFilter:
+//                    ColorFilter.mode(Colors.lightGreenAccent.withOpacity(0.20),
+//                    BlendMode.dstATop),
+//                    image: new AssetImage('assets/background_a.jpg'),
+//                    fit: BoxFit.cover,
+//                    ),
                     ),
 
                     child:
@@ -590,7 +587,7 @@ class _LeadFarmerCaptureScreenState extends State<LeadFarmerCaptureScreen> {
                   ),
                   onPressed: ()  {
                     Navigator.pop(context);
-                    Navigator.of(context).pushNamed('/loadfarmers');
+                    Navigator.of(context).pushNamed('/cart');
 
                   },
                   width: 120,

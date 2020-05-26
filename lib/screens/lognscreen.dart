@@ -6,6 +6,7 @@ import 'package:goviwiruvo_app/customwidget/multiselectdialog.dart';
 import 'package:goviwiruvo_app/dto/vegetablerequestdto.dart';
 import 'package:goviwiruvo_app/external/webservices.dart';
 import 'package:goviwiruvo_app/model/VegetableModel.dart';
+import 'package:goviwiruvo_app/myglobals.dart';
 import 'package:goviwiruvo_app/service/authservice.dart';
 import 'package:goviwiruvo_app/services/vegetableservice.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -90,24 +91,17 @@ class _LoginScreenState extends State<LoginScreen> {
     child: Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        Align(
-            alignment: Alignment.center,
-            child: Text(
-              "ඔබගේ දුරකථන අංකය ඇතුලත් කර පිවිසෙන්න",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                  color:Color.fromRGBO(0, 52, 34,0.8)
-              ),
-              textAlign: TextAlign.center,
-            )),
-        SizedBox(height: 150),
+        Container(
+          child: Image.asset('assets/trs_logo.png'),
+          width: MediaQuery.of(context).size.width / 2,
+        ),
+        SizedBox(height: 50),
         Align(
             alignment: Alignment.center,
             child: Text(
               "දුරකථන අංකය",
               style: TextStyle(
-                  fontSize: 22,
-                  color:Color.fromRGBO(0, 52, 34,0.8)
+                  color:Colors.black87,fontSize: 18,fontWeight: FontWeight.bold
               ),
               textAlign: TextAlign.center,
             )),
@@ -124,16 +118,16 @@ class _LoginScreenState extends State<LoginScreen> {
 //                    )
 //                    ,
                     enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))),
+                        borderSide: BorderSide(color: Colors.black87)),
                     focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))) ,
+                        borderSide: BorderSide(color: Colors.black87)) ,
               contentPadding:
               EdgeInsets.only(left: 15, bottom: 10, top: 20, right: 15),
               ),
 
                   style: new TextStyle(
-                      color: Color.fromRGBO(0, 102, 34,0.8),
-                      decorationColor: Color.fromRGBO(0, 102, 34,0.8),//Font color change
+                      color: Colors.black87,
+                      decorationColor: Colors.black87,//Font color change
                    ),
                   validator: (value) {
                     if (value.isEmpty) {
@@ -154,6 +148,16 @@ class _LoginScreenState extends State<LoginScreen> {
             ],
           ),
         ),
+        Align(
+            alignment: Alignment.center,
+            child: Text(
+              "ඔබගේ දුරකථන අංකය ඇතුලත් කර පිවිසෙන්න",
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color:Colors.black87
+              ),
+              textAlign: TextAlign.center,
+            )),
       ],
     ),
   );
@@ -164,22 +168,28 @@ class _LoginScreenState extends State<LoginScreen> {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Container(
-          child: Center(child: CircularProgressIndicator()),
+          child: Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Color(0xFF14753a)))),
         ),
       ],
     ),
   );
 
   verificationCode(BuildContext context) => Padding(
-    padding: EdgeInsets.only(top: 150,left: 60,right: 60),
+    padding: EdgeInsets.only(top: 20,left: 60,right: 60),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
+
+        Container(
+          child: Image.asset('assets/trs_logo.png'),
+          width: MediaQuery.of(context).size.width / 2,
+        ),
+        SizedBox(height: 50),
         Align(
             alignment: Alignment.center,
             child: Text(
               "තහවුරු කිරීමේ කේතය",
-              style: TextStyle(color:Color.fromRGBO(0, 102, 34,0.8),fontSize: 18),
+              style: TextStyle(color:Colors.black87,fontSize: 18,fontWeight: FontWeight.bold),
               textAlign: TextAlign.left,
             )),
         Container(
@@ -189,15 +199,15 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: TextFormField(
               decoration:  new InputDecoration(
                               enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))),
+                              borderSide: BorderSide(color: Colors.black87)),
                               focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))) ,
+                                  borderSide: BorderSide(color: Colors.black87)) ,
                               contentPadding:
-                              EdgeInsets.only(left: 15, bottom: 10, top: 20, right: 15),
+                              EdgeInsets.only(left: 15, bottom: 10, top: 10, right: 15),
                       ),
                   style: new TextStyle(
-                    color: Color.fromRGBO(0, 102, 34,0.8),
-                    decorationColor: Color.fromRGBO(0, 102, 34,0.8),//Font color change
+                    color: Colors.black87,
+                    decorationColor: Colors.black87,//Font color change
                   ),
                   validator: (value) {
                     if (value.isEmpty) {
@@ -218,6 +228,16 @@ class _LoginScreenState extends State<LoginScreen> {
             ],
           ),
         ),
+        Align(
+            alignment: Alignment.center,
+            child: Text(
+              "ඔබගේ දුරකථන අංකය ඇතුලත් කර පිවිසෙන්න",
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color:Colors.black87
+              ),
+              textAlign: TextAlign.center,
+            )),
       ],
     ),
   );
@@ -231,7 +251,7 @@ class _LoginScreenState extends State<LoginScreen> {
       child: RaisedButton(
         shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
 
-        color: Color.fromRGBO(0, 102, 34,0.8),
+        color: Colors.white,
         onPressed: () async {
           _validateInputs(context);
 
@@ -240,7 +260,7 @@ class _LoginScreenState extends State<LoginScreen> {
 //              Navigator.of(context).pushNamed('/cart'); // to connect screen
         },
         child: Text("ඉදිරියට",
-            style: TextStyle(color: Colors.white, fontSize: 20,fontWeight: FontWeight.bold)),
+            style: TextStyle(color: Colors.black87, fontSize: 20,fontWeight: FontWeight.bold)),
       ),
     ),
   );
@@ -253,7 +273,7 @@ class _LoginScreenState extends State<LoginScreen> {
       child:
              RaisedButton(
                     shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
-                    color: Color.fromRGBO(0, 102, 34,0.8),
+                    color: Colors.white,
                     onPressed: () async {
                       print('verificationCode continue pressed ${verificationCodeController.text}  --- ${verificationId} ');
 
@@ -312,7 +332,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
         },
         child: Text("පිවිසෙන්න",
-            style: TextStyle(color: Colors.white, fontSize: 20,fontWeight: FontWeight.bold)),
+            style: TextStyle(color: Colors.black87, fontSize: 18,fontWeight: FontWeight.bold)),
       ),
     ),
   );
@@ -436,14 +456,14 @@ class _LoginScreenState extends State<LoginScreen> {
       body:
       Container(
         decoration: BoxDecoration(
-          color: Colors.white,
-          image: DecorationImage(
-            colorFilter:
-            ColorFilter.mode(Colors.lightGreenAccent.withOpacity(0.20),
-                BlendMode.dstATop),
-            image: new AssetImage('assets/background_a.jpg'),
-            fit: BoxFit.cover,
-          ),
+          color: MyGlobals.backgroundColor2,
+//          image: DecorationImage(
+//            colorFilter:
+//            ColorFilter.mode(Colors.lightGreenAccent.withOpacity(0.20),
+//                BlendMode.dstATop),
+//            image: new AssetImage('assets/background_a.jpg'),
+//            fit: BoxFit.cover,
+//          ),
         ),
 
         child:

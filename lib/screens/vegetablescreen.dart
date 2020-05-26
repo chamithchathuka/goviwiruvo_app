@@ -9,6 +9,7 @@ import 'package:goviwiruvo_app/dto/vegetablerequestdto.dart';
 import 'package:goviwiruvo_app/external/webservices.dart';
 import 'package:goviwiruvo_app/model/VegetablLoadModel.dart';
 import 'package:goviwiruvo_app/model/VegetableModel.dart';
+import 'package:goviwiruvo_app/myglobals.dart';
 import 'package:goviwiruvo_app/services/vegetableservice.dart';
 import 'package:intl/intl.dart';
 
@@ -90,7 +91,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                 alignment: Alignment.topLeft,
                 child: Text(
                   "බෝග වර්ගය",
-                  style: TextStyle(fontWeight: FontWeight.bold,color:Color.fromRGBO(0, 102, 34,0.8)),
+                  style: TextStyle(fontWeight: FontWeight.bold,color:Colors.black87),
                   textAlign: TextAlign.left,
                 )),
             Container(
@@ -102,15 +103,16 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                           child: DropdownButtonFormField(
                             decoration:  new InputDecoration(
                               enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))),
+                                  borderSide: BorderSide(color: MyGlobals.backgroundColor2)),
                               focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))) ,
+                                  borderSide: BorderSide(color: MyGlobals.backgroundColor2)) ,
+//                        contentPadding:
+//                        EdgeInsets.only(left: 15, bottom: 10,  right: 15),
                             ),
                             style: new TextStyle(
-                              color: Color.fromRGBO(0, 102, 34,0.8),
-                              decorationColor: Color.fromRGBO(0, 102, 34,0.8),//Font color change
+                              color: Colors.black87,
+                              decorationColor: Colors.black87,//Font color change
                             ),
-
                             value: _selectedVegetable,
                             items: _vegLoadItems,
                             onChanged: onChangeDropDownItem,
@@ -177,7 +179,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
             alignment: Alignment.topLeft,
             child: Text(
               "ඒකකයක මිල (කිලෝ 1ක් සදහා)",
-              style: TextStyle(fontWeight: FontWeight.bold,color:Color.fromRGBO(0, 102, 34,0.8)),
+              style: TextStyle(fontWeight: FontWeight.bold,color:Colors.black87),
               textAlign: TextAlign.left,
             )),
         Container(
@@ -192,17 +194,16 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
 
                   decoration:  new InputDecoration(
                     enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))),
+                        borderSide: BorderSide(color: Colors.black87)),
                     focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))) ,
-                    contentPadding:
-                    EdgeInsets.only(left: 15, bottom: 10, top: 20, right: 15),
+                        borderSide: BorderSide(color: Colors.black87)) ,
+//                        contentPadding:
+//                        EdgeInsets.only(left: 15, bottom: 10,  right: 15),
                   ),
                   style: new TextStyle(
-                    color: Color.fromRGBO(0, 102, 34,0.8),
-                    decorationColor: Color.fromRGBO(0, 102, 34,0.8),//Font color change
+                    color: Colors.black87,
+                    decorationColor: Colors.black87,//Font color change
                   ),
-                  
                   inputFormatters: [
                     WhitelistingTextInputFormatter.digitsOnly
                   ],
@@ -239,7 +240,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
             alignment: Alignment.topLeft,
             child: Text(
               "බර කිලෝග්‍රෑම්",
-              style: TextStyle(fontWeight: FontWeight.bold,color:Color.fromRGBO(0, 102, 34,0.8)),
+              style: TextStyle(fontWeight: FontWeight.bold,color:Colors.black87),
               textAlign: TextAlign.left,
             )),
         Container(
@@ -253,13 +254,15 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                 child: TextFormField(
                   decoration:  new InputDecoration(
                     enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))),
+                        borderSide: BorderSide(color: Colors.black87)),
                     focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))) ,
+                        borderSide: BorderSide(color: Colors.black87)) ,
+//                        contentPadding:
+//                        EdgeInsets.only(left: 15, bottom: 10,  right: 15),
                   ),
                   style: new TextStyle(
-                    color: Color.fromRGBO(0, 102, 34,0.8),
-                    decorationColor: Color.fromRGBO(0, 102, 34,0.8),//Font color change
+                    color: Colors.black87,
+                    decorationColor: Colors.black87,//Font color change
                   ),
                   onSaved: (val) =>
                       setState(() => veggi.quantity = int.parse(val)),
@@ -297,15 +300,15 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
             alignment: Alignment.topLeft,
             child: Text(
               "අස්වනු නෙලාගත් දිනය",
-              style: TextStyle(fontWeight: FontWeight.bold,color:Color.fromRGBO(0, 102, 34,0.8)),
+              style: TextStyle(fontWeight: FontWeight.bold,color:Colors.black87),
               textAlign: TextAlign.left,
             )),
         Container(
           child:
           FlatButton(
             child: Text('$selectedDate'),
-            color: Colors.amberAccent,
-            textColor: Colors.black,
+            color: MyGlobals.backgroundColor,
+            textColor: Colors.black87,
             onPressed: () {
            //   print('meek meek');
 
@@ -377,7 +380,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                 alignment: Alignment.topLeft,
                 child: Text(
                   "තත්වය",
-                  style: TextStyle(fontWeight: FontWeight.bold,color:Color.fromRGBO(0, 102, 34,0.8)),
+                  style: TextStyle(fontWeight: FontWeight.bold,color:Colors.black87),
                   textAlign: TextAlign.left,
                 )),
             Container(
@@ -392,13 +395,13 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
 
                       decoration:  new InputDecoration(
                         enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))),
+                            borderSide: BorderSide(color: MyGlobals.backgroundColor2)),
                         focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))) ,
+                            borderSide: BorderSide(color: MyGlobals.backgroundColor2)) ,
                       ),
                       style: new TextStyle(
-                        color: Color.fromRGBO(0, 102, 34,0.8),
-                        decorationColor: Color.fromRGBO(0, 102, 34,0.8),//Font color change
+                        color: Colors.black87,
+                        decorationColor: Colors.black87,//Font color change
                       ),
 
                       validator: (value) {
@@ -445,7 +448,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
             alignment: Alignment.topLeft,
             child: Text(
               "නොමිලේ දෙන ප්‍රමාණය (කිලෝ)",
-              style: TextStyle(fontWeight: FontWeight.bold,color:Color.fromRGBO(0, 102, 34,0.8)),
+              style: TextStyle(fontWeight: FontWeight.bold,color:Colors.black87),
               textAlign: TextAlign.left,
             )),
         Container(
@@ -459,13 +462,15 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                 child: TextFormField(
                   decoration:  new InputDecoration(
                     enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))),
+                        borderSide: BorderSide(color: Colors.black87)),
                     focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Color.fromRGBO(0, 102, 34,0.8))) ,
+                        borderSide: BorderSide(color: Colors.black87)) ,
+//                        contentPadding:
+//                        EdgeInsets.only(left: 15, bottom: 10,  right: 15),
                   ),
                   style: new TextStyle(
-                    color: Color.fromRGBO(0, 102, 34,0.8),
-                    decorationColor: Color.fromRGBO(0, 102, 34,0.8),//Font color change
+                    color: Colors.black87,
+                    decorationColor: Colors.black87,//Font color change
                   ),
                   inputFormatters: [
                     WhitelistingTextInputFormatter.digitsOnly
@@ -607,13 +612,13 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
 
 
   saveLead(BuildContext context) => Padding(
-        padding: const EdgeInsets.all(0),
+        padding: const EdgeInsets.only(right: 60,left: 60),
         child: Container(
           width: double.infinity,
           height: 50,
           child: RaisedButton(
             shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
-            color: Color.fromRGBO(0, 102, 34,0.8),
+            color: Colors.white,
 //            shape:
 //                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             onPressed: () {
@@ -633,7 +638,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
 //          Provider.of<VegetableModel>(context).addVegToList(veggiesList[rng.nextInt(3)]);
             },
             child: Text("එකතුකරන්න",
-                style: TextStyle(color: Colors.white, fontSize: 20)),
+                style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold,  fontSize: 18)),
           ),
         ),
       );
@@ -752,24 +757,24 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
 //              }),
 //        ],
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white),
+          icon: Icon(Icons.arrow_back, color: Colors.black87),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        backgroundColor: Color.fromRGBO(0, 102, 34,0.8),
-        title: new Text(pageName, style: TextStyle(color:Colors.white,fontSize: 20, fontWeight: FontWeight.bold)),
+        backgroundColor: MyGlobals.backgroundColor,
+        title: new Text(pageName, style: TextStyle(color:Colors.black87,fontSize: 18, fontWeight: FontWeight.bold)),
 
       ),
       body:
       Container(
               decoration: BoxDecoration(
-              color: Colors.white,
-              image: DecorationImage(
-              colorFilter:
-              ColorFilter.mode(Colors.lightGreenAccent.withOpacity(0.20),
-              BlendMode.dstATop),
-              image: new AssetImage('assets/background_a.jpg'),
-              fit: BoxFit.cover,
-              ),
+              color: MyGlobals.backgroundColor2,
+//              image: DecorationImage(
+//              colorFilter:
+//              ColorFilter.mode(Colors.lightGreenAccent.withOpacity(0.20),
+//              BlendMode.dstATop),
+//              image: new AssetImage('assets/background_a.jpg'),
+//              fit: BoxFit.cover,
+//              ),
               ),
          child: SafeArea(
             minimum: const EdgeInsets.all(8.0),

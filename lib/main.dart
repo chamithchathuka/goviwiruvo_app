@@ -24,7 +24,7 @@ void main() async{
    if (checkAccessTokenBool) {
      //Todo change this to a common screen or recheck weather the user is a farmer or a coordinator
    int user =       await getUserRole();
-      if(user==0){
+      if(user==1){
         SingleChildScrollView(child: _defaultHome = CartScreen());
       }else{
         SingleChildScrollView(child: _defaultHome = LoadFarmerScreen());
@@ -55,20 +55,28 @@ void main() async{
     home:
     SplashScreen(
         seconds: 3,
+        loadingText: new Text(
+          'Powered by Shraddha Media Network',
+          style: TextStyle(fontWeight: FontWeight.bold,color:Colors.black87),
+          textAlign: TextAlign.center,
+        ) ,
         navigateAfterSeconds:_defaultHome,
         title: new Text(
-          '\n\n\n\n\n\n\n\n\n\n\n\nලක්පොළොවෙන් උපන් සාරය ලක් දූ පුතුන් පෝෂණය නොකොට \n නිකරුනේ දිරායෑමට ඉඩ නොතබමු',
+          '\n\n\nලක්පොළොවෙන් උපන් සාරය ලක් දූ පුතුන් පෝෂණය නොකොට \n නිකරුනේ දිරායෑමට ඉඩ නොතබමු',
           style: TextStyle(fontWeight: FontWeight.bold,color:Colors.grey,fontStyle: FontStyle.italic),
           textAlign: TextAlign.center,
         ),
-        image: new Image.asset('assets/pnglogo.png'),
-        backgroundColor: Colors.white,
+        image: new Image.asset('assets/trs_logo.png',
+//          height: MediaQuery.of(context).size.width / 2.5,
+//          width: MediaQuery.of(context).size.width / 2.5,
+        ),
+        backgroundColor: MyGlobals.backgroundColor2,
         styleTextUnderTheLoader: new TextStyle(
             color: Colors.grey,
             fontStyle: FontStyle.italic
         ),
         photoSize: 100.0,
-        loaderColor: Color.fromRGBO(0, 102, 34,0.8)
+        loaderColor: MyGlobals.backgroundColor
     ),
   ));
 }

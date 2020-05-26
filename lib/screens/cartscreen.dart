@@ -10,6 +10,7 @@ import 'package:goviwiruvo_app/dto/vegetablerequestdto.dart';
 import 'package:goviwiruvo_app/external/webservices.dart';
 import 'package:goviwiruvo_app/model/VegetablLoadModel.dart';
 import 'package:goviwiruvo_app/model/VegetableModel.dart';
+import 'package:goviwiruvo_app/myglobals.dart';
 import 'package:goviwiruvo_app/services/vegetableservice.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
@@ -97,37 +98,37 @@ class _CartScreenState extends State<CartScreen> {
       AutoSizeText(
         'බෝග වර්ගය',
         textAlign: TextAlign.center,
-        style: TextStyle(fontWeight: FontWeight.bold,color:Color.fromRGBO(0, 102, 34,0.8)),
+        style: TextStyle(fontWeight: FontWeight.bold,color:Colors.black87),
         maxLines: 2,
       ),
       AutoSizeText(
         'බර kg',
         textAlign: TextAlign.center,
-        style: TextStyle(fontWeight: FontWeight.bold,color:Color.fromRGBO(0, 102, 34,0.8)),
+        style: TextStyle(fontWeight: FontWeight.bold,color:Colors.black87),
         maxLines: 2,
       ),
       AutoSizeText(
         'නොමිලේ ප්‍රමාණය kg',
         textAlign: TextAlign.center,
-        style: TextStyle(fontWeight: FontWeight.bold,color:Color.fromRGBO(0, 102, 34,0.8)),
+        style: TextStyle(fontWeight: FontWeight.bold,color:Colors.black87),
         maxLines: 2,
       ),
       AutoSizeText(
         'ඒ්කකයක මිල',
         textAlign: TextAlign.center,
-        style: TextStyle(fontWeight: FontWeight.bold,color:Color.fromRGBO(0, 102, 34,0.8)),
+        style: TextStyle(fontWeight: FontWeight.bold,color:Colors.black87),
         maxLines: 2,
       ),
       AutoSizeText(
           'මුළු මුදල',
         textAlign: TextAlign.center,
-        style: TextStyle(fontWeight: FontWeight.bold,color:Color.fromRGBO(0, 102, 34,0.8)),
+        style: TextStyle(fontWeight: FontWeight.bold,color:Colors.black87),
         maxLines: 2,
       ),
       AutoSizeText(
         'දිනය',
         textAlign: TextAlign.center,
-        style: TextStyle(fontWeight: FontWeight.bold,color:Color.fromRGBO(0, 102, 34,0.8)),
+        style: TextStyle(fontWeight: FontWeight.bold,color:Colors.black87),
         maxLines: 2,
       ),
       AutoSizeText(
@@ -211,7 +212,7 @@ class _CartScreenState extends State<CartScreen> {
       GestureDetector(
         child: new IconTheme(
           data: new IconThemeData(
-              color: Colors.redAccent),
+              color: MyGlobals.backgroundColor),
           child: new Icon(Icons.add_circle,size:48),
         ),
         onTap: () {
@@ -337,13 +338,13 @@ class _CartScreenState extends State<CartScreen> {
 
 
   submitRequestButton(BuildContext context) => Padding(
-    padding: const EdgeInsets.all(0),
+    padding: const EdgeInsets.only(right: 60,left: 60),
     child: Container(
       width: double.infinity,
       height: 50,
       child: RaisedButton(
         shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
-        color: Color.fromRGBO(0, 102, 34,0.8),
+        color: Colors.white,
         onPressed: () async {
           if(vegservice.getVegstobeSaved().length>0){
 
@@ -428,8 +429,10 @@ class _CartScreenState extends State<CartScreen> {
 
 
         },
-        child: Text("පුරවන්න",
-            style: TextStyle(color: Colors.white, fontSize: 20)),
+        child: Text(
+            "පුරවන්න",
+            style: TextStyle(color: Colors.black87, fontSize: 18,fontWeight: FontWeight.bold)
+        ),
       ),
     ),
   );
@@ -722,12 +725,12 @@ class _CartScreenState extends State<CartScreen> {
 //              }),
 //        ],
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white),
+          icon: Icon(Icons.arrow_back, color: Colors.black87),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        backgroundColor: Color.fromRGBO(0, 102, 34,0.8),
+        backgroundColor: MyGlobals.backgroundColor,
         title: new Text(pageName,
-            style: TextStyle(color:Colors.white,fontSize: 20, fontWeight: FontWeight.bold)),
+            style: TextStyle(color:Colors.black87,fontSize: 18, fontWeight: FontWeight.bold)),
       ),
 //      floatingActionButton: FloatingActionButton(
 //        onPressed: () {
@@ -739,7 +742,20 @@ class _CartScreenState extends State<CartScreen> {
 //        child: Icon(Icons.add_shopping_cart),
 //        backgroundColor: Colors.redAccent,
 //      ),
-      body: SafeArea(
+      body:
+    Container(
+    decoration: BoxDecoration(
+    color: MyGlobals.backgroundColor2,
+//    image: DecorationImage(
+//    colorFilter:
+//    ColorFilter.mode(Colors.lightGreenAccent.withOpacity(0.20),
+//    BlendMode.dstATop),
+//    image:  new AssetImage('assets/background_a.jpg'),
+//    fit: BoxFit.cover,
+//    ),
+    ),
+      child:
+      SafeArea(
         minimum: const EdgeInsets.all(8.0),
         child: OrientationBuilder(builder: (context, orientation) {
           return orientation == Orientation.portrait
@@ -760,6 +776,7 @@ class _CartScreenState extends State<CartScreen> {
                 });
         }),
       ),
+    ),
     );
   }
 
