@@ -5,6 +5,7 @@ import 'package:goviwiruvo_app/customwidget/multiselectdialog.dart';
 import 'package:goviwiruvo_app/dto/userdto.dart';
 import 'package:goviwiruvo_app/dto/vegetablerequestdto.dart';
 import 'package:goviwiruvo_app/model/VegetableModel.dart';
+import 'package:goviwiruvo_app/myglobals.dart';
 import 'package:goviwiruvo_app/services/vegetableservice.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -63,7 +64,7 @@ class _LeadCoordinatorState extends State<LeadCoordinator> {
 
   String contactNumber = '';
 
-  final pageName = "සම්බන්දිකරණ නිළදාරීමහතාගේ තොරතුරු";
+  final pageName = "සම්බන්දිකරණමහතාගේ තොරතුරු";
 
   @override
   void initState() {
@@ -268,26 +269,38 @@ class _LeadCoordinatorState extends State<LeadCoordinator> {
   }
 
   address(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(top: 8.0),
-        child: Column(
+    padding: const EdgeInsets.only(top: 20,left: 50,right: 50),
+    child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Align(
                 alignment: Alignment.topLeft,
                 child: Text(
                   "ලිපිනය",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(fontWeight: FontWeight.bold,color:Colors.black87),
                   textAlign: TextAlign.left,
                 )),
             Container(
               child: Row(
                 children: <Widget>[
-//                  Icon(Icons.chat_bubble),
+                  Icon(Icons.chat_bubble),
 //                  Padding(
 //                    padding: EdgeInsets.only(left: 8, right: 8),
 //                  ),
                   Expanded(
                     child: TextFormField(
+                      decoration:  new InputDecoration(
+                        enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black87)),
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black87)) ,
+//                        contentPadding:
+//                        EdgeInsets.only(left: 15, bottom: 10,  right: 15),
+                      ),
+                      style: new TextStyle(
+                        color: Colors.black87,
+                        decorationColor: Colors.black87,//Font color change
+                      ),
                       validator: (value) {
                         if (value.isEmpty) {
                           return ('ලිපිනය ඇතුලත්කරන්න');
@@ -308,7 +321,7 @@ class _LeadCoordinatorState extends State<LeadCoordinator> {
       );
 
   customerName(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(top: 8),
+        padding: const EdgeInsets.only(top: 20,left: 50,right: 50),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -316,18 +329,30 @@ class _LeadCoordinatorState extends State<LeadCoordinator> {
                 alignment: Alignment.topLeft,
                 child: Text(
                   "නම",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(fontWeight: FontWeight.bold,color:Colors.black87),
                   textAlign: TextAlign.left,
                 )),
             Container(
               child: Row(
                 children: <Widget>[
-//                  Icon(Icons.person),
+                 Icon(Icons.person),
 //                  Padding(
 //                    padding: EdgeInsets.only(left: 8, right: 8),
 //                  ),
                   Expanded(
                     child: TextFormField(
+                      decoration:  new InputDecoration(
+                        enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black87)),
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black87)) ,
+//                        contentPadding:
+//                        EdgeInsets.only(left: 15, bottom: 10,  right: 15),
+                      ),
+                      style: new TextStyle(
+                        color: Colors.black87,
+                        decorationColor: Colors.black87,//Font color change
+                      ),
                       validator: (value) {
                         if (value.isEmpty) {
                           return ('නම ඇතුලත්කරන්න');
@@ -346,7 +371,7 @@ class _LeadCoordinatorState extends State<LeadCoordinator> {
 
 
   contactnumberWhatsApp(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(top: 8),
+        padding: const EdgeInsets.only(top: 20,left: 50,right: 50),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -354,7 +379,7 @@ class _LeadCoordinatorState extends State<LeadCoordinator> {
                 alignment: Alignment.topLeft,
                 child: Text(
                   "වට්ස්ඇප් දුරකථන අංකය",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(fontWeight: FontWeight.bold,color:Colors.black87),
                   textAlign: TextAlign.left,
                 )),
             Container(
@@ -364,8 +389,21 @@ class _LeadCoordinatorState extends State<LeadCoordinator> {
 //                  Padding(
 //                    padding: EdgeInsets.only(left: 8, right: 8),
 //                  ),
+                  Icon(Icons.phone),
                   Expanded(
                     child: TextFormField(
+                      decoration:  new InputDecoration(
+                        enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black87)),
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black87)) ,
+//                        contentPadding:
+//                        EdgeInsets.only(left: 15, bottom: 10,  right: 15),
+                      ),
+                      style: new TextStyle(
+                        color: Colors.black87,
+                        decorationColor: Colors.black87,//Font color change
+                      ),
                       validator: (value) {
 //                        if(value.isEmpty){
 //                          return ('දුරකථන අංකය වැරදයි');
@@ -393,13 +431,13 @@ class _LeadCoordinatorState extends State<LeadCoordinator> {
 
 
   saveLead(BuildContext context) => Padding(
-        padding: const EdgeInsets.all(0),
+        padding: const EdgeInsets.only(right: 60,left: 60),
         child: Container(
           width: double.infinity,
           height: 50,
           child: RaisedButton(
             shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
-            color: Color.fromRGBO(0, 102, 34,0.8),
+            color: Colors.white,
             onPressed: () {
               bool isValid = _validateInputs(context);
 
@@ -409,7 +447,7 @@ class _LeadCoordinatorState extends State<LeadCoordinator> {
 
             },
             child: Text("ඉදිරියට",
-                style: TextStyle(color: Colors.white, fontSize: 20)),
+                style: TextStyle(color: Colors.black87, fontSize: 18,fontWeight: FontWeight.bold)),
           ),
         ),
       );
@@ -528,21 +566,22 @@ class _LeadCoordinatorState extends State<LeadCoordinator> {
         actions: <Widget>[
 
         ],
-        backgroundColor: Color.fromRGBO(0, 102, 34,0.8),
+        backgroundColor: MyGlobals.backgroundColor,
         title: new Text(pageName,
-            style: TextStyle(color:Colors.white,fontSize: 20, fontWeight: FontWeight.bold)),
+            style: TextStyle(color:Colors.black87,fontSize: 18, fontWeight: FontWeight.bold)),
       ),
       body:
           Container(
                     decoration: BoxDecoration(
-                    color: Colors.white,
-                    image: DecorationImage(
-                    colorFilter:
-                    ColorFilter.mode(Colors.lightGreenAccent.withOpacity(0.20),
-                    BlendMode.dstATop),
-                    image: new AssetImage('assets/background_a.jpg'),
-                    fit: BoxFit.cover,
-                    ),
+                      color: MyGlobals.backgroundColor2,
+//                    color: Colors.white,
+//                    image: DecorationImage(
+//                    colorFilter:
+//                    ColorFilter.mode(Colors.lightGreenAccent.withOpacity(0.20),
+//                    BlendMode.dstATop),
+//                    image: new AssetImage('assets/background_a.jpg'),
+//                    fit: BoxFit.cover,
+//                    ),
                     ),
 
                     child:
