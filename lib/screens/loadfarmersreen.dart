@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:goviwiruvo_app/screens/cartscreen_farmer.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
@@ -64,62 +65,86 @@ class _LoadFarmerScreenState extends State<LoadFarmerScreen> {
                   return ListView.builder(
                       itemCount: snapshot.data.farmers.length,
                       itemBuilder: (BuildContext ctxt, int Index) {
-                        return
-                          Column(
-                              children: <Widget>[
-                              SizedBox(height: MediaQuery.of(context).size.height/80),
-                              Row(
-                                children: <Widget>[
-                                  Container(
-                                      height: MediaQuery.of(context).size.height / 20,
-                                    width: MediaQuery.of(context).size.width -20,
-                                      color: MyGlobals.backgroundColor2,
-                                      child:  Container(
-                                          decoration:  BoxDecoration(
-                                              color: Colors.white54,
-                                              borderRadius:  BorderRadius.only(
-                                                topLeft: const Radius.circular(10.0),
-                                                topRight: const Radius.circular(10.0),
-                                                bottomLeft: const Radius.circular(10.0),
-                                                bottomRight: const Radius.circular(10.0),
-                                              )),
-                                          child:  Align(
-                                            alignment: Alignment.centerLeft,
-                                            child:
-                                            new RichText(
-                                              text: new TextSpan(
-                                                // Note: Styles for TextSpans must be explicitly defined.
-                                                // Child text spans will inherit styles from parent
-                                                style: new TextStyle(
-                                                  fontSize: 18,
-                                                  color: Colors.black87,
-                                                ),
-                                                children: <TextSpan>[
-                                                  new TextSpan(text: '        '),
-                                                  new TextSpan(text: (Index+1).toString()),
-                                                  new TextSpan(text: '.', style: new TextStyle(fontWeight: FontWeight.bold)),
-                                                  new TextSpan(text: '  '),
-                                                  new TextSpan(text:snapshot.data.farmers[Index].name, style: new TextStyle(fontWeight: FontWeight.bold)),
-                                                  new TextSpan(text: '  - '),
-                                                  new TextSpan(text:snapshot.data.farmers[Index].phoneNo, style: new TextStyle(fontWeight: FontWeight.bold)),
-                                                ],
-                                              ),
-                                            ),
-      //                                      Text(
-      //                                          "     "+(Index+1).toString() + ".     " +  snapshot.data.farmers[Index].name,
-      //                                          style: TextStyle(
-      //                                          color: Colors.black87,
-      //                                          fontSize: 18,
-      //                                          fontWeight: FontWeight.bold)
-      //                                      ),
+                        return Column(children: <Widget>[
+                          SizedBox(
+                              height: MediaQuery.of(context).size.height / 80),
+                          Row(
+                            children: <Widget>[
+                              Container(
+                                height: MediaQuery.of(context).size.height / 20,
+                                width: MediaQuery.of(context).size.width - 20,
+                                color: MyGlobals.backgroundColor2,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    print(
+                                        '${snapshot.data.farmers[Index].name}');
+                                    Farmers farmer = snapshot.data.farmers[Index] ;
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                CartScreenFarmer(farmerDTO: farmer,)));
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: Colors.white54,
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: const Radius.circular(10.0),
+                                          topRight: const Radius.circular(10.0),
+                                          bottomLeft:
+                                              const Radius.circular(10.0),
+                                          bottomRight:
+                                              const Radius.circular(10.0),
+                                        )),
+                                    child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: new RichText(
+                                        text: new TextSpan(
+                                          // Note: Styles for TextSpans must be explicitly defined.
+                                          // Child text spans will inherit styles from parent
+                                          style: new TextStyle(
+                                            fontSize: 18,
+                                            color: Colors.black87,
                                           ),
+                                          children: <TextSpan>[
+                                            new TextSpan(text: '        '),
+                                            new TextSpan(
+                                                text: (Index + 1).toString()),
+                                            new TextSpan(
+                                                text: '.',
+                                                style: new TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                            new TextSpan(text: '  '),
+                                            new TextSpan(
+                                                text: snapshot
+                                                    .data.farmers[Index].name,
+                                                style: new TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                            new TextSpan(text: '  - '),
+                                            new TextSpan(
+                                                text: snapshot.data
+                                                    .farmers[Index].phoneNo,
+                                                style: new TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                          ],
+                                        ),
                                       ),
-                                  )
-
-                                ],
+                                      //                                      Text(
+                                      //                                          "     "+(Index+1).toString() + ".     " +  snapshot.data.farmers[Index].name,
+                                      //                                          style: TextStyle(
+                                      //                                          color: Colors.black87,
+                                      //                                          fontSize: 18,
+                                      //                                          fontWeight: FontWeight.bold)
+                                      //                                      ),
+                                    ),
+                                  ),
+                                ),
                               )
-                            ]
-                          ) ;
+                            ],
+                          )
+                        ]);
                       });
                 } else {
                   return Text(

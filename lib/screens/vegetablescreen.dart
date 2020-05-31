@@ -122,45 +122,6 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                               }
                             },
 
-//                            },
-//                              items:veggiesList.map((String ){
-//                                return DropdownMenuItem<String>(
-//                                  value: val.description,
-//                                  child: new Text(val.description),
-//                                );
-//                              }).toList(),
-//                              hint:Text(_SelectdType),
-//                              onChanged:(String val){
-//                                _SelectdType= val;
-//                                setState(() {});
-//                              }
-
-//                            validator: (value) {
-//                              if (selectedVegetable .isEmpty) {
-//                                return 'බෝග වර්ගය තෝරන්න';
-//                              }
-//                            },
-//                              items: veggiesList
-//                                .map(
-//                                  (value) => DropdownMenuItem(
-//                                    child: Text('${value}'),
-//                                    value: value,
-//                                  ),
-//                                )
-//                                .toList(),
-//                            onChanged: (String value) {
-//                              setState(() {
-//                                selectedVegetable = value;
-//                                print("Selected Channel  - $value");
-//
-//
-//                              });
-//                            },
-//                            onSaved: (val) =>
-//                                setState(() { veggi.vegetableDescription = val;}),
-//                            value: selectedVegetable == ''
-//                          ? 'Selected Value'
-//                          : selectedVegetable,
                           ),
                         ),
                 ],
@@ -185,13 +146,8 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
         Container(
           child: Row(
             children: <Widget>[
-         //     Icon(Icons.monetization_on),
-//              Padding(
-//                padding: EdgeInsets.only(left: 8, right: 8),
-//              ),
               Expanded(
                 child: TextFormField(
-
                   decoration:  new InputDecoration(
                     enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.black87)),
@@ -215,10 +171,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                     if(value.isEmpty){
                       return ('මිල ඇතුලත් කරන්න');
                     }
-//                    else
-//                    if (int.parse(value) > 2000) {
-//                      return ('මිල වැරදයි');
-//                    }
+
                   },
                   textAlign: TextAlign.left,
                   keyboardType: TextInputType.number,
@@ -247,9 +200,9 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
           child: Row(
             children: <Widget>[
          //     Icon(Icons.add_shopping_cart),
-//              Padding(
-//                padding: EdgeInsets.only(left: 8, right: 8),
-//              ),
+////              Padding(
+////                padding: EdgeInsets.only(left: 8, right: 8),
+////              ),
               Expanded(
                 child: TextFormField(
                   decoration:  new InputDecoration(
@@ -272,13 +225,9 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
                   controller: weightController,
                   maxLength: 6,
                   validator: (value) {
-
                     if(value.isEmpty){
                       return ('බර ඇතුලත් කරන්න');
                     }
-//                    else if (int.parse(value) > 1000) {
-//                      return ('බර වැරදයි');
-//                    }
                   },
                   textAlign: TextAlign.left,
                   keyboardType: TextInputType.number,
@@ -336,36 +285,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
             },
           ),
 
-//          GestureDetector(
-//            onTap: (){
-//              print('tapped');
-//
-//            showDatePicker(
-//                context: context,
-//                initialDate: DateTime.now(),
-//                firstDate: DateTime(DateTime.now().year),
-//                lastDate: DateTime(DateTime.now().year))
-//                .then((date) {
-//              setState(() {
-//                print('date ${date}');
-//                if (date != null) {
-//                  var formatter = new DateFormat('dd-MM-yyyy');
-//                  String formatted = formatter.format(date);
-//                  print(formatted);
-//                  selectedDate = formatted;
-//                }
-//              });
-//            });
-//
-//            },
-//            child: Row(
-//              children: <Widget>[
-//                Expanded(
-//                  child: Text(selectedDate),
-//                ),
-//              ],
-//            ),
-//          ),
+
         ),
       ],
     ),
@@ -604,9 +524,6 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
         firstDate: DateTime.now(),
         lastDate: DateTime(2022));
     if (picked != null && picked != selectedDate) print(picked.day);
-//    setState(() {
-//      selectedDate = picked;
-//    });
   }
 
 
@@ -619,23 +536,8 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
           child: RaisedButton(
             shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
             color: Colors.white,
-//            shape:
-//                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             onPressed: () {
               _validateInputs();
-
-//              Navigator.of(context).pop(
-//              );
-//              var rng = new Random(3);
-
-//          Vegset v1 = Vegset();
-//          v1.vegetableId = rng.nextInt(3);
-//          v1.grade=2;
-//          v1.rate=3;
-//          v1.quantity=100;
-//          v1.date="2013-02-01";
-//          v1.freePercentage = 10;
-//          Provider.of<VegetableModel>(context).addVegToList(veggiesList[rng.nextInt(3)]);
             },
             child: Text("එකතුකරන්න",
                 style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold,  fontSize: 18)),
@@ -734,28 +636,12 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
       ),
     );
   }
-//
-//  @override
-//  void dispose() {
-////    qualityController.dispose();
-////    weightController.dispose();
-////    freeprecentagecontroller.dispose();
-////    rateController.dispose();
-////    super.dispose;
-//  }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: new AppBar(
-//        actions: <Widget>[
-//          IconButton(
-//              icon: Icon(Icons.search),
-//              onPressed: () {
-//                Navigator.of(context).pushReplacementNamed(
-//                    '/leadcapturesearch'); // to connect screen
-//              }),
-//        ],
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.black87),
           onPressed: () => Navigator.of(context).pop(),
@@ -819,8 +705,6 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
         v2.date = selectedDate;
       vegservice.addVegSet(v2);
 
-
-
       _formKey.currentState.reset();
       Navigator.of(context)
           .pushNamed(
@@ -829,10 +713,7 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
 
     } else {
       print('invalid');
-    //If all data are not valid then start auto validation.
-//      setState(() {
-//        _autoValidate = true;
-//      });
+
     }
   }
 
@@ -848,8 +729,5 @@ class _VegitableAddScreenState extends State<VegitableAddScreen> {
       },
     );
 
-//    setState(() {
-//      selectedValues = selectedValuesLocal;
-//    });
   }
 }
