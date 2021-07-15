@@ -1,15 +1,38 @@
+import 'package:goviwiruvo_app/dto/userdto.dart';
+import 'package:goviwiruvo_app/dto/tokenDTO.dart';
+import 'package:goviwiruvo_app/dto/usertokenid.dart';
 import 'package:goviwiruvo_app/dto/vegetableload.dart';
+import 'package:goviwiruvo_app/dto/vegetablerequestdto.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class WebServiceCall {
 
 
-  static final String postsURL = "http://13.71.48.65:3000/vegetables";
+  static final String GET_URL = "http://goviwiru.xeniqhub.xyz:8080/vegetable";
+  static final String POST_URL = "http://goviwiru.xeniqhub.xyz:8080/createVegetableList";
+  static final String POST_ADD_FARMER_URL = "http://goviwiru.xeniqhub.xyz:8080/registerFarmer";
+  static final String TOKEN_URL = "https://us-central1-goviwiru.cloudfunctions.net/getToken";
 
-  Future<List<VegetableLoad>> getVegetables() async {
-    Response res = await get(postsURL);
+//  Map<String, String> get headers => {
+//    "Content-Type": "application/json",
+//    "Accept": "application/json",
+//    "Authorization": "Bearer $_token",
+//  };
+//  var response = await http.get(url, headers: headers);
+//  if (response.statusCode != 200) {
+//  throw Exception(
+//  "Request to $url failed with status ${response.statusCode}: ${response.body}");
+//  }
+  static Future<List<VegetableLoad>> getVegetables() async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String tokenStr  = prefs.get('token');
+    print('tokenStr = ${tokenStr}' );
+
+    Response res = await http.get(GET_URL, headers: {'Content-type': 'application/json','Authorization':'${tokenStr}'});
 
     if (res.statusCode == 200) {
       List<dynamic> body = jsonDecode(res.body);
@@ -29,26 +52,121 @@ class WebServiceCall {
     }
   }
 
-//  static Future<http.Response> validateUserPOST(AuthTokenDTO ath) async {
-//    String _validateurl = '${MyGlobals.hostURL}/login/authenticate';
+  static Future<http.Response> getToken(String uuid) async {
+
+    http.Response response = null;
+
+    UseridDTO userToken = UseridDTO();
+    userToken.uid = uuid;
+
+    String bodyd = "";
+    bodyd = json.encode(userToken.toJson());
+
+    print("json map :"+bodyd);
+
+    try {
+      response = await http.post(TOKEN_URL,
+          headers: {"Content-Type": "application/json"}, body: bodyd);
+          print('gettoken response ${response.body}');
+
+      if(response !=null ){
+      if(response.statusCode == 200)
+        if(response.body.isNotEmpty){
+
+              TokenDTO tokenDTO = new TokenDTO.fromJson(json.decode(response.body));
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              prefs.setString('token',tokenDTO.token);
+        }else{
+          print('body  empty');
+        }
+      }
+
+    } on Exception catch (e) {
+      print(e);
+    }
+    return response;
+  }
+
+  static Future<http.Response> addFarmerRequest(UserDTO farmerDTO) async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String tokenStr  = prefs.get('token');
+    print('tokenStr = ${tokenStr}' );
+
+    Future<http.Response> response = null;
+
+    String bodyd = "";
+    bodyd = json.encode(farmerDTO.toJson());
+
+    print("json map :"+bodyd);
+
+    try {
+
+      response = http.post(POST_ADD_FARMER_URL,
+          headers: {'Content-type': 'application/json','Authorization':'${tokenStr}'},
+          body: bodyd);
+
+    } on Exception catch (e) {
+      print(e);
+
+    }
+    return response;
+  }
+
+  static Future<http.Response> createVegRequestPOST(VegetableRequest vegetableRequest) async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String tokenStr  = prefs.get('token');
+    print('tokenStr = ${tokenStr}' );
+
+    Future<http.Response> response = null;
+
+    String bodyd = "";
+    bodyd = json.encode(vegetableRequest.toJson());
+
+    print("json map :"+bodyd);
+
+    try {
+     
+      response = http.post(POST_URL,
+          headers: {'Content-type': 'application/json','Authorization':'${tokenStr}'},
+          body: bodyd);
+    } on Exception catch (e) {
+      print(e);
+
+    }
+    return response;
+  }
+
+
+
+
+  static Future<http.Response> getUserRoleData() async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String tokenStr  = prefs.get('token');
+    print('tokenStr = ${tokenStr}' );
+
+    Future<http.Response> response = null;
+
+//    String bodyd = "";
+//    bodyd = json.encode(vegetableRequest.toJson());
 //
-//    Future<http.Response> response = null;
-//
-//    String token = "";
-//    token = json.encode(ath.toJson());
-//
-//    print("json map :"+token);
+//    print("json map :"+bodyd);
 //
 //    try {
-//      response = http.post(_validateurl,
-//          headers: {"Content-Type": "application/json"}, body: token);
+//      response = http.post(POST_URL,
+//          headers: {"Content-Type": "application/json"}, body: bodyd);
 //    } on Exception catch (e) {
 //      print(e);
 //
 //    }
-//    return response;
-//  }
+    return response;
+  }
 
+
+
+//
 //  static Future<http.Response> changeJobStatus(ResetPasswordDTO resetPasswordDTO) async {
 //    String _changeResponse = '${MyGlobals.hostURL}/login/reset';
 //

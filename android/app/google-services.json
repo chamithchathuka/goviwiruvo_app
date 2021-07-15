@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "789323971000",
+    "firebase_url": "https://goviwiru.firebaseio.com",
+    "project_id": "goviwiru",
+    "storage_bucket": "goviwiru.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:789323971000:android:36905a2274fe300bc9b74d",
+        "android_client_info": {
+          "package_name": "lk.xeniq.shradhdha.goviwiruvo.goviwiruvo_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "789323971000-jcl8rhv099igsuv28b8pd7vj19sq1djt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoE4FxQ_dtRA-o3nfMtfr7t7-vwygX69s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "789323971000-jcl8rhv099igsuv28b8pd7vj19sq1djt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

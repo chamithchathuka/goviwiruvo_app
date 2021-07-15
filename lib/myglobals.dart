@@ -1,27 +1,24 @@
+import 'dart:ui';
+
 class MyGlobals {
   static final AppName = "ගොවි විරුවෝ";
   static final AppVersion = "1";
 
-  final PUBLIC_KEY =
-      "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgackVmxB4IPC4IKuMfrC"+
-          "TQpm11hLVKfN3BOkbFD9W1HtuTUfbRzp1PeZQFzz5ps4ul21IjgELWK1wdh7eDht"+
-          "CRBMx2Qlx8XgubXHvj68SuRRs6YxUVEL6NZjh8DqA/ZOmfHqARgfz8pY2mZEeWgr"+
-          "BS+ptOYPvc195lEA+uRcmpXbuZEnzQpU5SBZVq8C4fCUm2DiL0DEPrwLrwfPFZXd"+
-          "24BbxIj/iGN2bfoYKrGRQWJiq8L2pEwt18Cx4ADC7KIPqPfpYWItoCoonKevemk8"+
-          "+dN5KwUHLEghJpmNmbyvQgstVxmK28EehPP+v7FZKMPcdWdZmcnowz934yFklWA+"+
-          "eQIDAQAB";
+  static Color backgroundColor = const Color(0xFFFFAA00);
+  static Color backgroundColor2 = const Color(0xFFFFDD3C);
 
-  static const hostURL = "https://online.plc.lk/pil-0.0.1-SNAPSHOT";
+
+  static const userproFileURL = 'https://www.clipartmax.com/png/small/444-4440198_user-account-profile-avatar-person-student-male-comments-circle.png';
+
 //   static const hostURL = "http://localhost:8080";
 //   static const hostURL = "http://455b59ba.ngrok.io";
 
   static const SECURITY_SETTINGS_PAGE_NAME = "Security Settings";
   static const HOME_PAGE_NAME = "Security Settings";
 
-  static final List<String> MENU_ITEMS = <String>[
-    "Assigned Jobs",
-    "Apply Leave",
-    "Payments",
+  static final List<String> USER_ROLES = <String>[
+    "ගොවි තැන",
+    "සම්බන්දිකරණය",
 //  "Trial Calculation",
 //  "Credit Approval",
   ];
@@ -33,9 +30,8 @@ class MyGlobals {
   ];
 
   static final List<String> MENU_PATHS = <String>[
-    "/myleads",
-    "/comingsoon",
-    "/comingsoon",
+    "/leadFarmer", // role id 1
+    "/leadCoordinator" // role id 2
   ];
 
 
